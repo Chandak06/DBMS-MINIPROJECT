@@ -135,3 +135,90 @@ CREATE TABLE NOTIFICATION (
     CHECK (type IN ('MATCH', 'CLAIM', 'GENERAL')),
     CHECK (is_read IN (0, 1))
 );
+
+DELIMITER //
+
+CREATE TRIGGER check_match_reviewer_insert
+BEFORE INSERT ON `MATCH`
+FOR EACH ROW
+BEGIN
+    IF NEW.reviewed_by IS NOT NULL
+       AND NOT EXISTS (
+           SELECT 1
+           FROM `USER`
+           WHERE user_id = NEW.reviewed_by
+             AND role IN ('ADMIN', 'STAFF')
+       )
+    THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Only ADMIN or STAFF can review matches';
+    END IF;
+END//
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE TRIGGER check_match_reviewer_update
+BEFORE UPDATE ON `MATCH`
+FOR EACH ROW
+BEGIN
+    IF NEW.reviewed_by IS NOT NULL
+       AND NOT EXISTS (
+           SELECT 1
+           FROM `USER`
+           WHERE user_id = NEW.reviewed_by
+             AND role IN ('ADMIN', 'STAFF')
+       )
+    THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Only ADMIN or STAFF can review matches';
+    END IF;
+END//
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE TRIGGER check_claim_processor_insert
+BEFORE INSERT ON CLAIM
+FOR EACH ROW
+BEGIN
+    IF NEW.processed_by IS NOT NULL
+       AND NOT EXISTS (
+           SELECT 1
+           FROM `USER`
+           WHERE user_id = NEW.processed_by
+             AND role IN ('ADMIN', 'STAFF')
+       )
+    THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Only ADMIN or STAFF can process claims';
+    END IF;
+END//
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE TRIGGER check_claim_processor_update
+BEFORE UPDATE ON CLAIM
+FOR EACH ROW
+BEGIN
+    IF NEW.processed_by IS NOT NULL
+       AND NOT EXISTS (
+           SELECT 1
+           FROM `USER`
+           WHERE user_id = NEW.processed_by
+             AND role IN ('ADMIN', 'STAFF')
+       )
+    THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Only ADMIN or STAFF can process claims';
+    END IF;
+END//
+
+DELIMITER ;
