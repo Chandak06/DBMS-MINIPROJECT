@@ -1,0 +1,5 @@
+USE campus_lost_found;
+-- Detect stale candidate scores after a report or its MongoDB details change.
+ALTER TABLE LOST_ITEM ADD COLUMN revision INT UNSIGNED NOT NULL DEFAULT 1;
+ALTER TABLE FOUND_ITEM ADD COLUMN revision INT UNSIGNED NOT NULL DEFAULT 1;
+ALTER TABLE `MATCH` ADD COLUMN lost_revision INT UNSIGNED NOT NULL DEFAULT 1, ADD COLUMN found_revision INT UNSIGNED NOT NULL DEFAULT 1;
