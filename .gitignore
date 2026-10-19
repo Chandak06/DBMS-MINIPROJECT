@@ -1,0 +1,17 @@
+node_modules
+.next
+.env
+.env.local
+.env.*
+!.env.example
+coverage
+__pycache__/
+*.pyc
+.DS_Store
+*.tsbuildinfo
+artifacts/local/
+*.log
+.next-dev
+
+!docs/testing/results/*.log
+deliverables/
