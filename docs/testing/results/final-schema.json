@@ -1,0 +1,2455 @@
+{
+  "capturedAt": "2026-10-02T03:10:45.150Z",
+  "basis": "Fresh schema produced by the submitted setup script",
+  "sourceFiles": [
+    {
+      "path": "database/mysql/schema.sql",
+      "sha256": "b5a11e03d005bd5aad3766cc3c2e9130fe1e012a3d2fe4d10422fe0cf32ea186"
+    },
+    {
+      "path": "database/mysql/indexes_views.sql",
+      "sha256": "785726b4970ae7bed278b0fb57d0ca02c3a8a845834e5897f3f819e668af2ee2"
+    },
+    {
+      "path": "database/mysql/advanced.sql",
+      "sha256": "64120d32e15fdc6da3918dabd7c17e359eab368296358b78e9f3b1c7ae4c43d3"
+    },
+    {
+      "path": "database/mysql/revisions.sql",
+      "sha256": "383fcf508fef0aa7a279eb77d1a7dd8a2116fcbb8b530d519a4e85b97871fcdd"
+    },
+    {
+      "path": "database/mysql/procedures.sql",
+      "sha256": "c95c215e7a2b349e5d5a70d22e56060bb7e51f0937fd6bcca4b8ed873b107f1e"
+    },
+    {
+      "path": "scripts/setup-databases.mjs",
+      "sha256": "134c1ce940d9b87fe3794bffee7699f59d1514935741a91f76ca2faded91e160"
+    },
+    {
+      "path": "scripts/seed.mjs",
+      "sha256": "12f9401d7523f8bcf1caa61c097cd35089fc77fbb4e7ceb0d3f599c6c4993509"
+    },
+    {
+      "path": "scripts/seed-demo.mjs",
+      "sha256": "4a6079fdc7d6d5de89c2d350398a4429628b877a5f783730d04c48f8981ccbf0"
+    },
+    {
+      "path": "database/mongodb/model.mjs",
+      "sha256": "f0d1d9493351f1810e5aac558503bbdd71cd5c87da717c3af5547d5e3ad004e8"
+    }
+  ],
+  "tables": [
+    {
+      "name": "campus",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "campus_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "campus_name",
+          "type": "varchar(120)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "street",
+          "type": "varchar(150)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "city",
+          "type": "varchar(80)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "state",
+          "type": "varchar(80)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "postal_code",
+          "type": "varchar(20)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "campus_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [],
+      "indexes": [
+        {
+          "name": "idx_campus_city_name",
+          "nonUnique": 1,
+          "columnName": "city",
+          "position": 1
+        },
+        {
+          "name": "idx_campus_city_name",
+          "nonUnique": 1,
+          "columnName": "campus_name",
+          "position": 2
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "campus_id",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `campus` (\n  `campus_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `campus_name` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `street` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `city` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `state` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `postal_code` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  PRIMARY KEY (`campus_id`),\n  KEY `idx_campus_city_name` (`city`,`campus_name`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "category",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "category_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "category_name",
+          "type": "varchar(100)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "category_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_category_name",
+          "type": "UNIQUE",
+          "columnName": "category_name",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "category_id",
+          "position": 1
+        },
+        {
+          "name": "uq_category_name",
+          "nonUnique": 0,
+          "columnName": "category_name",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `category` (\n  `category_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `category_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `description` text COLLATE utf8mb4_unicode_ci,\n  PRIMARY KEY (`category_id`),\n  UNIQUE KEY `uq_category_name` (`category_name`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "claim",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "claim_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "claim_description",
+          "type": "text",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "status",
+          "type": "varchar(30)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "extra": "DEFAULT_GENERATED",
+          "expression": ""
+        },
+        {
+          "name": "claim_remarks",
+          "type": "text",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "submitted_by",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "found_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "processed_by",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "processed_at",
+          "type": "datetime",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "processing_remarks",
+          "type": "text",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "approved_found_id",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "STORED GENERATED",
+          "expression": "(case when (`status` = _utf8mb4\\'APPROVED\\') then `found_id` else NULL end)"
+        }
+      ],
+      "keys": [
+        {
+          "name": "chk_claim_description",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_claim_process_relationship",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_claim_processing_status",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_claim_status",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "fk_claim_found_item",
+          "type": "FOREIGN KEY",
+          "columnName": "found_id",
+          "referencedTable": "found_item",
+          "referencedColumn": "found_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "fk_claim_processor",
+          "type": "FOREIGN KEY",
+          "columnName": "processed_by",
+          "referencedTable": "user",
+          "referencedColumn": "user_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "fk_claim_submitter",
+          "type": "FOREIGN KEY",
+          "columnName": "submitted_by",
+          "referencedTable": "user",
+          "referencedColumn": "user_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "claim_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_claim_approved_found",
+          "type": "UNIQUE",
+          "columnName": "approved_found_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_claim_user_found",
+          "type": "UNIQUE",
+          "columnName": "submitted_by",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_claim_user_found",
+          "type": "UNIQUE",
+          "columnName": "found_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 2,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_claim_description",
+          "expression": "(char_length(trim(`claim_description`)) >= 10)"
+        },
+        {
+          "name": "chk_claim_process_relationship",
+          "expression": "((`processed_by` is not null) or ((`processed_at` is null) and (`processing_remarks` is null)))"
+        },
+        {
+          "name": "chk_claim_processing_status",
+          "expression": "((upper(trim(`status`)) = _utf8mb4\\'PENDING\\') or (`processed_by` is not null))"
+        },
+        {
+          "name": "chk_claim_status",
+          "expression": "(upper(trim(`status`)) in (_utf8mb4\\'PENDING\\',_utf8mb4\\'APPROVED\\',_utf8mb4\\'REJECTED\\'))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "fk_claim_found_item",
+          "nonUnique": 1,
+          "columnName": "found_id",
+          "position": 1
+        },
+        {
+          "name": "fk_claim_processor",
+          "nonUnique": 1,
+          "columnName": "processed_by",
+          "position": 1
+        },
+        {
+          "name": "idx_claim_status",
+          "nonUnique": 1,
+          "columnName": "status",
+          "position": 1
+        },
+        {
+          "name": "idx_claim_user_created",
+          "nonUnique": 1,
+          "columnName": "submitted_by",
+          "position": 1
+        },
+        {
+          "name": "idx_claim_user_created",
+          "nonUnique": 1,
+          "columnName": "created_at",
+          "position": 2
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "claim_id",
+          "position": 1
+        },
+        {
+          "name": "uq_claim_approved_found",
+          "nonUnique": 0,
+          "columnName": "approved_found_id",
+          "position": 1
+        },
+        {
+          "name": "uq_claim_user_found",
+          "nonUnique": 0,
+          "columnName": "submitted_by",
+          "position": 1
+        },
+        {
+          "name": "uq_claim_user_found",
+          "nonUnique": 0,
+          "columnName": "found_id",
+          "position": 2
+        }
+      ],
+      "ddl": "CREATE TABLE `claim` (\n  `claim_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `claim_description` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `claim_remarks` text COLLATE utf8mb4_unicode_ci,\n  `submitted_by` int unsigned NOT NULL,\n  `found_id` int unsigned NOT NULL,\n  `processed_by` int unsigned DEFAULT NULL,\n  `processed_at` datetime DEFAULT NULL,\n  `processing_remarks` text COLLATE utf8mb4_unicode_ci,\n  `approved_found_id` int unsigned GENERATED ALWAYS AS ((case when (`status` = _utf8mb4'APPROVED') then `found_id` else NULL end)) STORED,\n  PRIMARY KEY (`claim_id`),\n  UNIQUE KEY `uq_claim_user_found` (`submitted_by`,`found_id`),\n  UNIQUE KEY `uq_claim_approved_found` (`approved_found_id`),\n  KEY `fk_claim_found_item` (`found_id`),\n  KEY `fk_claim_processor` (`processed_by`),\n  KEY `idx_claim_status` (`status`),\n  KEY `idx_claim_user_created` (`submitted_by`,`created_at`),\n  CONSTRAINT `fk_claim_found_item` FOREIGN KEY (`found_id`) REFERENCES `found_item` (`found_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `fk_claim_processor` FOREIGN KEY (`processed_by`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `fk_claim_submitter` FOREIGN KEY (`submitted_by`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `chk_claim_description` CHECK ((char_length(trim(`claim_description`)) >= 10)),\n  CONSTRAINT `chk_claim_process_relationship` CHECK (((`processed_by` is not null) or ((`processed_at` is null) and (`processing_remarks` is null)))),\n  CONSTRAINT `chk_claim_processing_status` CHECK (((upper(trim(`status`)) = _utf8mb4'PENDING') or (`processed_by` is not null))),\n  CONSTRAINT `chk_claim_status` CHECK ((upper(trim(`status`)) in (_utf8mb4'PENDING',_utf8mb4'APPROVED',_utf8mb4'REJECTED')))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "department",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "department_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "department_name",
+          "type": "varchar(120)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "campus_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "fk_department_campus",
+          "type": "FOREIGN KEY",
+          "columnName": "campus_id",
+          "referencedTable": "campus",
+          "referencedColumn": "campus_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "department_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [],
+      "indexes": [
+        {
+          "name": "fk_department_campus",
+          "nonUnique": 1,
+          "columnName": "campus_id",
+          "position": 1
+        },
+        {
+          "name": "idx_department_name",
+          "nonUnique": 1,
+          "columnName": "department_name",
+          "position": 1
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "department_id",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `department` (\n  `department_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `department_name` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `campus_id` int unsigned NOT NULL,\n  PRIMARY KEY (`department_id`),\n  KEY `fk_department_campus` (`campus_id`),\n  KEY `idx_department_name` (`department_name`),\n  CONSTRAINT `fk_department_campus` FOREIGN KEY (`campus_id`) REFERENCES `campus` (`campus_id`) ON DELETE RESTRICT ON UPDATE RESTRICT\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "found_item",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "found_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "item_name",
+          "type": "varchar(150)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "found_datetime",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "color",
+          "type": "varchar(60)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "brand",
+          "type": "varchar(100)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "status",
+          "type": "varchar(30)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "remarks",
+          "type": "text",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "extra": "DEFAULT_GENERATED",
+          "expression": ""
+        },
+        {
+          "name": "reported_by",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "category_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "location_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "revision",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": "1",
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "chk_found_item_status",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_found_name",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "fk_found_item_category",
+          "type": "FOREIGN KEY",
+          "columnName": "category_id",
+          "referencedTable": "category",
+          "referencedColumn": "category_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "fk_found_item_location",
+          "type": "FOREIGN KEY",
+          "columnName": "location_id",
+          "referencedTable": "location",
+          "referencedColumn": "location_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "fk_found_item_reporter",
+          "type": "FOREIGN KEY",
+          "columnName": "reported_by",
+          "referencedTable": "user",
+          "referencedColumn": "user_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "found_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_found_item_status",
+          "expression": "(upper(trim(`status`)) in (_utf8mb4\\'OPEN\\',_utf8mb4\\'MATCHED\\',_utf8mb4\\'CLOSED\\'))"
+        },
+        {
+          "name": "chk_found_name",
+          "expression": "(char_length(trim(`item_name`)) >= 2)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "fk_found_item_location",
+          "nonUnique": 1,
+          "columnName": "location_id",
+          "position": 1
+        },
+        {
+          "name": "idx_found_category_location",
+          "nonUnique": 1,
+          "columnName": "category_id",
+          "position": 1
+        },
+        {
+          "name": "idx_found_category_location",
+          "nonUnique": 1,
+          "columnName": "location_id",
+          "position": 2
+        },
+        {
+          "name": "idx_found_category_location",
+          "nonUnique": 1,
+          "columnName": "status",
+          "position": 3
+        },
+        {
+          "name": "idx_found_item_status_datetime",
+          "nonUnique": 1,
+          "columnName": "status",
+          "position": 1
+        },
+        {
+          "name": "idx_found_item_status_datetime",
+          "nonUnique": 1,
+          "columnName": "found_datetime",
+          "position": 2
+        },
+        {
+          "name": "idx_found_user_created",
+          "nonUnique": 1,
+          "columnName": "reported_by",
+          "position": 1
+        },
+        {
+          "name": "idx_found_user_created",
+          "nonUnique": 1,
+          "columnName": "created_at",
+          "position": 2
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "found_id",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `found_item` (\n  `found_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `item_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `description` text COLLATE utf8mb4_unicode_ci,\n  `found_datetime` datetime NOT NULL,\n  `color` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `brand` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `remarks` text COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `reported_by` int unsigned NOT NULL,\n  `category_id` int unsigned NOT NULL,\n  `location_id` int unsigned NOT NULL,\n  `revision` int unsigned NOT NULL DEFAULT '1',\n  PRIMARY KEY (`found_id`),\n  KEY `fk_found_item_location` (`location_id`),\n  KEY `idx_found_item_status_datetime` (`status`,`found_datetime`),\n  KEY `idx_found_category_location` (`category_id`,`location_id`,`status`),\n  KEY `idx_found_user_created` (`reported_by`,`created_at`),\n  CONSTRAINT `fk_found_item_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `fk_found_item_location` FOREIGN KEY (`location_id`) REFERENCES `location` (`location_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `fk_found_item_reporter` FOREIGN KEY (`reported_by`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `chk_found_item_status` CHECK ((upper(trim(`status`)) in (_utf8mb4'OPEN',_utf8mb4'MATCHED',_utf8mb4'CLOSED'))),\n  CONSTRAINT `chk_found_name` CHECK ((char_length(trim(`item_name`)) >= 2))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "location",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "location_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "location_name",
+          "type": "varchar(150)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "building",
+          "type": "varchar(100)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "floor",
+          "type": "varchar(50)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "area",
+          "type": "varchar(100)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "type",
+          "type": "varchar(50)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "campus_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "fk_location_campus",
+          "type": "FOREIGN KEY",
+          "columnName": "campus_id",
+          "referencedTable": "campus",
+          "referencedColumn": "campus_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "location_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [],
+      "indexes": [
+        {
+          "name": "fk_location_campus",
+          "nonUnique": 1,
+          "columnName": "campus_id",
+          "position": 1
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "location_id",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `location` (\n  `location_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `location_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `building` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `floor` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `area` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `campus_id` int unsigned NOT NULL,\n  PRIMARY KEY (`location_id`),\n  KEY `fk_location_campus` (`campus_id`),\n  CONSTRAINT `fk_location_campus` FOREIGN KEY (`campus_id`) REFERENCES `campus` (`campus_id`) ON DELETE RESTRICT ON UPDATE RESTRICT\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "lost_item",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "lost_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "item_name",
+          "type": "varchar(150)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "lost_datetime",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "color",
+          "type": "varchar(60)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "brand",
+          "type": "varchar(100)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "status",
+          "type": "varchar(30)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "remarks",
+          "type": "text",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "extra": "DEFAULT_GENERATED",
+          "expression": ""
+        },
+        {
+          "name": "reported_by",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "category_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "location_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "revision",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": "1",
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "chk_lost_item_status",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_lost_name",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "fk_lost_item_category",
+          "type": "FOREIGN KEY",
+          "columnName": "category_id",
+          "referencedTable": "category",
+          "referencedColumn": "category_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "fk_lost_item_location",
+          "type": "FOREIGN KEY",
+          "columnName": "location_id",
+          "referencedTable": "location",
+          "referencedColumn": "location_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "fk_lost_item_reporter",
+          "type": "FOREIGN KEY",
+          "columnName": "reported_by",
+          "referencedTable": "user",
+          "referencedColumn": "user_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "lost_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_lost_item_status",
+          "expression": "(upper(trim(`status`)) in (_utf8mb4\\'OPEN\\',_utf8mb4\\'MATCHED\\',_utf8mb4\\'CLOSED\\'))"
+        },
+        {
+          "name": "chk_lost_name",
+          "expression": "(char_length(trim(`item_name`)) >= 2)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "fk_lost_item_location",
+          "nonUnique": 1,
+          "columnName": "location_id",
+          "position": 1
+        },
+        {
+          "name": "idx_lost_category_location",
+          "nonUnique": 1,
+          "columnName": "category_id",
+          "position": 1
+        },
+        {
+          "name": "idx_lost_category_location",
+          "nonUnique": 1,
+          "columnName": "location_id",
+          "position": 2
+        },
+        {
+          "name": "idx_lost_datetime",
+          "nonUnique": 1,
+          "columnName": "lost_datetime",
+          "position": 1
+        },
+        {
+          "name": "idx_lost_item_status_datetime",
+          "nonUnique": 1,
+          "columnName": "status",
+          "position": 1
+        },
+        {
+          "name": "idx_lost_item_status_datetime",
+          "nonUnique": 1,
+          "columnName": "lost_datetime",
+          "position": 2
+        },
+        {
+          "name": "idx_lost_user_status_created",
+          "nonUnique": 1,
+          "columnName": "reported_by",
+          "position": 1
+        },
+        {
+          "name": "idx_lost_user_status_created",
+          "nonUnique": 1,
+          "columnName": "status",
+          "position": 2
+        },
+        {
+          "name": "idx_lost_user_status_created",
+          "nonUnique": 1,
+          "columnName": "created_at",
+          "position": 3
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "lost_id",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `lost_item` (\n  `lost_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `item_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `description` text COLLATE utf8mb4_unicode_ci,\n  `lost_datetime` datetime NOT NULL,\n  `color` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `brand` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `remarks` text COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `reported_by` int unsigned NOT NULL,\n  `category_id` int unsigned NOT NULL,\n  `location_id` int unsigned NOT NULL,\n  `revision` int unsigned NOT NULL DEFAULT '1',\n  PRIMARY KEY (`lost_id`),\n  KEY `fk_lost_item_location` (`location_id`),\n  KEY `idx_lost_item_status_datetime` (`status`,`lost_datetime`),\n  KEY `idx_lost_user_status_created` (`reported_by`,`status`,`created_at`),\n  KEY `idx_lost_category_location` (`category_id`,`location_id`),\n  KEY `idx_lost_datetime` (`lost_datetime`),\n  CONSTRAINT `fk_lost_item_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `fk_lost_item_location` FOREIGN KEY (`location_id`) REFERENCES `location` (`location_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `fk_lost_item_reporter` FOREIGN KEY (`reported_by`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `chk_lost_item_status` CHECK ((upper(trim(`status`)) in (_utf8mb4'OPEN',_utf8mb4'MATCHED',_utf8mb4'CLOSED'))),\n  CONSTRAINT `chk_lost_name` CHECK ((char_length(trim(`item_name`)) >= 2))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "match",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "match_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "lost_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "found_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "similarity_score",
+          "type": "decimal(10,6)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "match_method",
+          "type": "varchar(100)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "status",
+          "type": "varchar(30)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "matched_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "extra": "DEFAULT_GENERATED",
+          "expression": ""
+        },
+        {
+          "name": "reviewed_by",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "reviewed_at",
+          "type": "datetime",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "review_remarks",
+          "type": "text",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "accepted_lost_id",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "STORED GENERATED",
+          "expression": "(case when (`status` = _utf8mb4\\'ACCEPTED\\') then `lost_id` else NULL end)"
+        },
+        {
+          "name": "accepted_found_id",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "STORED GENERATED",
+          "expression": "(case when (`status` = _utf8mb4\\'ACCEPTED\\') then `found_id` else NULL end)"
+        },
+        {
+          "name": "lost_revision",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": "1",
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "found_revision",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": "1",
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "chk_match_method",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_match_review_relationship",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_match_review_status",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_match_similarity_score",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_match_status",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "fk_match_found_item",
+          "type": "FOREIGN KEY",
+          "columnName": "found_id",
+          "referencedTable": "found_item",
+          "referencedColumn": "found_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "fk_match_lost_item",
+          "type": "FOREIGN KEY",
+          "columnName": "lost_id",
+          "referencedTable": "lost_item",
+          "referencedColumn": "lost_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "fk_match_reviewer",
+          "type": "FOREIGN KEY",
+          "columnName": "reviewed_by",
+          "referencedTable": "user",
+          "referencedColumn": "user_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "match_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_match_accepted_found",
+          "type": "UNIQUE",
+          "columnName": "accepted_found_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_match_accepted_lost",
+          "type": "UNIQUE",
+          "columnName": "accepted_lost_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_match_pair",
+          "type": "UNIQUE",
+          "columnName": "lost_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_match_pair",
+          "type": "UNIQUE",
+          "columnName": "found_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 2,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_match_method",
+          "expression": "(upper(trim(`match_method`)) in (_utf8mb4\\'AI\\',_utf8mb4\\'MANUAL\\',_utf8mb4\\'HYBRID\\'))"
+        },
+        {
+          "name": "chk_match_review_relationship",
+          "expression": "((`reviewed_by` is not null) or ((`reviewed_at` is null) and (`review_remarks` is null)))"
+        },
+        {
+          "name": "chk_match_review_status",
+          "expression": "((upper(trim(`status`)) = _utf8mb4\\'PENDING\\') or (`reviewed_by` is not null))"
+        },
+        {
+          "name": "chk_match_similarity_score",
+          "expression": "((`similarity_score` >= 0) and (`similarity_score` <= 1))"
+        },
+        {
+          "name": "chk_match_status",
+          "expression": "(upper(trim(`status`)) in (_utf8mb4\\'PENDING\\',_utf8mb4\\'ACCEPTED\\',_utf8mb4\\'REJECTED\\'))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "fk_match_found_item",
+          "nonUnique": 1,
+          "columnName": "found_id",
+          "position": 1
+        },
+        {
+          "name": "fk_match_reviewer",
+          "nonUnique": 1,
+          "columnName": "reviewed_by",
+          "position": 1
+        },
+        {
+          "name": "idx_match_lost_status",
+          "nonUnique": 1,
+          "columnName": "lost_id",
+          "position": 1
+        },
+        {
+          "name": "idx_match_lost_status",
+          "nonUnique": 1,
+          "columnName": "status",
+          "position": 2
+        },
+        {
+          "name": "idx_match_similarity",
+          "nonUnique": 1,
+          "columnName": "similarity_score",
+          "position": 1
+        },
+        {
+          "name": "idx_match_status",
+          "nonUnique": 1,
+          "columnName": "status",
+          "position": 1
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "match_id",
+          "position": 1
+        },
+        {
+          "name": "uq_match_accepted_found",
+          "nonUnique": 0,
+          "columnName": "accepted_found_id",
+          "position": 1
+        },
+        {
+          "name": "uq_match_accepted_lost",
+          "nonUnique": 0,
+          "columnName": "accepted_lost_id",
+          "position": 1
+        },
+        {
+          "name": "uq_match_pair",
+          "nonUnique": 0,
+          "columnName": "lost_id",
+          "position": 1
+        },
+        {
+          "name": "uq_match_pair",
+          "nonUnique": 0,
+          "columnName": "found_id",
+          "position": 2
+        }
+      ],
+      "ddl": "CREATE TABLE `match` (\n  `match_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `lost_id` int unsigned NOT NULL,\n  `found_id` int unsigned NOT NULL,\n  `similarity_score` decimal(10,6) NOT NULL,\n  `match_method` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `matched_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `reviewed_by` int unsigned DEFAULT NULL,\n  `reviewed_at` datetime DEFAULT NULL,\n  `review_remarks` text COLLATE utf8mb4_unicode_ci,\n  `accepted_lost_id` int unsigned GENERATED ALWAYS AS ((case when (`status` = _utf8mb4'ACCEPTED') then `lost_id` else NULL end)) STORED,\n  `accepted_found_id` int unsigned GENERATED ALWAYS AS ((case when (`status` = _utf8mb4'ACCEPTED') then `found_id` else NULL end)) STORED,\n  `lost_revision` int unsigned NOT NULL DEFAULT '1',\n  `found_revision` int unsigned NOT NULL DEFAULT '1',\n  PRIMARY KEY (`match_id`),\n  UNIQUE KEY `uq_match_pair` (`lost_id`,`found_id`),\n  UNIQUE KEY `uq_match_accepted_lost` (`accepted_lost_id`),\n  UNIQUE KEY `uq_match_accepted_found` (`accepted_found_id`),\n  KEY `fk_match_found_item` (`found_id`),\n  KEY `fk_match_reviewer` (`reviewed_by`),\n  KEY `idx_match_similarity` (`similarity_score`),\n  KEY `idx_match_status` (`status`),\n  KEY `idx_match_lost_status` (`lost_id`,`status`),\n  CONSTRAINT `fk_match_found_item` FOREIGN KEY (`found_id`) REFERENCES `found_item` (`found_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `fk_match_lost_item` FOREIGN KEY (`lost_id`) REFERENCES `lost_item` (`lost_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `fk_match_reviewer` FOREIGN KEY (`reviewed_by`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `chk_match_method` CHECK ((upper(trim(`match_method`)) in (_utf8mb4'AI',_utf8mb4'MANUAL',_utf8mb4'HYBRID'))),\n  CONSTRAINT `chk_match_review_relationship` CHECK (((`reviewed_by` is not null) or ((`reviewed_at` is null) and (`review_remarks` is null)))),\n  CONSTRAINT `chk_match_review_status` CHECK (((upper(trim(`status`)) = _utf8mb4'PENDING') or (`reviewed_by` is not null))),\n  CONSTRAINT `chk_match_similarity_score` CHECK (((`similarity_score` >= 0) and (`similarity_score` <= 1))),\n  CONSTRAINT `chk_match_status` CHECK ((upper(trim(`status`)) in (_utf8mb4'PENDING',_utf8mb4'ACCEPTED',_utf8mb4'REJECTED')))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "mongo_outbox",
+      "kind": "internal",
+      "columns": [
+        {
+          "name": "outbox_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "collection_name",
+          "type": "varchar(40)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "document_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "payload",
+          "type": "json",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "operation",
+          "type": "varchar(10)",
+          "nullable": "NO",
+          "defaultValue": "UPSERT",
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "extra": "DEFAULT_GENERATED",
+          "expression": ""
+        },
+        {
+          "name": "processed_at",
+          "type": "datetime",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "attempts",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": "0",
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "last_error",
+          "type": "varchar(500)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "chk_outbox_collection",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_outbox_operation",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "outbox_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_outbox_collection",
+          "expression": "(`collection_name` in (_utf8mb4\\'lost_item_details\\',_utf8mb4\\'found_item_details\\',_utf8mb4\\'match_evidence\\'))"
+        },
+        {
+          "name": "chk_outbox_operation",
+          "expression": "(`operation` in (_utf8mb4\\'UPSERT\\',_utf8mb4\\'DELETE\\'))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_outbox_pending",
+          "nonUnique": 1,
+          "columnName": "processed_at",
+          "position": 1
+        },
+        {
+          "name": "idx_outbox_pending",
+          "nonUnique": 1,
+          "columnName": "outbox_id",
+          "position": 2
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "outbox_id",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `mongo_outbox` (\n  `outbox_id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `collection_name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `document_id` int unsigned NOT NULL,\n  `payload` json NOT NULL,\n  `operation` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'UPSERT',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `processed_at` datetime DEFAULT NULL,\n  `attempts` int unsigned NOT NULL DEFAULT '0',\n  `last_error` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  PRIMARY KEY (`outbox_id`),\n  KEY `idx_outbox_pending` (`processed_at`,`outbox_id`),\n  CONSTRAINT `chk_outbox_collection` CHECK ((`collection_name` in (_utf8mb4'lost_item_details',_utf8mb4'found_item_details',_utf8mb4'match_evidence'))),\n  CONSTRAINT `chk_outbox_operation` CHECK ((`operation` in (_utf8mb4'UPSERT',_utf8mb4'DELETE')))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "notification",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "notification_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "title",
+          "type": "varchar(200)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "type",
+          "type": "varchar(50)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "is_read",
+          "type": "tinyint(1)",
+          "nullable": "NO",
+          "defaultValue": "0",
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "extra": "DEFAULT_GENERATED",
+          "expression": ""
+        },
+        {
+          "name": "user_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "chk_notification_is_read",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "chk_notification_type",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "fk_notification_user",
+          "type": "FOREIGN KEY",
+          "columnName": "user_id",
+          "referencedTable": "user",
+          "referencedColumn": "user_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "notification_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_notification_is_read",
+          "expression": "(`is_read` in (0,1))"
+        },
+        {
+          "name": "chk_notification_type",
+          "expression": "(upper(trim(`type`)) in (_utf8mb4\\'MATCH\\',_utf8mb4\\'CLAIM\\',_utf8mb4\\'GENERAL\\'))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_notification_user_read",
+          "nonUnique": 1,
+          "columnName": "user_id",
+          "position": 1
+        },
+        {
+          "name": "idx_notification_user_read",
+          "nonUnique": 1,
+          "columnName": "is_read",
+          "position": 2
+        },
+        {
+          "name": "idx_notification_user_read_created",
+          "nonUnique": 1,
+          "columnName": "user_id",
+          "position": 1
+        },
+        {
+          "name": "idx_notification_user_read_created",
+          "nonUnique": 1,
+          "columnName": "is_read",
+          "position": 2
+        },
+        {
+          "name": "idx_notification_user_read_created",
+          "nonUnique": 1,
+          "columnName": "created_at",
+          "position": 3
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "notification_id",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `notification` (\n  `notification_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `is_read` tinyint(1) NOT NULL DEFAULT '0',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `user_id` int unsigned NOT NULL,\n  PRIMARY KEY (`notification_id`),\n  KEY `idx_notification_user_read` (`user_id`,`is_read`),\n  KEY `idx_notification_user_read_created` (`user_id`,`is_read`,`created_at`),\n  CONSTRAINT `fk_notification_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `chk_notification_is_read` CHECK ((`is_read` in (0,1))),\n  CONSTRAINT `chk_notification_type` CHECK ((upper(trim(`type`)) in (_utf8mb4'MATCH',_utf8mb4'CLAIM',_utf8mb4'GENERAL')))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "schema_migration",
+      "kind": "internal",
+      "columns": [
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "checksum",
+          "type": "char(64)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "applied_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "extra": "DEFAULT_GENERATED",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "name",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "name",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `schema_migration` (\n  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `checksum` char(64) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `applied_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`name`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "user",
+      "kind": "domain",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "auto_increment",
+          "expression": ""
+        },
+        {
+          "name": "first_name",
+          "type": "varchar(80)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "middle_name",
+          "type": "varchar(80)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "last_name",
+          "type": "varchar(80)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "phone",
+          "type": "varchar(20)",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "email",
+          "type": "varchar(255)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "role",
+          "type": "varchar(30)",
+          "nullable": "NO",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "extra": "DEFAULT_GENERATED",
+          "expression": ""
+        },
+        {
+          "name": "department_id",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "defaultValue": null,
+          "extra": "",
+          "expression": ""
+        }
+      ],
+      "keys": [
+        {
+          "name": "chk_user_role",
+          "type": "CHECK",
+          "columnName": null,
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": null,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "fk_user_department",
+          "type": "FOREIGN KEY",
+          "columnName": "department_id",
+          "referencedTable": "department",
+          "referencedColumn": "department_id",
+          "position": 1,
+          "updateRule": "RESTRICT",
+          "deleteRule": "RESTRICT"
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "columnName": "user_id",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        },
+        {
+          "name": "uq_user_email",
+          "type": "UNIQUE",
+          "columnName": "email",
+          "referencedTable": null,
+          "referencedColumn": null,
+          "position": 1,
+          "updateRule": null,
+          "deleteRule": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_user_role",
+          "expression": "(upper(trim(`role`)) in (_utf8mb4\\'STUDENT\\',_utf8mb4\\'STAFF\\',_utf8mb4\\'ADMIN\\'))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "fk_user_department",
+          "nonUnique": 1,
+          "columnName": "department_id",
+          "position": 1
+        },
+        {
+          "name": "PRIMARY",
+          "nonUnique": 0,
+          "columnName": "user_id",
+          "position": 1
+        },
+        {
+          "name": "uq_user_email",
+          "nonUnique": 0,
+          "columnName": "email",
+          "position": 1
+        }
+      ],
+      "ddl": "CREATE TABLE `user` (\n  `user_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `first_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `middle_name` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `last_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `role` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `department_id` int unsigned DEFAULT NULL,\n  PRIMARY KEY (`user_id`),\n  UNIQUE KEY `uq_user_email` (`email`),\n  KEY `fk_user_department` (`department_id`),\n  CONSTRAINT `fk_user_department` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n  CONSTRAINT `chk_user_role` CHECK ((upper(trim(`role`)) in (_utf8mb4'STUDENT',_utf8mb4'STAFF',_utf8mb4'ADMIN')))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    }
+  ],
+  "views": [
+    {
+      "name": "vw_recovery_dashboard",
+      "definition": "select `c`.`category_id` AS `category_id`,`c`.`category_name` AS `category_name`,(select count(0) from `clf_doc_1790910645129`.`lost_item` `li` where (`li`.`category_id` = `c`.`category_id`)) AS `lost_reports`,(select count(0) from `clf_doc_1790910645129`.`found_item` `fi` where (`fi`.`category_id` = `c`.`category_id`)) AS `found_reports`,(select count(0) from (`clf_doc_1790910645129`.`claim` `cl` join `clf_doc_1790910645129`.`found_item` `fi` on((`fi`.`found_id` = `cl`.`found_id`))) where ((`fi`.`category_id` = `c`.`category_id`) and (`cl`.`status` = 'APPROVED'))) AS `recovered_items` from `clf_doc_1790910645129`.`category` `c`"
+    },
+    {
+      "name": "vw_user_lost_summary",
+      "definition": "select `u`.`user_id` AS `user_id`,`u`.`email` AS `email`,concat_ws(' ',`u`.`first_name`,`u`.`middle_name`,`u`.`last_name`) AS `full_name`,count(`li`.`lost_id`) AS `total_lost_reports`,sum((case when (`li`.`status` = 'OPEN') then 1 else 0 end)) AS `open_reports`,sum((case when (`li`.`status` = 'MATCHED') then 1 else 0 end)) AS `matched_reports`,sum((case when (`li`.`status` = 'CLOSED') then 1 else 0 end)) AS `closed_reports`,(select count(0) from `clf_doc_1790910645129`.`notification` `n` where ((`n`.`user_id` = `u`.`user_id`) and (`n`.`is_read` = 0))) AS `unread_notifications` from (`clf_doc_1790910645129`.`user` `u` left join `clf_doc_1790910645129`.`lost_item` `li` on((`li`.`reported_by` = `u`.`user_id`))) group by `u`.`user_id`,`u`.`email`,`u`.`first_name`,`u`.`middle_name`,`u`.`last_name`"
+    }
+  ],
+  "routines": [
+    {
+      "name": "fn_match_band",
+      "type": "FUNCTION",
+      "isDeterministic": "YES",
+      "dataAccess": "NO SQL",
+      "definition": "BEGIN\n RETURN CASE WHEN p_score >= 0.8 THEN 'HIGH' WHEN p_score >= 0.55 THEN 'POSSIBLE' ELSE 'LOW' END;\nEND"
+    },
+    {
+      "name": "sp_process_claim",
+      "type": "PROCEDURE",
+      "isDeterministic": "NO",
+      "dataAccess": "CONTAINS SQL",
+      "definition": "BEGIN\n DECLARE v_found INT UNSIGNED DEFAULT NULL;\n DECLARE v_lost INT UNSIGNED DEFAULT NULL;\n DECLARE v_lost_rev INT;\n DECLARE v_found_rev INT;\n DECLARE v_match_lost_rev INT;\n DECLARE v_match_found_rev INT;\n DECLARE v_owner INT UNSIGNED;\n DECLARE v_submitter INT UNSIGNED;\n DECLARE v_status VARCHAR(30);\n DECLARE v_found_status VARCHAR(30);\n DECLARE v_lost_status VARCHAR(30);\n DECLARE v_role VARCHAR(30);\n DECLARE EXIT HANDLER FOR SQLEXCEPTION BEGIN ROLLBACK; RESIGNAL; END;\n START TRANSACTION;\n SELECT role INTO v_role FROM `USER` WHERE user_id=p_actor;\n IF v_role IS NULL OR v_role NOT IN ('STAFF','ADMIN') THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Staff or Admin role required.'; END IF;\n IF p_decision NOT IN ('APPROVED','REJECTED') THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Invalid claim decision.'; END IF;\n SELECT found_id INTO v_found FROM CLAIM WHERE claim_id=p_claim_id;\n IF v_found IS NULL THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Claim does not exist.'; END IF;\n SELECT lost_id INTO v_lost FROM `MATCH` WHERE found_id=v_found AND status='ACCEPTED';\n IF v_lost IS NULL THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='An accepted match is required.'; END IF;\n SELECT status,reported_by INTO v_lost_status,v_owner FROM LOST_ITEM WHERE lost_id=v_lost FOR UPDATE;\n SELECT status,revision INTO v_found_status,v_found_rev FROM FOUND_ITEM WHERE found_id=v_found FOR UPDATE;\n SELECT status,submitted_by INTO v_status,v_submitter FROM CLAIM WHERE claim_id=p_claim_id FOR UPDATE;\n IF v_status <> 'PENDING' THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Only pending claims can be processed.'; END IF;\n IF v_submitter=p_actor THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Another staff member must process your claim.'; END IF;\n IF p_decision='APPROVED' THEN\n  IF v_submitter <> v_owner THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Claimant must own the matched lost report.'; END IF;\n  IF v_found_status <> 'MATCHED' OR v_lost_status <> 'MATCHED' THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Both matched reports must remain available.'; END IF;\n  INSERT INTO NOTIFICATION(title,message,type,user_id)\n   SELECT 'Claim rejected','Another verified owner recovered this item.','CLAIM',submitted_by FROM CLAIM WHERE found_id=v_found AND claim_id<>p_claim_id AND status='PENDING';\n  UPDATE CLAIM SET status='REJECTED',processed_by=p_actor,processed_at=UTC_TIMESTAMP(),processing_remarks='Another claim was approved.'\n   WHERE found_id=v_found AND claim_id<>p_claim_id AND status='PENDING';\n  UPDATE FOUND_ITEM SET status='CLOSED' WHERE found_id=v_found;\n  UPDATE LOST_ITEM SET status='CLOSED' WHERE lost_id=v_lost;\n END IF;\n UPDATE CLAIM SET status=p_decision,processed_by=p_actor,processed_at=UTC_TIMESTAMP(),processing_remarks=p_remarks WHERE claim_id=p_claim_id;\n INSERT INTO NOTIFICATION(title,message,type,user_id)\n VALUES (CONCAT('Claim ',LOWER(p_decision)), CONCAT('Claim #',p_claim_id,' was ',LOWER(p_decision),'. ',COALESCE(p_remarks,'')), 'CLAIM',v_submitter);\n COMMIT;\nEND"
+    },
+    {
+      "name": "sp_review_match",
+      "type": "PROCEDURE",
+      "isDeterministic": "NO",
+      "dataAccess": "CONTAINS SQL",
+      "definition": "BEGIN\n DECLARE v_lost INT UNSIGNED DEFAULT NULL;\n DECLARE v_found INT UNSIGNED DEFAULT NULL;\n DECLARE v_lost_rev INT;\n DECLARE v_found_rev INT;\n DECLARE v_match_lost_rev INT;\n DECLARE v_match_found_rev INT;\n DECLARE v_owner INT UNSIGNED;\n DECLARE v_lost_status VARCHAR(30);\n DECLARE v_found_status VARCHAR(30);\n DECLARE v_status VARCHAR(30);\n DECLARE v_role VARCHAR(30);\n DECLARE EXIT HANDLER FOR SQLEXCEPTION BEGIN ROLLBACK; RESIGNAL; END;\n START TRANSACTION;\n SELECT role INTO v_role FROM `USER` WHERE user_id=p_actor;\n IF v_role IS NULL OR v_role NOT IN ('STAFF','ADMIN') THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Staff or Admin role required.'; END IF;\n IF p_decision NOT IN ('ACCEPTED','REJECTED') THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Invalid match decision.'; END IF;\n SELECT lost_id, found_id INTO v_lost, v_found FROM `MATCH` WHERE match_id=p_match_id;\n IF v_lost IS NULL THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Match does not exist.'; END IF;\n SELECT status, reported_by,revision INTO v_lost_status,v_owner,v_lost_rev FROM LOST_ITEM WHERE lost_id=v_lost FOR UPDATE;\n SELECT status,revision INTO v_found_status,v_found_rev FROM FOUND_ITEM WHERE found_id=v_found FOR UPDATE;\n SELECT status,lost_revision,found_revision INTO v_status,v_match_lost_rev,v_match_found_rev FROM `MATCH` WHERE match_id=p_match_id FOR UPDATE;\n IF v_status <> 'PENDING' THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Only pending matches can be reviewed.'; END IF;\n IF p_decision='ACCEPTED' THEN\n  IF v_lost_rev<>v_match_lost_rev OR v_found_rev<>v_match_found_rev THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Report details changed. Regenerate the candidate before acceptance.'; END IF;\n  IF v_lost_status <> 'OPEN' OR v_found_status <> 'OPEN' THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Both reports must be open.'; END IF;\n  UPDATE LOST_ITEM SET status='MATCHED' WHERE lost_id=v_lost;\n  UPDATE FOUND_ITEM SET status='MATCHED' WHERE found_id=v_found;\n  UPDATE `MATCH` SET status='REJECTED', reviewed_by=p_actor, reviewed_at=UTC_TIMESTAMP(), review_remarks='A competing match was accepted.'\n   WHERE match_id<>p_match_id AND status='PENDING' AND (lost_id=v_lost OR found_id=v_found);\n END IF;\n UPDATE `MATCH` SET status=p_decision, reviewed_by=p_actor, reviewed_at=UTC_TIMESTAMP(), review_remarks=p_remarks WHERE match_id=p_match_id;\n INSERT INTO NOTIFICATION(title,message,type,user_id)\n VALUES (CONCAT('Match ',LOWER(p_decision)), CONCAT('Match #',p_match_id,' was ',LOWER(p_decision),'. ',COALESCE(p_remarks,'')), 'MATCH',v_owner);\n COMMIT;\nEND"
+    }
+  ],
+  "triggers": [
+    {
+      "name": "trg_claim_process_bi",
+      "tableName": "claim",
+      "timing": "BEFORE",
+      "event": "INSERT",
+      "definition": "BEGIN\n    DECLARE v_role VARCHAR(30);\n    IF NEW.processed_by IS NULL THEN\n        IF NEW.processed_at IS NOT NULL\n           OR NEW.processing_remarks IS NOT NULL THEN\n            SIGNAL SQLSTATE '45000'\n                SET MESSAGE_TEXT =\n                'Processing details require a processor.';\n        END IF;\n    ELSE\n        SET v_role = (\n            SELECT role\n            FROM `USER`\n            WHERE user_id = NEW.processed_by\n            LIMIT 1\n        );\n        IF v_role IS NULL\n           OR UPPER(TRIM(v_role))\n              NOT IN ('ADMIN', 'STAFF') THEN\n            SIGNAL SQLSTATE '45000'\n                SET MESSAGE_TEXT =\n                'Only Admin or Staff users may process claims.';\n        END IF;\n        IF NEW.processed_at IS NULL THEN\n            SET NEW.processed_at = CURRENT_TIMESTAMP;\n        END IF;\n    END IF;\nEND"
+    },
+    {
+      "name": "trg_claim_process_bu",
+      "tableName": "claim",
+      "timing": "BEFORE",
+      "event": "UPDATE",
+      "definition": "BEGIN\n    DECLARE v_role VARCHAR(30);\n    IF NEW.processed_by IS NULL THEN\n        IF NEW.processed_at IS NOT NULL\n           OR NEW.processing_remarks IS NOT NULL THEN\n            SIGNAL SQLSTATE '45000'\n                SET MESSAGE_TEXT =\n                'Processing details require a processor.';\n        END IF;\n    ELSE\n        SET v_role = (\n            SELECT role\n            FROM `USER`\n            WHERE user_id = NEW.processed_by\n            LIMIT 1\n        );\n        IF v_role IS NULL\n           OR UPPER(TRIM(v_role))\n              NOT IN ('ADMIN', 'STAFF') THEN\n            SIGNAL SQLSTATE '45000'\n                SET MESSAGE_TEXT =\n                'Only Admin or Staff users may process claims.';\n        END IF;\n        IF NEW.processed_at IS NULL THEN\n            SET NEW.processed_at = CURRENT_TIMESTAMP;\n        END IF;\n    END IF;\nEND"
+    },
+    {
+      "name": "trg_found_date_bi",
+      "tableName": "found_item",
+      "timing": "BEFORE",
+      "event": "INSERT",
+      "definition": "BEGIN\n IF NEW.found_datetime > UTC_TIMESTAMP() + INTERVAL 1 MINUTE THEN\n  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Found time cannot be in the future.';\n END IF;\nEND"
+    },
+    {
+      "name": "trg_found_date_bu",
+      "tableName": "found_item",
+      "timing": "BEFORE",
+      "event": "UPDATE",
+      "definition": "BEGIN\n IF NEW.found_datetime > UTC_TIMESTAMP() + INTERVAL 1 MINUTE THEN\n  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Found time cannot be in the future.';\n END IF;\nEND"
+    },
+    {
+      "name": "trg_lost_date_bi",
+      "tableName": "lost_item",
+      "timing": "BEFORE",
+      "event": "INSERT",
+      "definition": "BEGIN\n IF NEW.lost_datetime > UTC_TIMESTAMP() + INTERVAL 1 MINUTE THEN\n  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Lost time cannot be in the future.';\n END IF;\nEND"
+    },
+    {
+      "name": "trg_lost_date_bu",
+      "tableName": "lost_item",
+      "timing": "BEFORE",
+      "event": "UPDATE",
+      "definition": "BEGIN\n IF NEW.lost_datetime > UTC_TIMESTAMP() + INTERVAL 1 MINUTE THEN\n  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Lost time cannot be in the future.';\n END IF;\nEND"
+    },
+    {
+      "name": "trg_match_review_bi",
+      "tableName": "match",
+      "timing": "BEFORE",
+      "event": "INSERT",
+      "definition": "BEGIN\n    DECLARE v_role VARCHAR(30);\n    IF NEW.reviewed_by IS NULL THEN\n        IF NEW.reviewed_at IS NOT NULL\n           OR NEW.review_remarks IS NOT NULL THEN\n            SIGNAL SQLSTATE '45000'\n                SET MESSAGE_TEXT =\n                'Review details require a reviewer.';\n        END IF;\n    ELSE\n        SET v_role = (\n            SELECT role\n            FROM `USER`\n            WHERE user_id = NEW.reviewed_by\n            LIMIT 1\n        );\n        IF v_role IS NULL\n           OR UPPER(TRIM(v_role))\n              NOT IN ('ADMIN', 'STAFF') THEN\n            SIGNAL SQLSTATE '45000'\n                SET MESSAGE_TEXT =\n                'Only Admin or Staff users may review matches.';\n        END IF;\n        IF NEW.reviewed_at IS NULL THEN\n            SET NEW.reviewed_at = CURRENT_TIMESTAMP;\n        END IF;\n    END IF;\nEND"
+    },
+    {
+      "name": "trg_match_review_bu",
+      "tableName": "match",
+      "timing": "BEFORE",
+      "event": "UPDATE",
+      "definition": "BEGIN\n    DECLARE v_role VARCHAR(30);\n    IF NEW.reviewed_by IS NULL THEN\n        IF NEW.reviewed_at IS NOT NULL\n           OR NEW.review_remarks IS NOT NULL THEN\n            SIGNAL SQLSTATE '45000'\n                SET MESSAGE_TEXT =\n                'Review details require a reviewer.';\n        END IF;\n    ELSE\n        SET v_role = (\n            SELECT role\n            FROM `USER`\n            WHERE user_id = NEW.reviewed_by\n            LIMIT 1\n        );\n        IF v_role IS NULL\n           OR UPPER(TRIM(v_role))\n              NOT IN ('ADMIN', 'STAFF') THEN\n            SIGNAL SQLSTATE '45000'\n                SET MESSAGE_TEXT =\n                'Only Admin or Staff users may review matches.';\n        END IF;\n        IF NEW.reviewed_at IS NULL THEN\n            SET NEW.reviewed_at = CURRENT_TIMESTAMP;\n        END IF;\n    END IF;\nEND"
+    }
+  ],
+  "mongoCollections": [
+    {
+      "name": "found_item_details",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "found_id",
+            "created_at",
+            "updated_at"
+          ],
+          "properties": {
+            "found_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double"
+              ],
+              "minimum": 1
+            },
+            "media": {
+              "bsonType": "array",
+              "maxItems": 10,
+              "items": {
+                "bsonType": "object",
+                "required": [
+                  "url",
+                  "type"
+                ],
+                "properties": {
+                  "url": {
+                    "bsonType": "string",
+                    "pattern": "^https?://"
+                  },
+                  "type": {
+                    "enum": [
+                      "image",
+                      "document"
+                    ]
+                  },
+                  "caption": {
+                    "bsonType": "string",
+                    "maxLength": 200
+                  }
+                }
+              }
+            },
+            "tags": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "search_keywords": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "extra_attributes": {
+              "bsonType": "object"
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "updated_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "found_id": 1
+          },
+          "name": "ux_found_item_details_found_id",
+          "unique": true
+        },
+        {
+          "v": 2,
+          "key": {
+            "tags": 1
+          },
+          "name": "idx_found_item_details_tags"
+        },
+        {
+          "v": 2,
+          "key": {
+            "_fts": "text",
+            "_ftsx": 1
+          },
+          "name": "txt_found_item_details_search",
+          "weights": {
+            "search_keywords": 1,
+            "tags": 1
+          },
+          "default_language": "english",
+          "language_override": "language",
+          "textIndexVersion": 3
+        }
+      ]
+    },
+    {
+      "name": "match_evidence",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "match_id",
+            "rule_scores",
+            "evidence",
+            "explanation",
+            "created_at"
+          ],
+          "properties": {
+            "match_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double"
+              ],
+              "minimum": 1
+            },
+            "matched_tags": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "rule_scores": {
+              "bsonType": "object"
+            },
+            "evidence": {
+              "bsonType": "object"
+            },
+            "explanation": {
+              "bsonType": "string"
+            },
+            "score": {
+              "bsonType": [
+                "double",
+                "int"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "updated_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "match_id": 1
+          },
+          "name": "ux_match_evidence_match_id",
+          "unique": true
+        },
+        {
+          "v": 2,
+          "key": {
+            "score": -1
+          },
+          "name": "idx_match_evidence_score"
+        }
+      ]
+    },
+    {
+      "name": "lost_item_details",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "lost_id",
+            "created_at",
+            "updated_at"
+          ],
+          "properties": {
+            "lost_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double"
+              ],
+              "minimum": 1
+            },
+            "media": {
+              "bsonType": "array",
+              "maxItems": 10,
+              "items": {
+                "bsonType": "object",
+                "required": [
+                  "url",
+                  "type"
+                ],
+                "properties": {
+                  "url": {
+                    "bsonType": "string",
+                    "pattern": "^https?://"
+                  },
+                  "type": {
+                    "enum": [
+                      "image",
+                      "document"
+                    ]
+                  },
+                  "caption": {
+                    "bsonType": "string",
+                    "maxLength": 200
+                  }
+                }
+              }
+            },
+            "tags": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "search_keywords": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "extra_attributes": {
+              "bsonType": "object"
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "updated_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "lost_id": 1
+          },
+          "name": "ux_lost_item_details_lost_id",
+          "unique": true
+        },
+        {
+          "v": 2,
+          "key": {
+            "tags": 1
+          },
+          "name": "idx_lost_item_details_tags"
+        },
+        {
+          "v": 2,
+          "key": {
+            "_fts": "text",
+            "_ftsx": 1
+          },
+          "name": "txt_lost_item_details_search",
+          "weights": {
+            "search_keywords": 1,
+            "tags": 1
+          },
+          "default_language": "english",
+          "language_override": "language",
+          "textIndexVersion": 3
+        }
+      ]
+    },
+    {
+      "name": "audit_events",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "user_id",
+            "event_type",
+            "occurred_at"
+          ],
+          "properties": {
+            "user_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double"
+              ],
+              "minimum": 1
+            },
+            "event_type": {
+              "bsonType": "string"
+            },
+            "entity_type": {
+              "bsonType": [
+                "string",
+                "null"
+              ]
+            },
+            "entity_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double",
+                "string",
+                "null"
+              ]
+            },
+            "payload": {
+              "bsonType": "object"
+            },
+            "occurred_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "user_id": 1,
+            "occurred_at": -1
+          },
+          "name": "idx_audit_user_time"
+        },
+        {
+          "v": 2,
+          "key": {
+            "event_type": 1,
+            "occurred_at": -1
+          },
+          "name": "idx_audit_event_time"
+        },
+        {
+          "v": 2,
+          "key": {
+            "entity_type": 1,
+            "entity_id": 1
+          },
+          "name": "idx_audit_entity"
+        }
+      ]
+    }
+  ],
+  "mysqlVersion": "8.0.46"
+}
