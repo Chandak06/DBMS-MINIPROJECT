@@ -1,0 +1,53 @@
+{
+  "verifiedAt": "2026-10-02T09:40:30.2901906Z",
+  "dependencyInstallation": "PASS",
+  "typecheck": "PASS",
+  "productionBuild": "PASS",
+  "unitTests": 28,
+  "liveIntegrationChecks": 46,
+  "freshAndRepeatedSetup": "PASS",
+  "repeatedSeeding": "PASS",
+  "screenshots": 14,
+  "pdfReportPages": 24,
+  "pdfSchemaPages": 15,
+  "pdfVisualInspection": "PASS",
+  "wordContentInventory": "PASS",
+  "wordVisualRendering": "NOT RUN - dependency unavailable",
+  "privateCredentialScan": "PASS",
+  "recoveredDemoItems": 1,
+  "pendingMongoWrites": 0,
+  "externalGoogleLogin": "NOT RUN - external credentials unavailable",
+  "genuineGitContributions": "MANUAL ACTION",
+  "finalApplicationPublished": true,
+  "verdict": "READY AFTER MANUAL ACTIONS",
+  "databaseStorageFollowUp": {
+    "verifiedAt": "2026-10-12T15:23:12.481Z",
+    "status": "PASS",
+    "sqlDatabase": "campus_lost_found",
+    "mongoDatabase": "campus_lost_found",
+    "mongoDeployment": "Configured Atlas",
+    "liveIntegrationPassed": 46,
+    "liveIntegrationFailed": 0,
+    "liveIntegrationExecutedAt": "2026-10-12T15:19:19.226Z",
+    "pendingMongoWrites": 0,
+    "approvedLocalDocumentsCopied": 32,
+    "existingLocalAndRemoteDataPreserved": true,
+    "businessLogicChanged": false
+  },
+  "githubPublication": {
+    "verifiedAt": "2026-10-19T07:44:20.422916+00:00",
+    "repository": "https://github.com/Chandak06/DBMS-MINIPROJECT",
+    "branch": "main",
+    "publishedSourceHead": "94d64d493f01a689842fdd0875ac1421c095e629",
+    "sourcePhaseSingleFileCommits": 189,
+    "finalDocumentationCommitsPlannedAfterSnapshot": 7,
+    "author": {
+      "name": "Harshit Chandak",
+      "email": "chandakharshit06@gmail.com"
+    },
+    "existingHistoryPreserved": true,
+    "identityChanged": false,
+    "hamzaAuthorVerified": false,
+    "snapshotBeforeFinalDocumentationCommits": true
+  }
+}
