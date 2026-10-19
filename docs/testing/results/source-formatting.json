@@ -1,0 +1,17 @@
+{
+  "verifiedAt": "2026-10-12T15:34:17.441Z",
+  "files": [
+    {
+      "path": "database/mongodb/model.mjs",
+      "checkedAt": "2026-10-12T15:34:17.441Z",
+      "originalSha256": "f0d1d9493351f1810e5aac558503bbdd71cd5c87da717c3af5547d5e3ad004e8",
+      "currentSha256": "1a5a591810a08dc03b2e3be412727365ead35ec357abc95cc32330a98b89ab7b",
+      "originalProgramStructureSha256": "5fcf530fe10b6e57f5538fc7cf6d2d26153103fd42bffdc1e32a8ed3176a60bf",
+      "currentProgramStructureSha256": "5fcf530fe10b6e57f5538fc7cf6d2d26153103fd42bffdc1e32a8ed3176a60bf",
+      "modelDefinitionsIdentical": true,
+      "comparison": "Complete JavaScript syntax tree excluding formatting/trivia and redundant parentheses; exact exported MongoDB model definitions",
+      "programStructureIdentical": true,
+      "formattingOnly": true
+    }
+  ]
+}
