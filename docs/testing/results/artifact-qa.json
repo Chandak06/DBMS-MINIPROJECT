@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-02T09:40:30.2970273Z",
+  "reportPages": 24,
+  "schemaPages": 15,
+  "renderer": "Bundled ReportLab and Poppler",
+  "allPageImagesVisuallyInspected": true,
+  "reportAppendixPaginationCorrected": true,
+  "remainingVisualDefects": 0,
+  "docxRenderer": "NOT RUN - LibreOffice soffice.exe missing",
+  "docxContentInventory": "PASS"
+}
