@@ -1,0 +1,80 @@
+{
+  "verifiedAt": "2026-10-12T15:23:12.481Z",
+  "sqlDatabase": "campus_lost_found",
+  "mongoDatabase": "campus_lost_found",
+  "status": "PASS",
+  "sql": {
+    "CAMPUS": 1,
+    "DEPARTMENT": 3,
+    "USER": 3,
+    "CATEGORY": 5,
+    "LOCATION": 4,
+    "LOST_ITEM": 2,
+    "FOUND_ITEM": 2,
+    "MATCH": 2,
+    "CLAIM": 1,
+    "NOTIFICATION": 5
+  },
+  "mongo": {
+    "lost_item_details": 2,
+    "found_item_details": 2,
+    "match_evidence": 2,
+    "audit_events": 30
+  },
+  "linkedDocuments": {
+    "lost_item_details": {
+      "sqlRecords": 2,
+      "linkedDocuments": 2,
+      "missingSqlIds": [],
+      "missingDemoSqlIds": []
+    },
+    "found_item_details": {
+      "sqlRecords": 2,
+      "linkedDocuments": 2,
+      "missingSqlIds": [],
+      "missingDemoSqlIds": []
+    },
+    "match_evidence": {
+      "sqlRecords": 2,
+      "linkedDocuments": 2,
+      "missingSqlIds": [],
+      "missingDemoSqlIds": []
+    }
+  },
+  "localMigration": {
+    "requested": false,
+    "checked": true,
+    "collections": [
+      {
+        "collection": "lost_item_details",
+        "sourceDocuments": 2,
+        "missingBeforeCopy": 0,
+        "inserted": 0,
+        "existingTargetDocumentsPreserved": true
+      },
+      {
+        "collection": "found_item_details",
+        "sourceDocuments": 2,
+        "missingBeforeCopy": 0,
+        "inserted": 0,
+        "existingTargetDocumentsPreserved": true
+      },
+      {
+        "collection": "match_evidence",
+        "sourceDocuments": 2,
+        "missingBeforeCopy": 0,
+        "inserted": 0,
+        "existingTargetDocumentsPreserved": true
+      },
+      {
+        "collection": "audit_events",
+        "sourceDocuments": 26,
+        "missingBeforeCopy": 0,
+        "inserted": 0,
+        "existingTargetDocumentsPreserved": true
+      }
+    ],
+    "sameLocalDatabase": false
+  },
+  "pendingMongoWrites": 0
+}
