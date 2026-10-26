@@ -34,7 +34,7 @@ export async function verifySessionToken(token: string): Promise<SessionUser | n
     const email = String(payload.email ?? "");
     const role = String(payload.role ?? "") as Role;
 
-    if (!Number.isInteger(userId) || userId <= 0 || !email) return null;
+    if (!Number.isSafeInteger(userId) || userId <= 0 || !email) return null;
     if (!(["STUDENT", "STAFF", "ADMIN"] as string[]).includes(role)) return null;
 
     return { userId, email, role };
