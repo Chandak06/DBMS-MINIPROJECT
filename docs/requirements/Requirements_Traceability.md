@@ -63,3 +63,8 @@ The faculty draft does not require Jira. Its optional planning CSV is not remote
 
 
 Publication update on 19 October 2026: the source-code GitHub requirement is fulfilled. The older audit snapshots describe the pre-publication state; publication does not fabricate the separate individual-contribution requirement.
+
+
+## 26 October 2026 implementation update
+
+The role, synchronization, security and testing statements above retain their original verification dates. See [current implemented-fixes audit](../AUDIT_2026-10-26.md) for the superseding permission matrix, safe upgrade instructions, confirmed issues, fixes and current 85/152/13 passing test results. The configured MySQL and Atlas are connected; the original pending write is retained and processed, with zero writes remaining. No historical evidence timestamps, PDFs or submission archives were rewritten.
