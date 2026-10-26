@@ -8,12 +8,12 @@ const globalForMongo = globalThis as unknown as {
 };
 
 function getClientPromise() {
-  if (!uri) {
+  if (!uri || !/^mongodb(?:\+srv)?:\/\//.test(uri)) {
     throw new Error("MONGODB_URI is not configured");
   }
 
   if (!globalForMongo.mongoClientPromise) {
-    const client = new MongoClient(uri, { serverSelectionTimeoutMS: 3000 });
+    const client = new MongoClient(uri, { serverSelectionTimeoutMS: 3000, connectTimeoutMS: 3000, socketTimeoutMS: 5000 });
     globalForMongo.mongoClientPromise = client.connect().catch((error) => {
       globalForMongo.mongoClientPromise = undefined;
       throw error;
