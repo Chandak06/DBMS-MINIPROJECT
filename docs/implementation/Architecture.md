@@ -37,16 +37,20 @@ Matches move from PENDING to ACCEPTED or REJECTED. Claims move from PENDING to A
 
 ## Cross-database consistency
 
-The report transaction commits its core row and a JSON payload in MONGO_OUTBOX together. A worker holds a MySQL named lock, processes rows in ID order and performs idempotent MongoDB upserts/deletes. Only successful writes receive processed_at. Failures retain the payload, increment attempts and record an error for retry.
+Report core fields, enrichment events and mutation audit events commit together in MySQL. Match/claim procedures also enqueue decision audit events in their SQL transaction. MongoDB remains the indexed document read model. This is eventual consistency, not a distributed transaction.
 
-This is eventual consistency, not a distributed transaction. Report responses expose whether enrichment was saved; staff can retry from the dashboard or `npm run db:sync`. Matching refuses to generate while unsynchronized detail writes remain. Audit events use a separate best-effort write; they are not guaranteed during a MongoDB outage.
+The app and CLI share `lib/outbox-worker.mjs`. A connection-scoped MySQL named lock serializes workers. Only the earliest unfinished event for each document can run; a failed document does not block unrelated documents. Upsert keys are stable SQL IDs. Audit events use `event_id=outbox:<outbox_id>` with a partial unique index that preserves legacy audit records.
+
+Transient failures retain payloads and receive exponential backoff (5 seconds, doubling to at most 1 hour). Eight failures exhaust automatic retries. Validation/authorization errors are classified as permanent. The Admin sync page displays pending, retryable and failed counts, connection health and per-write attempts. An explicit per-record retry preserves attempt history and payloads. Success sets `processed_at` only after MongoDB acknowledgement. A crash before SQL acknowledgement safely replays the same Mongo document.
+
+Run `npm run db:worker` alongside the app for unattended recovery, including after restart. App mutations opportunistically process due writes; `npm run db:sync` processes a batch. No database reset is needed. Matching uses the relevant latest committed outbox snapshot when MongoDB is stale/unavailable. Legacy details without a snapshot require MongoDB availability; missing data is never silently scored as empty during an outage. Unrelated pending writes do not block matching. Per-document responses report actual enrichment/evidence synchronization state.
 
 ## Security and operational choices
 
 - MySQL queries use parameters; editable field names come from fixed allowlists.
 - Cookies are signed with HS256, HttpOnly and SameSite=Lax; production Google cookies use HTTPS security settings. Role and account existence are checked against SQL on each request.
 - Students see their own lost reports, matches and claims. Found-item private attributes and remarks are restricted to the reporter and staff/admin.
-- Only staff/admin generate matches, review candidates and process claims. Only admin registers users.
+- Staff/Admin generate matches, review candidates and process claims. Only Admin changes master data, roles, users, sync controls and audit views. New verified Google registrations always receive STUDENT. Staff reference data is read-only.
 - SQL foreign keys, unique keys, CHECKs and triggers reinforce API checks. MongoDB uses strict JSON schema validation and unique SQL-link indexes.
 - API input timestamps carry an offset and are stored in UTC; UI renders Asia/Kolkata. IDs are immutable and foreign keys use RESTRICT.
 - API lists are capped at 500 records; matching stops above 2,000 eligible comparisons and can be restricted to a specific lost report.
