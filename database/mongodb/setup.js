@@ -320,6 +320,20 @@ const models = {
     "indexes": [
       [
         {
+          "event_id": 1
+        },
+        {
+          "unique": true,
+          "name": "ux_audit_event_id",
+          "partialFilterExpression": {
+            "event_id": {
+              "$type": "string"
+            }
+          }
+        }
+      ],
+      [
+        {
           "user_id": 1,
           "occurred_at": -1
         },
