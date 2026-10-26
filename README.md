@@ -11,7 +11,7 @@ Both members' database and application parts are delivered. The allocation recor
 
 
 
-## Reliability and role audit — 26 October 2026
+## Reliability and role audit â€” 26 October 2026
 
 The [current audit report](docs/AUDIT_2026-10-26.md) supersedes earlier implementation/test statements. The October 2 PDFs and archived evidence remain dated snapshots; the source documentation below reflects the fixes.
 
@@ -118,6 +118,8 @@ Student creates a lost report; Staff records a corresponding found report, gener
 The delivered local wallet is recovered; a headphones candidate remains pending. On a fresh database the seeded pairs start available for demonstration. Seeds preserve existing terminal decisions. Use a distinct pair for repeat demonstrations. Follow [DEMO_SCRIPT](docs/DEMO_SCRIPT.md).
 
 ## Google login and roles
+
+Local demo sign-in also works when Next.js uses another port, such as `http://127.0.0.1:3001`, while APP_BASE_URL remains `http://localhost:3000`. The request origin must match the actual loopback Host and port; unrelated origins, forwarded-host spoofing and cross-site requests remain blocked. This exception applies only when APP_BASE_URL is itself a loopback address. Google OAuth still uses the exact configured APP_BASE_URL and provider-authorized callback URL.
 
 Google sign-in requires a verified email; new identities register as Student in MySQL. Set valid `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and `APP_BASE_URL`; register `http://localhost:3000/api/auth/google/callback` for the default URL. Set distinct `DEMO_STUDENT_EMAIL`, `DEMO_STAFF_EMAIL` and `DEMO_ADMIN_EMAIL` before seeding, or register users in Admin management.
 
