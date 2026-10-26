@@ -1,0 +1,769 @@
+{
+  "runId": "4a5f8501-e9dd-4026-afc4-43628845b47f",
+  "executedAt": "2026-10-26T07:39:42.570Z",
+  "passed": 152,
+  "failed": 0,
+  "fixturesRetained": true,
+  "results": [
+    {
+      "name": "Authentication required",
+      "status": "PASS",
+      "durationMs": 74
+    },
+    {
+      "name": "Tampered session rejected",
+      "status": "PASS",
+      "durationMs": 9
+    },
+    {
+      "name": "Database role overrides stale admin claim",
+      "status": "PASS",
+      "durationMs": 18
+    },
+    {
+      "name": "OAuth callback rejects invalid state before provider exchange",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "Student cannot manage categories",
+      "status": "PASS",
+      "durationMs": 9
+    },
+    {
+      "name": "Student cannot manage users",
+      "status": "PASS",
+      "durationMs": 7
+    },
+    {
+      "name": "Cross-origin mutation rejected",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "Future date rejected",
+      "status": "PASS",
+      "durationMs": 11
+    },
+    {
+      "name": "Invalid foreign reference rejected",
+      "status": "PASS",
+      "durationMs": 9
+    },
+    {
+      "name": "Lost report persists in both databases",
+      "status": "PASS",
+      "durationMs": 65
+    },
+    {
+      "name": "Duplicate active report rejected",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "Other student's lost report hidden",
+      "status": "PASS",
+      "durationMs": 8
+    },
+    {
+      "name": "Student cannot set MATCHED",
+      "status": "PASS",
+      "durationMs": 7
+    },
+    {
+      "name": "Found report persists in both databases",
+      "status": "PASS",
+      "durationMs": 34
+    },
+    {
+      "name": "Private found attributes hidden from strangers",
+      "status": "PASS",
+      "durationMs": 13
+    },
+    {
+      "name": "Student cannot generate matches",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "Matching persists ranked evidence",
+      "status": "PASS",
+      "durationMs": 59
+    },
+    {
+      "name": "Match generation is idempotent",
+      "status": "PASS",
+      "durationMs": 55
+    },
+    {
+      "name": "Changed details block stale acceptance and roll back",
+      "status": "PASS",
+      "durationMs": 41
+    },
+    {
+      "name": "Regeneration refreshes revisions",
+      "status": "PASS",
+      "durationMs": 36
+    },
+    {
+      "name": "Manual pairing creates competing candidate",
+      "status": "PASS",
+      "durationMs": 80
+    },
+    {
+      "name": "Student cannot review match",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "Other student cannot read match",
+      "status": "PASS",
+      "durationMs": 8
+    },
+    {
+      "name": "Claim requires accepted match",
+      "status": "PASS",
+      "durationMs": 7
+    },
+    {
+      "name": "Concurrent match decisions produce one accepted pair",
+      "status": "PASS",
+      "durationMs": 29
+    },
+    {
+      "name": "Matched report cannot be edited",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "Match notification is committed",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "Wrong owner cannot claim",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "Owner can submit claim",
+      "status": "PASS",
+      "durationMs": 21
+    },
+    {
+      "name": "Duplicate claim rejected",
+      "status": "PASS",
+      "durationMs": 10
+    },
+    {
+      "name": "Claim evidence is private",
+      "status": "PASS",
+      "durationMs": 8
+    },
+    {
+      "name": "Student cannot approve claim",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "Concurrent claim approval commits once and closes both reports",
+      "status": "PASS",
+      "durationMs": 29
+    },
+    {
+      "name": "Terminal claim cannot be reversed",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "MongoDB audit aggregation records one approval",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "MySQL role trigger rejects student reviewer",
+      "status": "PASS",
+      "durationMs": 2
+    },
+    {
+      "name": "MySQL CHECK rejects invalid score",
+      "status": "PASS",
+      "durationMs": 1
+    },
+    {
+      "name": "MySQL trigger rejects future date",
+      "status": "PASS",
+      "durationMs": 1
+    },
+    {
+      "name": "MongoDB validator rejects invalid detail",
+      "status": "PASS",
+      "durationMs": 2
+    },
+    {
+      "name": "Failed outbox write is retained and successfully replayed",
+      "status": "PASS",
+      "durationMs": 55
+    },
+    {
+      "name": "Views and stored function return results",
+      "status": "PASS",
+      "durationMs": 2
+    },
+    {
+      "name": "All role pages render",
+      "status": "PASS",
+      "durationMs": 168
+    },
+    {
+      "name": "Invalid demo payload returns a validation response",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "Local demo login is gated",
+      "status": "PASS",
+      "durationMs": 39
+    },
+    {
+      "name": "Notification ownership is enforced",
+      "status": "PASS",
+      "durationMs": 57
+    },
+    {
+      "name": "Unmatched OPEN report deletes SQL and MongoDB",
+      "status": "PASS",
+      "durationMs": 56
+    },
+    {
+      "name": "STUDENT can read campuses",
+      "status": "PASS",
+      "durationMs": 7
+    },
+    {
+      "name": "STUDENT master-data write permission: campuses",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "STUDENT can read departments",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT master-data write permission: departments",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "STUDENT can read categories",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT master-data write permission: categories",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "STUDENT can read locations",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "STUDENT master-data write permission: locations",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT admin read permission: /api/admin/users",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "STUDENT admin read permission: /api/system/sync",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT synchronization mutation permission",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "STUDENT user creation permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT role assignment permission",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "STUDENT direct match review permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT direct claim processing permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT match generation permission",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "STUDENT manual matching permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT profile role escalation rejected",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "STUDENT notification send permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STUDENT own profile can be updated",
+      "status": "PASS",
+      "durationMs": 17
+    },
+    {
+      "name": "STUDENT own notifications can be marked read",
+      "status": "PASS",
+      "durationMs": 24
+    },
+    {
+      "name": "STUDENT report and details edit is atomic",
+      "status": "PASS",
+      "durationMs": 89
+    },
+    {
+      "name": "STUDENT own found report details lifecycle",
+      "status": "PASS",
+      "durationMs": 122
+    },
+    {
+      "name": "STAFF can read campuses",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "STAFF master-data write permission: campuses",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "STAFF can read departments",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF master-data write permission: departments",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "STAFF can read categories",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF master-data write permission: categories",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF can read locations",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF master-data write permission: locations",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF admin read permission: /api/admin/users",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "STAFF admin read permission: /api/system/sync",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF synchronization mutation permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF user creation permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF role assignment permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF direct match review permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF direct claim processing permission",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "STAFF match generation permission",
+      "status": "PASS",
+      "durationMs": 20
+    },
+    {
+      "name": "STAFF manual matching permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF profile role escalation rejected",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "STAFF notification send permission",
+      "status": "PASS",
+      "durationMs": 18
+    },
+    {
+      "name": "STAFF own profile can be updated",
+      "status": "PASS",
+      "durationMs": 17
+    },
+    {
+      "name": "STAFF own notifications can be marked read",
+      "status": "PASS",
+      "durationMs": 14
+    },
+    {
+      "name": "STAFF report and details edit is atomic",
+      "status": "PASS",
+      "durationMs": 74
+    },
+    {
+      "name": "STAFF own found report details lifecycle",
+      "status": "PASS",
+      "durationMs": 122
+    },
+    {
+      "name": "ADMIN can read campuses",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "ADMIN master-data write permission: campuses",
+      "status": "PASS",
+      "durationMs": 22
+    },
+    {
+      "name": "ADMIN can read departments",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "ADMIN master-data write permission: departments",
+      "status": "PASS",
+      "durationMs": 22
+    },
+    {
+      "name": "ADMIN can read categories",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "ADMIN master-data write permission: categories",
+      "status": "PASS",
+      "durationMs": 21
+    },
+    {
+      "name": "ADMIN can read locations",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "ADMIN master-data write permission: locations",
+      "status": "PASS",
+      "durationMs": 21
+    },
+    {
+      "name": "ADMIN admin read permission: /api/admin/users",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "ADMIN admin read permission: /api/system/sync",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "ADMIN synchronization mutation permission",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "ADMIN user creation permission",
+      "status": "PASS",
+      "durationMs": 19
+    },
+    {
+      "name": "ADMIN role assignment permission",
+      "status": "PASS",
+      "durationMs": 7
+    },
+    {
+      "name": "ADMIN direct match review permission",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "ADMIN direct claim processing permission",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "ADMIN match generation permission",
+      "status": "PASS",
+      "durationMs": 20
+    },
+    {
+      "name": "ADMIN manual matching permission",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "ADMIN profile role escalation rejected",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "ADMIN notification send permission",
+      "status": "PASS",
+      "durationMs": 17
+    },
+    {
+      "name": "ADMIN own profile can be updated",
+      "status": "PASS",
+      "durationMs": 19
+    },
+    {
+      "name": "ADMIN own notifications can be marked read",
+      "status": "PASS",
+      "durationMs": 21
+    },
+    {
+      "name": "ADMIN report and details edit is atomic",
+      "status": "PASS",
+      "durationMs": 79
+    },
+    {
+      "name": "ADMIN own found report details lifecycle",
+      "status": "PASS",
+      "durationMs": 103
+    },
+    {
+      "name": "Anonymous denied GET /api/campuses",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "Anonymous denied POST /api/campuses",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "Anonymous denied GET /api/departments",
+      "status": "PASS",
+      "durationMs": 2
+    },
+    {
+      "name": "Anonymous denied POST /api/departments",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied GET /api/categories",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied POST /api/categories",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "Anonymous denied GET /api/locations",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied POST /api/locations",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied GET /api/admin/users",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied POST /api/admin/users",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "Anonymous denied GET /api/system/sync",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied POST /api/system/sync",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied GET /api/claims",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied POST /api/claims",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "Anonymous denied GET /api/matches",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied POST /api/matches",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied GET /api/found-items",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied POST /api/found-items",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "Anonymous denied GET /api/notifications",
+      "status": "PASS",
+      "durationMs": 2
+    },
+    {
+      "name": "Anonymous denied POST /api/notifications",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Anonymous denied GET /api/users/me",
+      "status": "PASS",
+      "durationMs": 4
+    },
+    {
+      "name": "Anonymous denied POST /api/users/me",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "Admin cannot change own role",
+      "status": "PASS",
+      "durationMs": 5
+    },
+    {
+      "name": "Role revocation overrides an existing Staff session",
+      "status": "PASS",
+      "durationMs": 53
+    },
+    {
+      "name": "Admin and Staff dashboard responsibilities differ",
+      "status": "PASS",
+      "durationMs": 24
+    },
+    {
+      "name": "STUDENT cannot open /admin/users",
+      "status": "PASS",
+      "durationMs": 9
+    },
+    {
+      "name": "STUDENT cannot open /admin/sync",
+      "status": "PASS",
+      "durationMs": 8
+    },
+    {
+      "name": "STUDENT cannot open /admin/audit",
+      "status": "PASS",
+      "durationMs": 7
+    },
+    {
+      "name": "STAFF cannot open /admin/users",
+      "status": "PASS",
+      "durationMs": 7
+    },
+    {
+      "name": "STAFF cannot open /admin/sync",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "STAFF cannot open /admin/audit",
+      "status": "PASS",
+      "durationMs": 6
+    },
+    {
+      "name": "Admin management pages render",
+      "status": "PASS",
+      "durationMs": 30
+    },
+    {
+      "name": "Concurrent duplicate report submissions save once",
+      "status": "PASS",
+      "durationMs": 32
+    },
+    {
+      "name": "Dashboard counters match SQL",
+      "status": "PASS",
+      "durationMs": 11
+    },
+    {
+      "name": "Staff cannot process own claim; Admin rejection preserves matched reports",
+      "status": "PASS",
+      "durationMs": 184
+    },
+    {
+      "name": "Admin cannot process own claim; Staff can verify the return",
+      "status": "PASS",
+      "durationMs": 156
+    },
+    {
+      "name": "Rejected match leaves both reports OPEN",
+      "status": "PASS",
+      "durationMs": 112
+    }
+  ]
+}
