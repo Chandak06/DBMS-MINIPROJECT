@@ -3,12 +3,15 @@ import mysql from "mysql2/promise";
 const globalForMySQL = globalThis as unknown as {
   mysqlPool?: mysql.Pool;
 };
+const port=Number(process.env.MYSQL_PORT??3306);
+if(!Number.isInteger(port)||port<1||port>65535)throw new Error("MYSQL_PORT must be a valid TCP port");
+if(!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(process.env.MYSQL_DATABASE??"campus_lost_found"))throw new Error("MYSQL_DATABASE must be a simple SQL identifier");
 
 export const mysqlPool =
   globalForMySQL.mysqlPool ??
   mysql.createPool({
     host: process.env.MYSQL_HOST,
-    port: Number(process.env.MYSQL_PORT ?? 3306),
+    port,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE ?? "campus_lost_found",
