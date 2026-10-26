@@ -48,3 +48,8 @@ Evidence: [storage and linkage](results/database-storage.json), [approved migrat
 
 A pre-existing formatting edit in database/mongodb/model.mjs was compared with the earlier archive: exported validator/index definitions and the complete JavaScript syntax tree were identical. Original capture hashes were retained; source-formatting.json records both byte hashes and matching semantic hashes. Submission checks accept only this explicitly verified formatting version and still reject further source edits.
 
+
+
+## 26 October 2026 implementation update
+
+The role, synchronization, security and testing statements above retain their original verification dates. See [current implemented-fixes audit](../AUDIT_2026-10-26.md) for the superseding permission matrix, safe upgrade instructions, confirmed issues, fixes and current 85/152/13 passing test results. The configured MySQL and Atlas are connected; the original pending write is retained and processed, with zero writes remaining. No historical evidence timestamps, PDFs or submission archives were rewritten.
