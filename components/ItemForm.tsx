@@ -25,18 +25,12 @@ export function ItemForm({kind,categories,locations,initial={},details={}}:{
     media:String(form.get("media")||"").split("\n").map(t=>t.trim()).filter(Boolean).map(url=>({url,type:"image"}))
    };
    const payload={itemName:form.get("itemName"),description:form.get("description"),[kind+"Datetime"]:new Date(String(form.get("datetime"))).toISOString(),
-    color:form.get("color"),brand:form.get("brand"),remarks:form.get("remarks"),categoryId:form.get("categoryId"),locationId:form.get("locationId"),...(!edit?enrichment:{})};
+    color:form.get("color"),brand:form.get("brand"),remarks:form.get("remarks"),categoryId:form.get("categoryId"),locationId:form.get("locationId"),...enrichment};
    const endpoint="/api/"+kind+"-items"+(edit?"/"+id:"");
    const r=await fetch(endpoint,{method:edit?"PATCH":"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
    const b=await r.json();if(!r.ok)throw new Error(b.error||"Unable to save report");
    const savedId=edit?id:b[kind+"Id"];
    let synced=b.enrichmentSaved!==false;
-   if(edit) {
-    const detailsResult=await fetch(endpoint+"/details",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(enrichment)});
-    const detailsBody=await detailsResult.json();
-    if(!detailsResult.ok)throw new Error("Report saved, but details failed: "+(detailsBody.error||"Please retry."));
-    synced=detailsBody.enrichmentSaved!==false;
-   }
    router.push("/"+kind+"-items/"+savedId+(synced?"":"?sync=pending"));router.refresh();
   }catch(e){setError(e instanceof Error?e.message:"Unable to save report");}finally{setBusy(false);}
  }
