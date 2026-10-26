@@ -21,3 +21,13 @@ Captured from the actual local Next.js production application on 2 October 2026.
 
 See [the demo script](../DEMO_SCRIPT.md) for the presentation sequence and [database evidence](../testing/results/database-evidence.json) for the executed SQL/Mongo results.
 
+
+
+## Audit captures — 26 October 2026
+
+Live browser verification confirmed the separate Student, Staff and Admin experiences, read-only Staff campus data, and the recovered report #16 without a stale sync warning. Admin synchronization health showed Connected and zero pending/failed writes.
+
+- [Separate Admin dashboard](15-admin-dashboard-audit.png)
+- [Connected synchronization health](16-sync-health-audit.png)
+
+These two captures are current; screenshots 01–14 retain their original dates.
