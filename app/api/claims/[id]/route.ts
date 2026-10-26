@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { withUser } from "@/lib/api-route";
+import { withUser,withPermission } from "@/lib/api-route";
 import { listClaims,processClaim } from "@/lib/claim-service";
 import { positiveId,AppError } from "@/lib/errors";
 import { claimProcessSchema } from "@/lib/validations";
@@ -12,7 +12,7 @@ export async function GET(_request:Request,{params}:Context) {
  });
 }
 export async function PATCH(request:Request,{params}:Context) {
- return withUser(async user=>{
+ return withPermission("claims.process",async user=>{
   const parsed=claimProcessSchema.safeParse(await request.json().catch(()=>({})));
   if(!parsed.success) throw new AppError("Supply a decision and processing remarks");
   await processClaim(user,positiveId((await params).id),parsed.data.status,parsed.data.remarks);
