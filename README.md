@@ -9,14 +9,70 @@ A DBMS Level 3 project using Next.js, MySQL and MongoDB. Students report belongi
 
 Both members' database and application parts are delivered. The allocation records responsibility, not personal authorship of automated edits.
 
+
+
+## Reliability and role audit — 26 October 2026
+
+The [current audit report](docs/AUDIT_2026-10-26.md) supersedes earlier implementation/test statements. The October 2 PDFs and archived evidence remain dated snapshots; the source documentation below reflects the fixes.
+
+| Capability | Student | Staff | Admin |
+|---|---|---|---|
+| Own reports, profile, claims and inbox | Yes | Yes | Yes |
+| Browse public found items / read reference choices | Yes | Yes | Yes |
+| All operational reports and claims | No | Yes | Yes |
+| Generate/review matches; verify another user's claim | No | Yes | Yes |
+| Modify campus master data | No | No | Yes |
+| Create accounts / assign other users' roles | No | No | Yes |
+| Inspect audit records / manage synchronization | No | No | Yes |
+| Change own role / process own claim | No | No | No |
+
+Staff's campus data view is read-only. Admin has separate Users, Sync and Audit pages. New verified Google accounts register as Student. Role changes are refreshed from SQL on every request.
+
+The original pending Atlas write was retained and replayed successfully; current live pending writes: **0**. The shared worker preserves per-document ordering, idempotent IDs and failure payloads, with exponential backoff and eight automatic attempts. Start its continuous mode in a separate PowerShell terminal:
+
+```powershell
+npm run db:worker
+```
+
+Safe repeatable upgrade and application start:
+
+```powershell
+npm ci
+npm run db:setup
+npm run build
+npm start
+```
+
+Preserve the existing `.env.local`. For a new installation, copy `.env.example`, fill the database variables locally, then run `node scripts/init-local-env.mjs --demo`, `npm run db:setup`, `npm run seed` and optionally `npm run seed:demo`. Existing installations do not need reseeding. `npm run db:setup -- --sql-only` installs SQL upgrades if MongoDB is temporarily unavailable; rerun full setup when its connection returns.
+
+Current validation: **85 unit tests, 152 live workflow checks, 13 synchronization fault/recovery checks**, production build and TypeScript passed. Next.js is **15.5.28**, Zod **4.6.7**; the patched lockfile reports **0 npm advisories**. The earlier version/test table is a historical snapshot.
+
+```powershell
+npm run typecheck
+npm test
+npm run build
+npm run test:audit
+```
+
+`test:audit` uses separate, uniquely named SQL/Mongo databases and a server on port 3100; its outage test uses 3101. It retains its test data. Run a separate local MongoDB on port 27018 first (or set `AUDIT_MONGODB_URI` to an explicitly selected test MongoDB server):
+
+```powershell
+$auditDbPath = Join-Path $PWD 'artifacts\local\mongo-audit'
+New-Item -ItemType Directory -Path $auditDbPath -Force | Out-Null
+& 'C:\Program Files\MongoDB\Server\8.3\bin\mongod.exe' --dbpath $auditDbPath --bind_ip 127.0.0.1 --port 27018
+```
+
+Leave that terminal running; execute `npm run test:audit` in another. Adjust the mongod executable path to your installed version. A separate lint command is not configured; TypeScript and the Next production build are the available static checks. Real Google consent/token exchange still requires team-owned OAuth settings; provider calls are mocked in registration unit tests, while local role/session workflows use real SQL/Mongo databases.
+
+
 ## Technology
 
 | Layer | Implemented technology |
 |---|---|
-| Interface / backend | Next.js 15.5.26 App Router and Route Handlers; React 19.3.0 |
+| Interface / backend | Next.js 15.5.28 App Router and Route Handlers; React 19.3.0 |
 | SQL | MySQL 8; mysql2 3.24.4 |
 | NoSQL | MongoDB; Node driver 6.21.0 |
-| Validation / sessions | Zod 3.25.76; jose 5.10.0; Google OAuth and signed sessions |
+| Validation / sessions | Zod 4.6.7; jose 5.10.0; Google OAuth and signed sessions |
 | Language / testing | TypeScript 5.9.3; Vitest 5.0.3; live Node integration harness |
 
 Exact dependencies are pinned in `package-lock.json`. Matching uses deterministic weighted rules; it does not use a trained model or embeddings.
@@ -63,7 +119,7 @@ The delivered local wallet is recovered; a headphones candidate remains pending.
 
 ## Google login and roles
 
-Google sign-in requires a verified email registered in MySQL. Set valid `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and `APP_BASE_URL`; register `http://localhost:3000/api/auth/google/callback` for the default URL. Set distinct `DEMO_STUDENT_EMAIL`, `DEMO_STAFF_EMAIL` and `DEMO_ADMIN_EMAIL` before seeding, or register users in Admin management.
+Google sign-in requires a verified email; new identities register as Student in MySQL. Set valid `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and `APP_BASE_URL`; register `http://localhost:3000/api/auth/google/callback` for the default URL. Set distinct `DEMO_STUDENT_EMAIL`, `DEMO_STAFF_EMAIL` and `DEMO_ADMIN_EMAIL` before seeding, or register users in Admin management.
 
 For a new installation without demo access use `node scripts/init-local-env.mjs` without `--demo`. External deployment requires HTTPS and `DEMO_LOGIN_ENABLED=false`. Real Google provider login is unverified; signed local sessions, role refresh and OAuth state rejection are tested.
 
