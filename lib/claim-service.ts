@@ -3,9 +3,10 @@ import type { SessionUser } from "./types";
 import { mysqlPool } from "./mysql";
 import { transaction } from "./transaction";
 import { AppError } from "./errors";
-import { isStaffOrAdmin } from "./permissions";
-import { requireStaff } from "./match-service";
-import { tryWriteAuditEvent } from "./audit";
+import { isStaffOrAdmin,requirePermission } from "./permissions";
+import { enqueueAuditEvent } from "./audit";
+import { tryFlushMongoOutbox } from "./outbox";
+import { requireTransition } from "./workflow";
 import { claimCreateSchema } from "./validations";
 export async function listClaims(user:SessionUser,status="",id?:number) {
  const where:string[]=[],values:(string|number|boolean|Date|null)[]=[];
@@ -28,17 +29,19 @@ export async function createClaim(user:SessionUser,raw:unknown) {
   if(lost[0]?.status!=="MATCHED"||found[0]?.status!=="MATCHED") throw new AppError("Item is no longer available",409);
   const [result]=await connection.execute<ResultSetHeader>("INSERT INTO CLAIM (claim_description,status,claim_remarks,submitted_by,found_id) VALUES (?,'PENDING',?,?,?)",[d.claimDescription,d.claimRemarks??null,user.userId,d.foundId]);
   await connection.execute("INSERT INTO NOTIFICATION(title,message,type,user_id) SELECT 'New ownership claim',?,'CLAIM',user_id FROM `USER` WHERE role IN ('STAFF','ADMIN')",["Claim #"+result.insertId+" is awaiting ownership verification."]);
+  await enqueueAuditEvent(connection,{userId:user.userId,eventType:"CLAIM_CREATE",entityType:"CLAIM",entityId:result.insertId});
   return result.insertId;
  });
- await tryWriteAuditEvent({userId:user.userId,eventType:"CLAIM_CREATE",entityType:"CLAIM",entityId:id});
+ await tryFlushMongoOutbox();
  return id;
 }
 export async function processClaim(user:SessionUser,id:number,status:string,remarks:string) {
- requireStaff(user);
+ requirePermission(user,"claims.process");
  const claims=await listClaims(user,"",id);
  if(!claims[0]) throw new AppError("Claim not found",404);
+ requireTransition("claim",claims[0].status,status);
  if(claims[0].submitted_by===user.userId) throw new AppError("Another staff member must review your own claim",403);
  await mysqlPool.execute("CALL sp_process_claim(?,?,?,?)",[id,user.userId,status,remarks]);
- await tryWriteAuditEvent({userId:user.userId,eventType:"CLAIM_"+status,entityType:"CLAIM",entityId:id,payload:{remarks}});
+ await tryFlushMongoOutbox();
 }
 
