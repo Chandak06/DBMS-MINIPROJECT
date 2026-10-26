@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { NextResponse } from "next/server";
 import { createGoogleAuthorizationUrl, GOOGLE_OAUTH_STATE_COOKIE } from "@/lib/google-oauth";
+import { safeDiagnostic } from "@/lib/diagnostics";
 
 export const runtime = "nodejs";
 
@@ -17,7 +18,7 @@ export async function GET(request: Request) {
     });
     return response;
   } catch (error) {
-    console.error(error);
+    console.error("Google login configuration failed",safeDiagnostic(error));
     const url = new URL("/login", request.url);
     url.searchParams.set("error", "OAUTH_CONFIG");
     return NextResponse.redirect(url);
