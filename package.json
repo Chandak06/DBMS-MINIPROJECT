@@ -10,9 +10,11 @@
     "seed": "node --env-file=.env.local scripts/seed.mjs",
     "db:setup": "node --env-file=.env.local scripts/setup-databases.mjs",
     "db:sync": "node --env-file=.env.local scripts/sync-mongo.mjs",
+    "db:worker": "node --env-file=.env.local scripts/sync-mongo.mjs --watch",
     "seed:demo": "node --env-file=.env.local scripts/seed-demo.mjs",
     "typecheck": "tsc --noEmit",
     "test:integration": "node --env-file=.env.local scripts/integration-test.mjs",
+    "test:audit": "node --env-file=.env.local scripts/audit-integration.mjs",
     "check": "npm run typecheck && npm run test && npm run build",
     "test:schema": "node --env-file=.env.local scripts/schema-smoke.mjs",
     "db:evidence": "node --env-file=.env.local scripts/collect-evidence.mjs"
@@ -21,10 +23,10 @@
     "jose": "5.10.0",
     "mongodb": "6.21.0",
     "mysql2": "3.24.4",
-    "next": "15.5.26",
+    "next": "15.5.28",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "zod": "3.25.76"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@types/node": "22.20.4",
