@@ -1,10 +1,12 @@
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "@/lib/auth";
-import { tryWriteAuditEvent } from "@/lib/audit";
+import { withUser } from "@/lib/api-route";
+import { enqueueAuditEvent } from "@/lib/audit";
+import { transaction } from "@/lib/transaction";
+import { tryFlushMongoOutbox } from "@/lib/outbox";
 import { apiError } from "@/lib/http";
 import { mysqlPool } from "@/lib/mysql";
-import { isStaffOrAdmin } from "@/lib/permissions";
+import { requirePermission } from "@/lib/permissions";
 import { z } from "zod";
 
 const createNotificationSchema = z.object({
@@ -15,8 +17,7 @@ const createNotificationSchema = z.object({
 });
 
 export async function GET(request: NextRequest) {
-  const session = await getSession();
-  if (!session) return apiError("Authentication required", 401);
+  return withUser(async session=>{
 
   const unreadOnly = request.nextUrl.searchParams.get("unread") === "1";
   const [rows] = await mysqlPool.execute<RowDataPacket[]>(
@@ -27,13 +28,13 @@ export async function GET(request: NextRequest) {
     [session.userId]
   );
   return NextResponse.json({ notifications: rows });
+  });
 }
 
 
 export async function POST(request: Request) {
-  const session = await getSession();
-  if (!session) return apiError("Authentication required", 401);
-  if (!isStaffOrAdmin(session.role)) return apiError("Staff or Admin role required", 403);
+  return withUser(async session=>{
+  requirePermission(session,"notifications.send");
 
   const parsed = createNotificationSchema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return apiError("Invalid notification data", 400, parsed.error.flatten());
@@ -42,11 +43,12 @@ export async function POST(request: Request) {
   const [users] = await mysqlPool.execute<RowDataPacket[]>("SELECT user_id FROM `USER` WHERE user_id = ?", [d.userId]);
   if (!users[0]) return apiError("Target user not found", 400);
 
-  const [result] = await mysqlPool.execute<ResultSetHeader>(
+  const response=await transaction(async connection=>{
+  const [result] = await connection.execute<ResultSetHeader>(
     "INSERT INTO NOTIFICATION (title, message, type, user_id) VALUES (?, ?, ?, ?)",
     [d.title, d.message, d.type, d.userId]
   );
-  await tryWriteAuditEvent({
+  await enqueueAuditEvent(connection,{
     userId: session.userId,
     eventType: "NOTIFICATION_CREATE",
     entityType: "NOTIFICATION",
@@ -54,4 +56,8 @@ export async function POST(request: Request) {
     payload: { target_user_id: d.userId, type: d.type }
   });
   return NextResponse.json({ notificationId: result.insertId }, { status: 201 });
+  });
+  await tryFlushMongoOutbox();
+  return response;
+  });
 }
