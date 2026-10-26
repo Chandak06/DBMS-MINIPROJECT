@@ -27,8 +27,14 @@ function validateDate(value: string | undefined, field: string, ctx: z.Refinemen
 }
 export const lostItemCreateSchema = base.merge(itemDetailsSchema).extend({ lostDatetime: z.string().min(1) }).superRefine((d,c) => validateDate(d.lostDatetime,"lostDatetime",c));
 export const foundItemCreateSchema = base.merge(itemDetailsSchema).extend({ foundDatetime: z.string().min(1) }).superRefine((d,c) => validateDate(d.foundDatetime,"foundDatetime",c));
-export const lostItemUpdateSchema = base.partial().extend({ lostDatetime: z.string().optional(), status: z.enum(["OPEN","CLOSED"]).optional() }).strict().superRefine((d,c) => validateDate(d.lostDatetime,"lostDatetime",c));
-export const foundItemUpdateSchema = base.partial().extend({ foundDatetime: z.string().optional(), status: z.enum(["OPEN","CLOSED"]).optional() }).strict().superRefine((d,c) => validateDate(d.foundDatetime,"foundDatetime",c));
+const detailPatch = z.object({
+  tags:itemDetailsSchema.shape.tags.removeDefault().optional(),
+  searchKeywords:itemDetailsSchema.shape.searchKeywords.removeDefault().optional(),
+  media:itemDetailsSchema.shape.media.removeDefault().optional(),
+  extraAttributes:itemDetailsSchema.shape.extraAttributes.removeDefault().optional()
+});
+export const lostItemUpdateSchema = base.partial().merge(detailPatch).extend({ lostDatetime: z.string().optional(), status: z.enum(["OPEN","CLOSED"]).optional() }).strict().superRefine((d,c) => validateDate(d.lostDatetime,"lostDatetime",c));
+export const foundItemUpdateSchema = base.partial().merge(detailPatch).extend({ foundDatetime: z.string().optional(), status: z.enum(["OPEN","CLOSED"]).optional() }).strict().superRefine((d,c) => validateDate(d.foundDatetime,"foundDatetime",c));
 export const profileUpdateSchema = z.object({
   firstName: z.string().trim().min(2).max(80), middleName: optionalText(80),
   lastName: z.string().trim().min(1).max(80), phone: optionalText(20),
