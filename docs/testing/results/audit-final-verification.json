@@ -1,0 +1,23 @@
+{
+  "verifiedAt": "2026-10-26T07:50:02.925010+00:00",
+  "unitPassed": 85,
+  "workflowPassed": 152,
+  "outboxPassed": 13,
+  "failed": 0,
+  "typecheck": "PASS",
+  "productionBuild": "PASS",
+  "dependencyAdvisories": 0,
+  "livePendingWrites": 0,
+  "originalPendingWritePreservedAndProcessed": true,
+  "liveBrowserRoles": [
+    "STUDENT",
+    "STAFF",
+    "ADMIN"
+  ],
+  "secretScan": "PASS",
+  "testDataRetained": true,
+  "applicationUrl": "http://localhost:3000",
+  "workerRunning": true,
+  "externalGoogleFlow": "NOT EXECUTED; provider mocked in registration tests",
+  "historicalPdfArchivesPreserved": true
+}
