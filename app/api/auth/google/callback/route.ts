@@ -5,6 +5,9 @@ import { tryWriteAuditEvent } from "@/lib/audit";
 import { exchangeGoogleCode, fetchGoogleUser, GOOGLE_OAUTH_STATE_COOKIE } from "@/lib/google-oauth";
 import { mysqlPool } from "@/lib/mysql";
 import type { Role } from "@/lib/types";
+import { transaction } from "@/lib/transaction";
+import { enqueueAuditEvent } from "@/lib/audit";
+import { safeDiagnostic } from "@/lib/diagnostics";
 
 export const runtime = "nodejs";
 
@@ -40,6 +43,16 @@ export async function GET(request: NextRequest) {
 
     if (!googleUser.emailVerified) return loginError(request, "EMAIL_NOT_VERIFIED");
 
+    // Provider-verified registration always assigns STUDENT on the server.
+    await transaction(async connection=>{
+      const [existing]=await connection.execute<UserRow[]>("SELECT user_id FROM `USER` WHERE email=?",[googleUser.email]);
+      if(!existing.length){
+        try{await connection.execute("INSERT INTO `USER`(first_name,last_name,email,role) VALUES (?,?,?,'STUDENT')",[(googleUser.firstName||googleUser.name||"Campus").slice(0,80),(googleUser.lastName||"Student").slice(0,80),googleUser.email]);}
+        catch(e){if((e as {code?:string}).code==="ER_DUP_ENTRY")return;throw e;}
+        const [[registered]]=await connection.execute<UserRow[]>("SELECT user_id FROM `USER` WHERE email=?",[googleUser.email]);
+        await enqueueAuditEvent(connection,{userId:registered.user_id,eventType:"USER_REGISTER",entityType:"USER",entityId:registered.user_id});
+      }
+    });
     const [rows] = await mysqlPool.execute<UserRow[]>(
       "SELECT user_id, email, role FROM `USER` WHERE LOWER(email) = ? LIMIT 1",
       [googleUser.email]
@@ -71,7 +84,7 @@ export async function GET(request: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error(error);
+    console.error("Google login failed",safeDiagnostic(error));
     return loginError(request, "OAUTH_FAILED");
   }
 }
