@@ -1,0 +1,130 @@
+{
+  "executedAt": "2026-10-26T13:52:46.186Z",
+  "passed": 18,
+  "failed": 0,
+  "typecheck": "PASS",
+  "productionBuild": "PASS",
+  "configuredUrlUnchanged": true,
+  "results": [
+    {
+      "base": "http://localhost:3000",
+      "role": "STUDENT",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://localhost:3000",
+      "role": "STAFF",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://localhost:3000",
+      "role": "ADMIN",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3000",
+      "role": "STUDENT",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3000",
+      "role": "STAFF",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3000",
+      "role": "ADMIN",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3000",
+      "origin": "https://untrusted.example",
+      "site": "cross-site",
+      "test": "cross-origin/cross-site denial",
+      "expectedStatus": 403,
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3000",
+      "origin": "http://127.0.0.1:3020",
+      "site": "same-site",
+      "test": "cross-origin/cross-site denial",
+      "expectedStatus": 403,
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3000",
+      "origin": "http://127.0.0.1:3000",
+      "site": "cross-site",
+      "test": "cross-origin/cross-site denial",
+      "expectedStatus": 403,
+      "status": "PASS"
+    },
+    {
+      "base": "http://localhost:3001",
+      "role": "STUDENT",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://localhost:3001",
+      "role": "STAFF",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://localhost:3001",
+      "role": "ADMIN",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3001",
+      "role": "STUDENT",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3001",
+      "role": "STAFF",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3001",
+      "role": "ADMIN",
+      "test": "demo sign-in and authenticated session",
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3001",
+      "origin": "https://untrusted.example",
+      "site": "cross-site",
+      "test": "cross-origin/cross-site denial",
+      "expectedStatus": 403,
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3001",
+      "origin": "http://127.0.0.1:3021",
+      "site": "same-site",
+      "test": "cross-origin/cross-site denial",
+      "expectedStatus": 403,
+      "status": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:3001",
+      "origin": "http://127.0.0.1:3001",
+      "site": "cross-site",
+      "test": "cross-origin/cross-site denial",
+      "expectedStatus": 403,
+      "status": "PASS"
+    }
+  ]
+}
