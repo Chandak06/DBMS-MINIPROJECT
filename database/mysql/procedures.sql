@@ -46,6 +46,8 @@ BEGIN
  UPDATE `MATCH` SET status=p_decision, reviewed_by=p_actor, reviewed_at=UTC_TIMESTAMP(), review_remarks=p_remarks WHERE match_id=p_match_id;
  INSERT INTO NOTIFICATION(title,message,type,user_id)
  VALUES (CONCAT('Match ',LOWER(p_decision)), CONCAT('Match #',p_match_id,' was ',LOWER(p_decision),'. ',COALESCE(p_remarks,'')), 'MATCH',v_owner);
+ INSERT INTO MONGO_OUTBOX(collection_name,document_id,payload) VALUES ('audit_events',p_actor,
+  JSON_OBJECT('user_id',p_actor,'event_type',CONCAT('MATCH_',p_decision),'entity_type','MATCH','entity_id',p_match_id,'payload',JSON_OBJECT('remarks',p_remarks)));
  COMMIT;
 END$$
 
@@ -90,6 +92,8 @@ BEGIN
  UPDATE CLAIM SET status=p_decision,processed_by=p_actor,processed_at=UTC_TIMESTAMP(),processing_remarks=p_remarks WHERE claim_id=p_claim_id;
  INSERT INTO NOTIFICATION(title,message,type,user_id)
  VALUES (CONCAT('Claim ',LOWER(p_decision)), CONCAT('Claim #',p_claim_id,' was ',LOWER(p_decision),'. ',COALESCE(p_remarks,'')), 'CLAIM',v_submitter);
+ INSERT INTO MONGO_OUTBOX(collection_name,document_id,payload) VALUES ('audit_events',p_actor,
+  JSON_OBJECT('user_id',p_actor,'event_type',CONCAT('CLAIM_',p_decision),'entity_type','CLAIM','entity_id',p_claim_id,'payload',JSON_OBJECT('remarks',p_remarks)));
  COMMIT;
 END$$
 DELIMITER ;
