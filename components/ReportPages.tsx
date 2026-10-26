@@ -6,6 +6,9 @@ import { mysqlPool } from "@/lib/mysql";
 import type { RowDataPacket } from "mysql2";
 import { isStaffOrAdmin } from "@/lib/permissions";
 import { formatDate } from "@/lib/dates";
+import { documentSyncState } from "@/lib/outbox";
+import { AppError } from "@/lib/errors";
+import { detailSnapshots } from "@/lib/detail-snapshots";
 import { ItemForm } from "./ItemForm";
 import { ActionButton } from "./ActionButton";
 export type PageQuery=Record<string,string|string[]|undefined>;
@@ -33,8 +36,9 @@ export async function ReportEditor({kind,id}:{kind:Kind;id?:number}) {
  const user=await requireSession(),options=await referenceOptions();
  let initial:Record<string,unknown>={},details={};
  if(id) {
-  try {initial=await getReport(kind,id,user);if(initial.reported_by!==user.userId||initial.status!=="OPEN")notFound();details=(await getDetails(kind,id,user))||{};}
-  catch {notFound();}
+  try {initial=await getReport(kind,id,user);}catch(e){if(e instanceof AppError&&e.status===404)notFound();throw e;}
+  if(initial.reported_by!==user.userId||initial.status!=="OPEN")notFound();
+  details=(await detailSnapshots(reportConfig(kind).collection,[id])).get(id)||{};
  }
  return <main className="container stack"><div><p className="eyebrow">{id?"Update your report":"Campus reports"}</p><h1>{id?"Edit":"Report"} {kind} item</h1></div><ItemForm kind={kind} {...options} initial={initial} details={details}/></main>;
 }
@@ -45,12 +49,14 @@ export async function ReportDetail({kind,id,sync}:{kind:Kind;id:number;sync?:str
  let details:Record<string,unknown>|null=null,detailsUnavailable=false;
  try {details=await getDetails(kind,id,user);}catch{detailsUnavailable=true;}
  const owns=item.reported_by===user.userId;
+ const syncState=await documentSyncState(c.collection,id);
  const [matches]=await mysqlPool.execute<RowDataPacket[]>("SELECT m.match_id,m.found_id,m.status,li.reported_by FROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id WHERE m."+c.id+"=? AND (li.reported_by=? OR ?=1) ORDER BY m.similarity_score DESC",[id,user.userId,isStaffOrAdmin(user.role)?1:0]);
  const accepted=matches.find(m=>m.status==="ACCEPTED"&&m.reported_by===user.userId);
  let claimId:number|undefined;
  if(kind==="found"&&accepted) {const [claims]=await mysqlPool.execute<RowDataPacket[]>("SELECT claim_id FROM CLAIM WHERE found_id=? AND submitted_by=?",[id,user.userId]);claimId=claims[0]?.claim_id;}
  return <main className="container stack"><div className="page-header"><div><p className="eyebrow">{kind} report #{id}</p><h1>{item.item_name}</h1><span className={"badge "+item.status.toLowerCase()}>{item.status}</span></div><Link className="button secondary" href={"/"+kind+"-items"}>Back to reports</Link></div>
- {(sync==="pending"||detailsUnavailable)&&<p className="notice">Your main report is saved. Extra details are awaiting MongoDB synchronization.</p>}
+ {syncState!=="SYNCED"&&<p className="notice">The main report is saved. {syncState==="FAILED"?"Its document write requires Admin attention; the saved payload is retained.":"Its extra details are queued for synchronization and safe retry."}</p>}
+ {detailsUnavailable&&<p className="notice">MongoDB details are currently unavailable. The relational report remains accessible.</p>}
  <section className="card stack"><div className="form-grid"><div><p className="muted">Category</p><strong>{item.category_name}</strong></div><div><p className="muted">Location</p><strong>{item.location_name}{item.building?", "+item.building:""}</strong></div><div><p className="muted">Date and time (IST)</p><strong>{formatDate(item[c.date])}</strong></div><div><p className="muted">Color and brand</p><strong>{[item.color,item.brand].filter(Boolean).join(" / ")||"Not specified"}</strong></div></div>
  <h2>Description</h2><p className="preserve">{item.description||"No description provided."}</p>
  {(owns||isStaffOrAdmin(user.role))&&item.remarks&&<div><h3>Private remarks</h3><p className="preserve">{item.remarks}</p></div>}
