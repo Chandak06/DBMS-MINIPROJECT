@@ -338,3 +338,17 @@ This internal table tracks applied migration names, checksums and timestamps. Th
 Verified inventory: 12 SQL base tables (10 domain and 2 internal), 2 views, 2 stored procedures, 1 stored function, 8 triggers and 4 MongoDB collections. Revisions are application-maintained fields; the database does not auto-increment them with a trigger. Terminal state rules are enforced through the APIs and stored procedures; raw SQL access must be restricted.
 
 Full installed metadata: [final-schema.json](../testing/results/final-schema.json). Executable sources: schema.sql, indexes_views.sql, advanced.sql, revisions.sql, procedures.sql and setup-databases.mjs.
+
+
+## 26 October 2026 outbox upgrade
+
+The repeatable `database/mysql/outbox-reliability.sql` migration adds these nullable fields to MONGO_OUTBOX, preserving every existing row:
+
+| Column | Type | Purpose |
+|---|---|---|
+| failure_kind | VARCHAR(20) NULL | TRANSIENT, PERMANENT or EXHAUSTED; NULL before attempts or after success |
+| next_attempt_at | DATETIME NULL | UTC due time for exponential-backoff retries |
+
+`idx_outbox_document_pending(collection_name,document_id,processed_at,outbox_id)` supports per-document ordering. The collection CHECK now also permits `audit_events`. For audit events document_id groups writes by actor; the actual unique MongoDB event key is `outbox:<outbox_id>`, so separate events never overwrite one another. The existing audit_events collection adds a partial unique string event_id index; legacy audit documents remain intact. No domain table or collection was added.
+
+Decision procedures enqueue audit events before COMMIT. Old metadata/PDF/Word files retain their original capture date. [Live upgraded schema evidence](../testing/results/audit-live-storage.json) and [current audit](../AUDIT_2026-10-26.md) describe the current implementation.
