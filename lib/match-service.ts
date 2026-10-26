@@ -1,14 +1,15 @@
 import type { RowDataPacket,ResultSetHeader } from "mysql2";
 import type { SessionUser } from "./types";
 import { mysqlPool } from "./mysql";
-import { getMongoDb } from "./mongo";
+import { detailSnapshots } from "./detail-snapshots";
 import { transaction } from "./transaction";
-import { enqueueMongo,tryFlushMongoOutbox } from "./outbox";
+import { enqueueMongo,tryFlushMongoOutbox,documentSyncState } from "./outbox";
 import { compareItems,MATCH_THRESHOLD, type MatchItem } from "./matching";
 import { AppError } from "./errors";
-import { isStaffOrAdmin } from "./permissions";
-import { tryWriteAuditEvent } from "./audit";
-export function requireStaff(user:SessionUser) { if(!isStaffOrAdmin(user.role)) throw new AppError("Staff or Admin role required",403); }
+import { isStaffOrAdmin,requirePermission } from "./permissions";
+import { enqueueAuditEvent,tryWriteAuditEvent } from "./audit";
+import { requireTransition } from "./workflow";
+export function requireStaff(user:SessionUser) { requirePermission(user,"operations.read"); }
 export async function listMatches(user:SessionUser,status="") {
  const where:string[]=[],values:(string|number|boolean|Date|null)[]=[];
  if(!isStaffOrAdmin(user.role)) { where.push("li.reported_by=?");values.push(user.userId); }
@@ -34,18 +35,14 @@ async function candidateRows(lostId?:number,foundId?:number) {
  return rows;
 }
 export async function generateMatches(user:SessionUser,lostId?:number,foundId?:number) {
- requireStaff(user);
- const sync=await tryFlushMongoOutbox();
- if(sync.pending!==0) throw new AppError("MongoDB details are awaiting synchronization. Retry after syncing.",503);
+ requirePermission(user,"matches.manage");
  const rows=await candidateRows(lostId,foundId);
  if(lostId&&foundId&&!rows.length) throw new AppError("Reports must be OPEN, share a category/campus, and be within 14 days",409);
- const db=await getMongoDb();
  const lostIds=[...new Set(rows.map(r=>r.lost_id))],foundIds=[...new Set(rows.map(r=>r.found_id))];
- const [lostDocs,foundDocs]=await Promise.all([
-  db.collection("lost_item_details").find({lost_id:{$in:lostIds}}).toArray(),
-  db.collection("found_item_details").find({found_id:{$in:foundIds}}).toArray()
+ const [lostMap,foundMap]=await Promise.all([
+  detailSnapshots("lost_item_details",lostIds),
+  detailSnapshots("found_item_details",foundIds)
  ]);
- const lostMap=new Map(lostDocs.map(d=>[d.lost_id,d])),foundMap=new Map(foundDocs.map(d=>[d.found_id,d]));
  const saved:number[]=[];
  for(const row of rows) {
   const lost:MatchItem={item_name:row.lost_name,description:row.lost_description,color:row.lost_color,brand:row.lost_brand,category_id:row.category_id,location_id:row.lost_location,campus_id:row.campus_id,datetime:row.lost_datetime,tags:lostMap.get(row.lost_id)?.tags,search_keywords:lostMap.get(row.lost_id)?.search_keywords};
@@ -63,18 +60,21 @@ export async function generateMatches(user:SessionUser,lostId?:number,foundId?:n
    if(matchId) await connection.execute("UPDATE `MATCH` SET similarity_score=?,match_method=?,lost_revision=?,found_revision=?,matched_at=UTC_TIMESTAMP() WHERE match_id=?",[comparison.score,manual?"MANUAL":"HYBRID",row.lost_revision,row.found_revision,matchId]);
    else { const [result]=await connection.execute<ResultSetHeader>("INSERT INTO `MATCH` (lost_id,found_id,similarity_score,match_method,status,lost_revision,found_revision) VALUES (?,?,?,?,'PENDING',?,?)",[row.lost_id,row.found_id,comparison.score,manual?"MANUAL":"HYBRID",row.lost_revision,row.found_revision]);matchId=result.insertId; }
    await enqueueMongo(connection,"match_evidence",matchId,{matched_tags:comparison.matchedTags,rule_scores:comparison.ruleScores,score:comparison.score,explanation:comparison.explanation,evidence:{lost,found,lost_revision:row.lost_revision,found_revision:row.found_revision,algorithm:"weighted-rules-v1"}});
+   await enqueueAuditEvent(connection,{userId:user.userId,eventType:"MATCH_CANDIDATE_SAVED",entityType:"MATCH",entityId:Number(matchId)});
    return Number(matchId);
   });
   if(id) saved.push(id);
  }
- const evidenceSync=await tryFlushMongoOutbox();
+ await tryFlushMongoOutbox();
  await tryWriteAuditEvent({userId:user.userId,eventType:"MATCH_GENERATE",entityType:"MATCH",payload:{candidate_count:rows.length,match_ids:saved}});
- return {candidateCount:rows.length,matchIds:saved,evidenceSaved:evidenceSync.pending===0};
+ const states=await Promise.all(saved.map(id=>documentSyncState("match_evidence",id)));
+ return {candidateCount:rows.length,matchIds:saved,evidenceSaved:states.every(state=>state==="SYNCED")};
 }
 export async function reviewMatch(user:SessionUser,id:number,status:string,remarks:string) {
- requireStaff(user);
- await getMatch(user,id);
+ requirePermission(user,"matches.manage");
+ const match=await getMatch(user,id);
+ requireTransition("match",match.status,status);
  await mysqlPool.execute("CALL sp_review_match(?,?,?,?)",[id,user.userId,status,remarks]);
- await tryWriteAuditEvent({userId:user.userId,eventType:"MATCH_"+status,entityType:"MATCH",entityId:id,payload:{remarks}});
+ await tryFlushMongoOutbox();
 }
 
