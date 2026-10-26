@@ -11,7 +11,7 @@ export function ActionButton({endpoint,label,method="POST",body={},className="bu
    const response=await fetch(endpoint,{method,headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
    const result=await response.json();
    if(!response.ok)throw new Error(result.error||"Request failed");
-   setMessage(result.matchIds ? result.matchIds.length+" candidates saved from "+result.candidateCount+" comparisons." : "Done.");
+   setMessage(result.matchIds ? result.matchIds.length+" candidates saved from "+result.candidateCount+" comparisons." : typeof result.processed==="number" ? result.busy?"Another worker is processing writes. Refresh health shortly.":result.processed+" writes synchronized; "+result.pending+" pending ("+result.failed+" require attention)." : "Done.");
    if(redirectTo)router.push(redirectTo);
    router.refresh();
   }catch(e){setError(e instanceof Error?e.message:"Request failed");}finally{setBusy(false);}
