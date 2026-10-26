@@ -96,6 +96,7 @@ export const mongoModels = {
       },
     },
     indexes: [
+      [{ event_id: 1 }, { unique: true, name: "ux_audit_event_id", partialFilterExpression: { event_id: { $type: "string" } } }],
       [{ user_id: 1, occurred_at: -1 }, { name: "idx_audit_user_time" }],
       [{ event_type: 1, occurred_at: -1 }, { name: "idx_audit_event_time" }],
       [{ entity_type: 1, entity_id: 1 }, { name: "idx_audit_entity" }],
