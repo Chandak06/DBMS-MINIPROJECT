@@ -1,0 +1,62 @@
+{
+  "executedAt": "2026-10-26T07:39:57.027Z",
+  "sqlDatabase": "clf_audit_1793000373613",
+  "mongoDatabase": "clf_audit_1793000373613",
+  "passed": 13,
+  "failed": 0,
+  "fixturesRetained": true,
+  "results": [
+    {
+      "name": "A real unavailable MongoDB connection retains payload and records failure",
+      "status": "PASS"
+    },
+    {
+      "name": "Backoff prevents immediate automatic retry",
+      "status": "PASS"
+    },
+    {
+      "name": "Recovery works in a new worker process after restart",
+      "status": "PASS"
+    },
+    {
+      "name": "Replaying an acknowledged write does not duplicate documents",
+      "status": "PASS"
+    },
+    {
+      "name": "Crash after Mongo write before SQL acknowledgement replays idempotently",
+      "status": "PASS"
+    },
+    {
+      "name": "Permanent validation failure does not block unrelated writes",
+      "status": "PASS"
+    },
+    {
+      "name": "An unrelated failed write does not block matching or enrichment status",
+      "status": "PASS"
+    },
+    {
+      "name": "Same-document writes stay blocked behind a failed predecessor",
+      "status": "PASS"
+    },
+    {
+      "name": "Simultaneous workers cannot process a write unsafely",
+      "status": "PASS"
+    },
+    {
+      "name": "Audit events survive outage and retries without duplicates",
+      "status": "PASS"
+    },
+    {
+      "name": "Retry limit stops automatic attempts and Admin can request recovery",
+      "status": "PASS"
+    },
+    {
+      "name": "All retained outbox records are synchronized",
+      "status": "PASS"
+    },
+    {
+      "name": "Matching and evidence remain available during a real Mongo connection outage",
+      "status": "PASS"
+    }
+  ]
+}
