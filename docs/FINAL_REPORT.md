@@ -1,6 +1,8 @@
 # Campus Lost & Found Intelligent Matching System
 
-DBMS Experiential Learning Level 3 | Final project report | 2 October 2026
+DBMS Experiential Learning Level 3 | Original report: 2 October 2026
+
+Current implementation update: [26 October audit and fixes](AUDIT_2026-10-26.md). The PDF is the original dated snapshot; current roles, reliability changes and test evidence are documented in that update.
 
 | Member | SRN |
 |---|---|
