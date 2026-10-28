@@ -3,6 +3,7 @@ import { canManageReferenceData, isStaffOrAdmin,hasPermission,requirePermission,
 import type { Role } from "@/lib/types";
 
 describe("role permissions", () => {
+  for(const role of ["STUDENT","STAFF","ADMIN"] as Role[])it(role+" report and claim submission boundary",()=>{expect(hasPermission(role,"reports.own")).toBe(role==="STUDENT");expect(hasPermission(role,"claims.own")).toBe(role==="STUDENT");});
   it("does not grant staff/admin privileges to students", () => {
     expect(isStaffOrAdmin("STUDENT")).toBe(false);
     expect(canManageReferenceData("STUDENT")).toBe(false);
