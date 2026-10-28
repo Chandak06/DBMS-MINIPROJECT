@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   if (!parsed.success) return apiError("Invalid notification data", 400, parsed.error.flatten());
 
   const d = parsed.data;
-  const [users] = await mysqlPool.execute<RowDataPacket[]>("SELECT user_id FROM `USER` WHERE user_id = ?", [d.userId]);
+  const [users] = await mysqlPool.execute<RowDataPacket[]>("SELECT u.user_id FROM USER u JOIN DEPARTMENT dep ON dep.department_id=u.department_id WHERE u.user_id=? AND (? IS NULL OR dep.campus_id=?)", [d.userId,session.role==="ADMIN"?null:session.campusId??-1,session.role==="ADMIN"?null:session.campusId??-1]);
   if (!users[0]) return apiError("Target user not found", 400);
 
   const response=await transaction(async connection=>{
