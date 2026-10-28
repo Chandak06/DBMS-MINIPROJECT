@@ -1,0 +1,2 @@
+USE campus_lost_found;
+ALTER TABLE COLLEGE_EMAIL_DOMAIN ADD COLUMN local_part_format VARCHAR(120) NOT NULL DEFAULT '{id}';
