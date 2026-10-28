@@ -1,3 +1,5 @@
+> Current login (28 October 2026): [College email and password](17-college-login.png). Earlier screenshots below show dated versions and may include retired Google/demo or role-assignment controls.
+
 # Browser demonstration screenshots
 
 Captured from the actual local Next.js production application on 2 October 2026. Seeded accounts and item contents are demonstration data. Full-page captures preserve the interface context.
@@ -23,11 +25,11 @@ See [the demo script](../DEMO_SCRIPT.md) for the presentation sequence and [data
 
 
 
-## Audit captures — 26 October 2026
+## Audit captures â€” 26 October 2026
 
 Live browser verification confirmed the separate Student, Staff and Admin experiences, read-only Staff campus data, and the recovered report #16 without a stale sync warning. Admin synchronization health showed Connected and zero pending/failed writes.
 
 - [Separate Admin dashboard](15-admin-dashboard-audit.png)
 - [Connected synchronization health](16-sync-health-audit.png)
 
-These two captures are current; screenshots 01–14 retain their original dates.
+These two captures are current; screenshots 01â€“14 retain their original dates.
