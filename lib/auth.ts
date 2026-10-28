@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import type { Role, SessionUser } from "./types";
 import { mysqlPool } from "./mysql";
 import type { RowDataPacket } from "mysql2";
+import { matchesCollegeEmail } from "./college-email.mjs";
 
 export const SESSION_COOKIE = "clf_session";
 
@@ -19,7 +20,8 @@ export async function createSessionToken(user: SessionUser): Promise<string> {
   return new SignJWT({
     userId: user.userId,
     email: user.email,
-    role: user.role
+    role: user.role,
+    authVersion: user.authVersion
   })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -33,11 +35,13 @@ export async function verifySessionToken(token: string): Promise<SessionUser | n
     const userId = Number(payload.userId);
     const email = String(payload.email ?? "");
     const role = String(payload.role ?? "") as Role;
+    const authVersion=Number(payload.authVersion);
 
     if (!Number.isSafeInteger(userId) || userId <= 0 || !email) return null;
     if (!(["STUDENT", "STAFF", "ADMIN"] as string[]).includes(role)) return null;
+    if(!Number.isSafeInteger(authVersion)||authVersion<1)return null;
 
-    return { userId, email, role };
+    return { userId, email, role, authVersion };
   } catch {
     return null;
   }
@@ -50,10 +54,14 @@ export async function getSession(): Promise<SessionUser | null> {
   const user = await verifySessionToken(token);
   if (!user) return null;
   const [rows] = await mysqlPool.execute<RowDataPacket[]>(
-    "SELECT email, role FROM `USER` WHERE user_id = ?", [user.userId]
+    `SELECT u.email,u.role,u.auth_enabled,u.credential_version,c.campus_id,c.registration_enabled,c.institution_code,ed.domain_name,ed.local_part_format
+     FROM USER u JOIN DEPARTMENT d ON d.department_id=u.department_id JOIN CAMPUS c ON c.campus_id=d.campus_id
+     JOIN COLLEGE_EMAIL_DOMAIN ed ON ed.campus_id=c.campus_id AND ed.account_type=u.role
+     WHERE u.user_id=?`, [user.userId]
   );
   if (!rows[0] || rows[0].email !== user.email) return null;
-  return { ...user, role: rows[0].role as Role };
+  if(!rows[0].auth_enabled||!rows[0].registration_enabled||Number(rows[0].credential_version)!==user.authVersion||!matchesCollegeEmail(rows[0].email,rows[0].role,rows[0].institution_code,rows[0].domain_name,rows[0].local_part_format))return null;
+  return { ...user, role: rows[0].role as Role,campusId:Number(rows[0].campus_id) };
 }
 
 export async function requireSession(): Promise<SessionUser> {
