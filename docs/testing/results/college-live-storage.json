@@ -1,0 +1,455 @@
+{
+  "executedAt": "2026-10-28T03:58:51.072Z",
+  "sqlDatabase": "campus_lost_found",
+  "mongoDatabase": "campus_lost_found",
+  "tables": [
+    {
+      "TABLE_NAME": "campus",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "category",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "claim",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "college_email_domain",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "department",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "found_item",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "location",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "lost_item",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "match",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "mongo_outbox",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "notification",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "schema_migration",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "user",
+      "TABLE_TYPE": "BASE TABLE"
+    },
+    {
+      "TABLE_NAME": "vw_campus_recovery_dashboard",
+      "TABLE_TYPE": "VIEW"
+    },
+    {
+      "TABLE_NAME": "vw_ranked_match_candidates",
+      "TABLE_TYPE": "VIEW"
+    },
+    {
+      "TABLE_NAME": "vw_recovery_dashboard",
+      "TABLE_TYPE": "VIEW"
+    },
+    {
+      "TABLE_NAME": "vw_user_lost_summary",
+      "TABLE_TYPE": "VIEW"
+    }
+  ],
+  "authenticationColumns": [
+    {
+      "TABLE_NAME": "campus",
+      "COLUMN_NAME": "institution_code",
+      "COLUMN_TYPE": "varchar(12)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": null
+    },
+    {
+      "TABLE_NAME": "campus",
+      "COLUMN_NAME": "registration_enabled",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0"
+    },
+    {
+      "TABLE_NAME": "college_email_domain",
+      "COLUMN_NAME": "domain_name",
+      "COLUMN_TYPE": "varchar(190)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null
+    },
+    {
+      "TABLE_NAME": "college_email_domain",
+      "COLUMN_NAME": "campus_id",
+      "COLUMN_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null
+    },
+    {
+      "TABLE_NAME": "college_email_domain",
+      "COLUMN_NAME": "account_type",
+      "COLUMN_TYPE": "varchar(10)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null
+    },
+    {
+      "TABLE_NAME": "college_email_domain",
+      "COLUMN_NAME": "local_part_format",
+      "COLUMN_TYPE": "varchar(120)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "{id}"
+    },
+    {
+      "TABLE_NAME": "user",
+      "COLUMN_NAME": "password_hash",
+      "COLUMN_TYPE": "varchar(255)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": null
+    },
+    {
+      "TABLE_NAME": "user",
+      "COLUMN_NAME": "auth_enabled",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0"
+    },
+    {
+      "TABLE_NAME": "user",
+      "COLUMN_NAME": "credential_version",
+      "COLUMN_TYPE": "int unsigned",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "1"
+    },
+    {
+      "TABLE_NAME": "user",
+      "COLUMN_NAME": "failed_login_attempts",
+      "COLUMN_TYPE": "int unsigned",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0"
+    },
+    {
+      "TABLE_NAME": "user",
+      "COLUMN_NAME": "locked_until",
+      "COLUMN_TYPE": "datetime",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": null
+    }
+  ],
+  "colleges": [
+    {
+      "campus_id": 1,
+      "campus_name": "Main Campus",
+      "institution_code": null,
+      "registration_enabled": 0,
+      "account_type": null,
+      "domain_name": null,
+      "local_part_format": null
+    }
+  ],
+  "accountCounts": [
+    {
+      "role": "STUDENT",
+      "accounts": 1,
+      "provisioned_accounts": "0"
+    },
+    {
+      "role": "STAFF",
+      "accounts": 1,
+      "provisioned_accounts": "0"
+    },
+    {
+      "role": "ADMIN",
+      "accounts": 1,
+      "provisioned_accounts": "0"
+    }
+  ],
+  "workflowCounts": [
+    {
+      "table": "LOST_ITEM",
+      "count": 3
+    },
+    {
+      "table": "FOUND_ITEM",
+      "count": 2
+    },
+    {
+      "table": "MATCH",
+      "count": 2
+    },
+    {
+      "table": "CLAIM",
+      "count": 1
+    }
+  ],
+  "outbox": [
+    {
+      "collection_name": "audit_events",
+      "events": 46,
+      "pending": "0",
+      "failed": "0"
+    },
+    {
+      "collection_name": "found_item_details",
+      "events": 2,
+      "pending": "0",
+      "failed": "0"
+    },
+    {
+      "collection_name": "lost_item_details",
+      "events": 3,
+      "pending": "0",
+      "failed": "0"
+    },
+    {
+      "collection_name": "match_evidence",
+      "events": 4,
+      "pending": "0",
+      "failed": "0"
+    }
+  ],
+  "triggers": [
+    {
+      "TRIGGER_NAME": "check_claim_processor_insert",
+      "EVENT_MANIPULATION": "INSERT",
+      "EVENT_OBJECT_TABLE": "claim"
+    },
+    {
+      "TRIGGER_NAME": "check_claim_processor_update",
+      "EVENT_MANIPULATION": "UPDATE",
+      "EVENT_OBJECT_TABLE": "claim"
+    },
+    {
+      "TRIGGER_NAME": "check_match_reviewer_insert",
+      "EVENT_MANIPULATION": "INSERT",
+      "EVENT_OBJECT_TABLE": "match"
+    },
+    {
+      "TRIGGER_NAME": "check_match_reviewer_update",
+      "EVENT_MANIPULATION": "UPDATE",
+      "EVENT_OBJECT_TABLE": "match"
+    },
+    {
+      "TRIGGER_NAME": "trg_found_date_bi",
+      "EVENT_MANIPULATION": "INSERT",
+      "EVENT_OBJECT_TABLE": "found_item"
+    },
+    {
+      "TRIGGER_NAME": "trg_found_date_bu",
+      "EVENT_MANIPULATION": "UPDATE",
+      "EVENT_OBJECT_TABLE": "found_item"
+    },
+    {
+      "TRIGGER_NAME": "trg_lost_date_bi",
+      "EVENT_MANIPULATION": "INSERT",
+      "EVENT_OBJECT_TABLE": "lost_item"
+    },
+    {
+      "TRIGGER_NAME": "trg_lost_date_bu",
+      "EVENT_MANIPULATION": "UPDATE",
+      "EVENT_OBJECT_TABLE": "lost_item"
+    }
+  ],
+  "routines": [
+    {
+      "ROUTINE_NAME": "fn_match_band",
+      "ROUTINE_TYPE": "FUNCTION"
+    },
+    {
+      "ROUTINE_NAME": "sp_process_claim",
+      "ROUTINE_TYPE": "PROCEDURE"
+    },
+    {
+      "ROUTINE_NAME": "sp_review_match",
+      "ROUTINE_TYPE": "PROCEDURE"
+    }
+  ],
+  "migrations": [
+    {
+      "name": "database/mysql/indexes_views.sql",
+      "applied_at": "2026-10-01 19:11:24"
+    },
+    {
+      "name": "database/mysql/advanced.sql",
+      "applied_at": "2026-10-01 19:11:31"
+    },
+    {
+      "name": "database/mysql/revisions.sql",
+      "applied_at": "2026-10-01 19:15:39"
+    },
+    {
+      "name": "database/mysql/outbox-reliability.sql",
+      "applied_at": "2026-10-26 07:19:44"
+    },
+    {
+      "name": "database/mysql/college-auth.sql",
+      "applied_at": "2026-10-28 03:31:25"
+    },
+    {
+      "name": "database/mysql/syllabus-features.sql",
+      "applied_at": "2026-10-28 03:31:26"
+    },
+    {
+      "name": "database/mysql/college-email-formats.sql",
+      "applied_at": "2026-10-28 03:51:18"
+    }
+  ],
+  "mongo": [
+    {
+      "collection": "lost_item_details",
+      "documents": 3,
+      "indexes": [
+        {
+          "name": "_id_",
+          "key": {
+            "_id": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "ux_lost_item_details_lost_id",
+          "key": {
+            "lost_id": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "idx_lost_item_details_tags",
+          "key": {
+            "tags": 1
+          },
+          "unique": false
+        },
+        {
+          "name": "txt_lost_item_details_search",
+          "key": {
+            "_fts": "text",
+            "_ftsx": 1
+          },
+          "unique": false
+        }
+      ]
+    },
+    {
+      "collection": "found_item_details",
+      "documents": 2,
+      "indexes": [
+        {
+          "name": "_id_",
+          "key": {
+            "_id": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "ux_found_item_details_found_id",
+          "key": {
+            "found_id": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "idx_found_item_details_tags",
+          "key": {
+            "tags": 1
+          },
+          "unique": false
+        },
+        {
+          "name": "txt_found_item_details_search",
+          "key": {
+            "_fts": "text",
+            "_ftsx": 1
+          },
+          "unique": false
+        }
+      ]
+    },
+    {
+      "collection": "match_evidence",
+      "documents": 2,
+      "indexes": [
+        {
+          "name": "_id_",
+          "key": {
+            "_id": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "ux_match_evidence_match_id",
+          "key": {
+            "match_id": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "idx_match_evidence_score",
+          "key": {
+            "score": -1
+          },
+          "unique": false
+        }
+      ]
+    },
+    {
+      "collection": "audit_events",
+      "documents": 76,
+      "indexes": [
+        {
+          "name": "_id_",
+          "key": {
+            "_id": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "idx_audit_user_time",
+          "key": {
+            "user_id": 1,
+            "occurred_at": -1
+          },
+          "unique": false
+        },
+        {
+          "name": "idx_audit_event_time",
+          "key": {
+            "event_type": 1,
+            "occurred_at": -1
+          },
+          "unique": false
+        },
+        {
+          "name": "idx_audit_entity",
+          "key": {
+            "entity_type": 1,
+            "entity_id": 1
+          },
+          "unique": false
+        },
+        {
+          "name": "ux_audit_event_id",
+          "key": {
+            "event_id": 1
+          },
+          "unique": true
+        }
+      ]
+    }
+  ]
+}
