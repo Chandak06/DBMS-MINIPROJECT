@@ -7,6 +7,7 @@ import { enqueueAuditEvent } from "./audit";
 import { tryFlushMongoOutbox } from "./outbox";
 import { AppError } from "./errors";
 import { campusCreateSchema,departmentCreateSchema,categoryCreateSchema,locationCreateSchema } from "./validations";
+import { registerCollege } from "./provisioning.mjs";
 const config={
  campuses:{table:"CAMPUS",id:"campusId",schema:campusCreateSchema,columns:["campus_name","street","city","state","postal_code"],fields:["campusName","street","city","state","postalCode"],order:"campus_name"},
  departments:{table:"DEPARTMENT",id:"departmentId",schema:departmentCreateSchema,columns:["department_name","campus_id"],fields:["departmentName","campusId"],order:"department_name"},
@@ -26,6 +27,7 @@ export function referenceHandlers(kind:keyof typeof config) {
    const data=parsed.data as Record<string,string|number|undefined>;
    const id=await transaction(async connection=>{
     const [r]=await connection.execute<ResultSetHeader>("INSERT INTO "+c.table+" ("+c.columns.join(",")+") VALUES ("+c.columns.map(()=>"?").join(",")+")",c.fields.map(f=>data[f]??null));
+    if(kind==="campuses")await registerCollege(connection,r.insertId,parsed.data as {institutionCode:string;studentDomain:string;staffDomain:string;adminDomain:string});
     await enqueueAuditEvent(connection,{userId:user.userId,eventType:c.table+"_CREATE",entityType:c.table,entityId:r.insertId});
     return r.insertId;
    });
