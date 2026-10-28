@@ -1,0 +1,98 @@
+{
+  "executedAt": "2026-10-28T03:53:11.622Z",
+  "database": "clf_college_1793159564397",
+  "queries": [
+    {
+      "query": "SELECT 'LOST' AS report_kind,lost_id AS report_id,item_name,status FROM LOST_ITEM WHERE status='OPEN'\nUNION ALL\nSELECT 'FOUND',found_id,item_name,status FROM FOUND_ITEM WHERE status='OPEN'",
+      "rows": [
+        {
+          "report_kind": "LOST",
+          "report_id": 2,
+          "item_name": "Concurrent 6f092417-88e0-4d69-a155-cbe4b5f0cf45",
+          "status": "OPEN"
+        },
+        {
+          "report_kind": "FOUND",
+          "report_id": 2,
+          "item_name": "College wallet 72fd2834-d59f-4bf0-b168-d889b0cb7350 alternative",
+          "status": "OPEN"
+        }
+      ]
+    },
+    {
+      "query": "SELECT li.lost_id,li.item_name FROM LOST_ITEM li WHERE li.status='OPEN'\nAND NOT EXISTS(SELECT 1 FROM `MATCH` m WHERE m.lost_id=li.lost_id AND m.status='ACCEPTED')",
+      "rows": [
+        {
+          "lost_id": 2,
+          "item_name": "Concurrent 6f092417-88e0-4d69-a155-cbe4b5f0cf45"
+        }
+      ]
+    },
+    {
+      "query": "SELECT * FROM vw_ranked_match_candidates ORDER BY lost_id,candidate_rank",
+      "rows": []
+    },
+    {
+      "query": "SELECT lost_id,item_name,MATCH(item_name,description,brand) AGAINST('wallet leather' IN NATURAL LANGUAGE MODE) AS relevance\nFROM LOST_ITEM WHERE MATCH(item_name,description,brand) AGAINST('wallet leather' IN NATURAL LANGUAGE MODE) ORDER BY relevance DESC,lost_id",
+      "rows": [
+        {
+          "lost_id": 1,
+          "item_name": "College wallet 72fd2834-d59f-4bf0-b168-d889b0cb7350 edited",
+          "relevance": 0.1476505994796753
+        },
+        {
+          "lost_id": 4,
+          "item_name": "Foreign college wallet",
+          "relevance": 0.1476505994796753
+        },
+        {
+          "lost_id": 2,
+          "item_name": "Concurrent 6f092417-88e0-4d69-a155-cbe4b5f0cf45",
+          "relevance": 0.0984337329864502
+        }
+      ]
+    },
+    {
+      "query": "EXPLAIN SELECT lost_id,item_name FROM LOST_ITEM WHERE reported_by=1 AND status='OPEN' ORDER BY created_at DESC",
+      "rows": [
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "LOST_ITEM",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "idx_lost_item_status_datetime,idx_lost_user_status_created",
+          "key": "idx_lost_item_status_datetime",
+          "key_len": "122",
+          "ref": "const",
+          "rows": 1,
+          "filtered": 66.67,
+          "Extra": "Using where; Using filesort"
+        }
+      ]
+    },
+    {
+      "query": "EXPLAIN SELECT lost_id FROM LOST_ITEM WHERE MATCH(item_name,description,brand) AGAINST('wallet' IN NATURAL LANGUAGE MODE)",
+      "rows": [
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "LOST_ITEM",
+          "partitions": null,
+          "type": "fulltext",
+          "possible_keys": "idx_lost_fulltext",
+          "key": "idx_lost_fulltext",
+          "key_len": "0",
+          "ref": "const",
+          "rows": 1,
+          "filtered": 100,
+          "Extra": "Using where; Ft_hints: sorted"
+        }
+      ]
+    },
+    {
+      "query": "SELECT collection_name,COUNT(*) pending,SUM(attempts) attempts FROM MONGO_OUTBOX WHERE processed_at IS NULL GROUP BY collection_name",
+      "rows": []
+    }
+  ]
+}
