@@ -5,15 +5,15 @@ import { writeFile } from "node:fs/promises";
 import { SignJWT } from "jose";
 import { createSqlConnection,createMongoClient,sqlDatabase,mongoDatabase } from "./db-config.mjs";
 import { replayOutbox,diagnostic } from "../lib/outbox-worker.mjs";
-if(!/^clf_audit_\d+$/.test(sqlDatabase)||sqlDatabase!==mongoDatabase)throw new Error("Outbox fault tests require isolated audit databases");
+if(!/^clf_(?:audit|college)_\d+$/.test(sqlDatabase)||sqlDatabase!==mongoDatabase)throw new Error("Outbox fault tests require isolated audit databases");
 const sql=await createSqlConnection(),mongo=createMongoClient();await mongo.connect();const db=mongo.db(mongoDatabase);
 const results=[];
 async function test(name,work){try{await work();results.push({name,status:"PASS"});console.log("PASS "+name);}catch(e){results.push({name,status:"FAIL",diagnostic:diagnostic(e),message:e.message});throw e;}}
 const base=process.env.TEST_BASE_URL;
-async function user(role){const [[u]]=await sql.execute("SELECT user_id,email,role FROM USER WHERE email=?",[process.env["DEMO_"+role+"_EMAIL"]]);return {...u,token:await new SignJWT({userId:u.user_id,email:u.email,role:u.role}).setProtectedHeader({alg:"HS256"}).setExpirationTime("1h").sign(new TextEncoder().encode(process.env.SESSION_SECRET))};}
+async function user(role){const [[u]]=await sql.execute("SELECT user_id,email,role,credential_version FROM USER WHERE email=?",[process.env["TEST_"+role+"_EMAIL"]]);return {...u,token:await new SignJWT({userId:u.user_id,email:u.email,role:u.role,authVersion:Number(u.credential_version)}).setProtectedHeader({alg:"HS256"}).setExpirationTime("1h").sign(new TextEncoder().encode(process.env.SESSION_SECRET))};}
 async function api(path,u,body,method="POST"){const r=await fetch(base+path,{method,headers:{Cookie:"clf_session="+u.token,Origin:base,"Content-Type":"application/json"},...(body?{body:JSON.stringify(body)}:{})});const d=await r.json();return {status:r.status,data:d};}
 async function insert(collection,id,payload,operation="UPSERT") {const [r]=await sql.execute("INSERT INTO MONGO_OUTBOX(collection_name,document_id,payload,operation) VALUES (?,?,?,?)",[collection,id,JSON.stringify(payload),operation]);return r.insertId;}
-const student=await user("STUDENT"),staff=await user("STAFF"),admin=await user("ADMIN");
+const student=await user("STUDENT"),finder=await user("FINDER"),staff=await user("STAFF"),admin=await user("ADMIN");
 const [[fixture]]=await sql.query("SELECT lost_id FROM LOST_ITEM ORDER BY lost_id LIMIT 1");const id=fixture.lost_id;
 let deferredId;
 try{
@@ -45,7 +45,7 @@ try{
  await test("An unrelated failed write does not block matching or enrichment status",async()=>{
   const p={itemName:"Queue isolation wallet "+Date.now(),description:"Black leather wallet",color:"Black",brand:"Fossil",categoryId:2,locationId:1,tags:["wallet"],extraAttributes:{mark:"private"}};
   const l=await api("/api/lost-items",student,{...p,lostDatetime:new Date(Date.now()-7200000).toISOString()});assert.equal(l.status,201);assert.equal(l.data.enrichmentSaved,true);
-  const f=await api("/api/found-items",staff,{...p,foundDatetime:new Date(Date.now()-3600000).toISOString()});assert.equal(f.status,201);assert.equal(f.data.enrichmentSaved,true);
+  const f=await api("/api/found-items",finder,{...p,foundDatetime:new Date(Date.now()-3600000).toISOString()});assert.equal(f.status,201);assert.equal(f.data.enrichmentSaved,true);
   const r=await api("/api/matches/generate",staff,{lostId:l.data.lostId});assert.equal(r.status,200,JSON.stringify(r.data));assert(r.data.matchIds.length);
  });
  await test("Same-document writes stay blocked behind a failed predecessor",async()=>{
@@ -76,7 +76,7 @@ try{
   try{
    let ready=false;for(let i=0;i<40;i++){try{if((await fetch(outageBase+"/login")).ok){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,250));}assert(ready,"Outage test server did not start");
    const p={itemName:"Outage wallet "+Date.now(),description:"Black leather wallet",color:"Black",brand:"Fossil",categoryId:2,locationId:1,tags:["wallet","leather"]};
-   const l=await api("/api/lost-items",student,{...p,lostDatetime:new Date(Date.now()-7200000).toISOString()});const f=await api("/api/found-items",staff,{...p,foundDatetime:new Date(Date.now()-3600000).toISOString()});assert.equal(l.status,201);assert.equal(f.status,201);
+   const l=await api("/api/lost-items",student,{...p,lostDatetime:new Date(Date.now()-7200000).toISOString()});const f=await api("/api/found-items",finder,{...p,foundDatetime:new Date(Date.now()-3600000).toISOString()});assert.equal(l.status,201);assert.equal(f.status,201);
    const request=async(path,body)=>{const r=await fetch(outageBase+path,{method:body?"POST":"GET",headers:{Cookie:"clf_session="+staff.token,Origin:outageBase,"Content-Type":"application/json"},...(body?{body:JSON.stringify(body)}:{})});return {status:r.status,data:await r.json()};};
    const result=await request("/api/matches/generate",{lostId:l.data.lostId});assert.equal(result.status,200,JSON.stringify(result.data));assert(result.data.matchIds.length);assert.equal(result.data.evidenceSaved,false);
    const detail=await request("/api/matches/"+result.data.matchIds[0]);assert.equal(detail.status,200);assert.equal(detail.data.mongoAvailable,false);assert(detail.data.evidence.rule_scores);assert.equal(detail.data.syncState,"PENDING");
