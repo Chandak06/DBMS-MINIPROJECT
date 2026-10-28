@@ -5,8 +5,9 @@ import { mysqlPool } from "@/lib/mysql";
 import type { RowDataPacket } from "mysql2";
 import { ClaimForm } from "@/components/ClaimForm";
 import Link from "next/link";
+import { requirePagePermission } from "@/lib/page-permission";
 export default async function Page({searchParams}:{searchParams:Promise<{foundId?:string}>}) {
- const user=await requireSession(),id=Number((await searchParams).foundId);if(!Number.isSafeInteger(id)||id<=0)notFound();
+ const user=await requirePagePermission("claims.own"),id=Number((await searchParams).foundId);if(!Number.isSafeInteger(id)||id<=0)notFound();
  const item=await getReport("found",id,user);
  const [matches]=await mysqlPool.execute<RowDataPacket[]>("SELECT 1 FROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id WHERE m.found_id=? AND m.status='ACCEPTED' AND li.reported_by=? AND li.status='MATCHED'",[id,user.userId]);
  if(!matches.length||item.status!=="MATCHED")return <main className="container card"><h1>Claim unavailable</h1><p>You need an accepted match for your own lost report before claiming this item.</p><Link className="button" href="/matches">View matches</Link></main>;
