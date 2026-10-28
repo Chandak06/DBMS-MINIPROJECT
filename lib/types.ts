@@ -4,6 +4,8 @@ export type SessionUser = {
   userId: number;
   email: string;
   role: Role;
+  authVersion: number;
+  campusId?: number;
 };
 
 export type LostItemStatus = "OPEN" | "MATCHED" | "CLOSED";
