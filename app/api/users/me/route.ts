@@ -35,8 +35,8 @@ export async function PATCH(request: Request) {
 
   const data = parsed.data;
   const [departments] = await mysqlPool.execute<RowDataPacket[]>(
-    "SELECT department_id FROM DEPARTMENT WHERE department_id = ?",
-    [data.departmentId]
+    "SELECT department_id FROM DEPARTMENT WHERE department_id=? AND campus_id=(SELECT d.campus_id FROM USER u JOIN DEPARTMENT d ON d.department_id=u.department_id WHERE u.user_id=?)",
+    [data.departmentId,session.userId]
   );
   if (departments.length === 0) return apiError("Department not found", 400);
 
