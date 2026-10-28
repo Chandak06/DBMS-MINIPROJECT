@@ -7,11 +7,6 @@ function setDefault(key,value,placeholders=[]) {
  else if(!match[1].trim()||placeholders.includes(match[1].trim())) source=source.replace(pattern,key+"="+value);
 }
 setDefault("SESSION_SECRET",randomBytes(48).toString("hex"),["replace_with_a_long_random_secret_value"]);
-setDefault("DEMO_LOGIN_ENABLED","false");
-if(process.argv.includes("--demo")) source=source.replace(/^DEMO_LOGIN_ENABLED=.*$/m,"DEMO_LOGIN_ENABLED=true");
-setDefault("DEMO_STUDENT_EMAIL","student@campus.test",["your_google_email@gmail.com"]);
-setDefault("DEMO_STAFF_EMAIL","staff@campus.test");
-setDefault("DEMO_ADMIN_EMAIL","admin@campus.test");
 await writeFile(".env.local",source,"utf8");
 console.log("Local defaults configured; database credentials preserved. Secrets were not printed.");
 
