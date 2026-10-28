@@ -1,7 +1,7 @@
 {
-  "executedAt": "2026-10-26T07:39:57.027Z",
-  "sqlDatabase": "clf_audit_1793000373613",
-  "mongoDatabase": "clf_audit_1793000373613",
+  "executedAt": "2026-10-28T03:53:26.162Z",
+  "sqlDatabase": "clf_college_1793159564397",
+  "mongoDatabase": "clf_college_1793159564397",
   "passed": 13,
   "failed": 0,
   "fixturesRetained": true,
