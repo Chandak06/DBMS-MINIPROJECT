@@ -1,12 +1,10 @@
-import type { RowDataPacket } from "mysql2";
-import { requirePagePermission } from "@/lib/page-permission";
-import { mysqlPool } from "@/lib/mysql";
-import { CreateRecordForm } from "@/components/CreateRecordForm";
-import { RoleForm } from "@/components/RoleForm";
-export default async function Page() {
- const actor=await requirePagePermission("users.manage");
- const [[users],[departments]]=await Promise.all([mysqlPool.query<RowDataPacket[]>("SELECT user_id,email,role FROM USER ORDER BY user_id LIMIT 500"),mysqlPool.query<RowDataPacket[]>("SELECT department_id,department_name FROM DEPARTMENT ORDER BY department_name")]);
- return <main className="container stack"><div><p className="eyebrow">Admin · Access management</p><h1>Users and roles</h1><p className="muted">New Google registrations always start as Student. Role assignments take effect on the next request. Your own role cannot be changed here.</p></div>
- <CreateRecordForm title="Register account" endpoint="/api/admin/users" fields={[{name:"firstName",label:"First name",required:true},{name:"lastName",label:"Last name",required:true},{name:"email",label:"Google email",type:"email",required:true},{name:"role",label:"Role",required:true,options:["STUDENT","STAFF","ADMIN"].map(r=>({value:r,label:r}))},{name:"departmentId",label:"Department",required:true,options:departments.map(d=>({value:d.department_id,label:d.department_name}))}]}/>
- <section className="card table-wrap"><table><thead><tr><th>ID</th><th>Email</th><th>Role</th></tr></thead><tbody>{users.map(u=><tr key={u.user_id}><td>{u.user_id}</td><td>{u.email}</td><td>{u.user_id===actor.userId?<span className="badge">ADMIN · your account</span>:<RoleForm id={u.user_id} role={u.role}/>}</td></tr>)}</tbody></table></section></main>;
+import type {RowDataPacket} from "mysql2";
+import {requirePagePermission} from "@/lib/page-permission";
+import {mysqlPool} from "@/lib/mysql";
+import {CreateRecordForm} from "@/components/CreateRecordForm";
+import {ActionButton} from "@/components/ActionButton";
+export default async function Page(){
+ await requirePagePermission("users.manage");
+ const [[users],[departments]]=await Promise.all([mysqlPool.query<RowDataPacket[]>("SELECT user_id,email,role,auth_enabled FROM USER ORDER BY user_id LIMIT 500"),mysqlPool.query<RowDataPacket[]>("SELECT d.department_id,d.department_name,c.campus_name FROM DEPARTMENT d JOIN CAMPUS c ON c.campus_id=d.campus_id WHERE c.registration_enabled=TRUE ORDER BY c.campus_name,d.department_name")]);
+ return <main className="container stack"><div><p className="eyebrow">Admin · College access</p><h1>College accounts</h1><p className="muted">Register the college first, then provision Student or Staff accounts. Email formats determine the account category; Admin accounts are created only by the trusted setup script.</p></div><CreateRecordForm title="Provision college account" endpoint="/api/admin/users" fields={[{name:"firstName",label:"First name",required:true},{name:"lastName",label:"Last name",required:true},{name:"email",label:"College email",type:"email",required:true},{name:"password",label:"Initial password (12-128 characters)",type:"password",required:true},{name:"role",label:"Account category",required:true,options:["STUDENT","STAFF"].map(r=>({value:r,label:r}))},{name:"departmentId",label:"Registered college department",required:true,options:departments.map(d=>({value:d.department_id,label:d.campus_name+" / "+d.department_name}))}]}/><section className="card table-wrap"><table><thead><tr><th>ID</th><th>College email</th><th>Access</th></tr></thead><tbody>{users.map(u=><tr key={u.user_id}><td>{u.user_id}</td><td>{u.email}</td><td>{u.role==="ADMIN"?<span className="badge">Admin · script managed</span>:<div className="stack"><span>{u.role} · {u.auth_enabled?"Enabled":"Disabled"}</span><ActionButton endpoint={"/api/admin/users/"+u.user_id} method="PATCH" body={{active:!u.auth_enabled}} label={u.auth_enabled?"Disable account":"Enable account"}/><CreateRecordForm title="Reset password" endpoint={"/api/admin/users/"+u.user_id+"/password"} fields={[{name:"password",label:"New password (12-128 characters)",type:"password",required:true}]}/></div>}</td></tr>)}</tbody></table></section></main>;
 }
