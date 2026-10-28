@@ -6,6 +6,7 @@ import { AppError } from "@/lib/errors";
 import { userCreateSchema } from "@/lib/validations";
 import { enqueueAuditEvent } from "@/lib/audit";
 import { transaction } from "@/lib/transaction";
+import { provisionAccount } from "@/lib/provisioning.mjs";
 import { tryFlushMongoOutbox } from "@/lib/outbox";
 export async function GET() {
  return withPermission("users.manage",async user=>{
@@ -21,9 +22,10 @@ export async function POST(request:Request) {
   if(!parsed.success) throw new AppError(parsed.error.issues[0].message);
   const d=parsed.data;
   const id=await transaction(async connection=>{
-  const [r]=await connection.execute<ResultSetHeader>("INSERT INTO `USER` (first_name,last_name,email,role,department_id) VALUES (?,?,?,?,?)",[d.firstName,d.lastName,d.email,d.role,d.departmentId]);
-  await enqueueAuditEvent(connection,{userId:user.userId,eventType:"USER_CREATE",entityType:"USER",entityId:r.insertId,payload:{role:d.role}});
-  return r.insertId;
+  let r;
+  try{r=await provisionAccount(connection,d);}catch(e){if((e as {code?:string}).code)throw e;throw new AppError(e instanceof Error?e.message:"Invalid college account");}
+  await enqueueAuditEvent(connection,{userId:user.userId,eventType:"USER_CREATE",entityType:"USER",entityId:r.userId,payload:{role:d.role}});
+  return r.userId;
   });
   await tryFlushMongoOutbox();
   return NextResponse.json({userId:id},{status:201});
