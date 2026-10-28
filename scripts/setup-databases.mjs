@@ -18,17 +18,27 @@ export function splitSql(source) {
 async function runFile(connection,file) {
  const source=(await readFile(file,"utf8")).replaceAll("campus_lost_found",sqlDatabase);
  for(const sql of splitSql(source)) {
+  if(file.endsWith("college-auth.sql")||file.endsWith("college-email-formats.sql")){
+   const column=sql.match(/^ALTER TABLE `?(\w+)`? ADD COLUMN (\w+)/i);
+   if(column){const [rows]=await connection.execute("SELECT 1 FROM information_schema.columns WHERE table_schema=? AND table_name=? AND column_name=?",[sqlDatabase,column[1],column[2]]);if(rows.length)continue;}
+  }
   if(file.endsWith("outbox-reliability.sql")) {
    const column=sql.match(/^ALTER TABLE MONGO_OUTBOX ADD COLUMN (\w+)/i);
    if(column) {const [rows]=await connection.execute("SELECT 1 FROM information_schema.columns WHERE table_schema=? AND table_name='MONGO_OUTBOX' AND column_name=?",[sqlDatabase,column[1]]);if(rows.length)continue;}
    if(/DROP CHECK/.test(sql)) {const [rows]=await connection.execute("SELECT 1 FROM information_schema.table_constraints WHERE constraint_schema=? AND table_name='MONGO_OUTBOX' AND constraint_name='chk_outbox_collection'",[sqlDatabase]);if(!rows.length)continue;}
   }
-  const index=sql.match(/^CREATE INDEX (\w+) ON (\w+)/i);
+  const index=sql.match(/^CREATE (?:FULLTEXT )?INDEX (\w+) ON (\w+)/i);
   if(index) {
    const [rows]=await connection.execute("SELECT 1 FROM information_schema.statistics WHERE table_schema=? AND table_name=? AND index_name=?",[sqlDatabase,index[2],index[1]]);
    if(rows.length) continue;
   }
-  await connection.query(sql);
+  let statement=sql;
+  if(file.endsWith("college-auth.sql")&&/^CREATE TABLE IF NOT EXISTS COLLEGE_EMAIL_DOMAIN/i.test(sql)){
+   const [[key]]=await connection.execute("SELECT COLUMN_TYPE AS kind FROM information_schema.columns WHERE table_schema=? AND table_name='CAMPUS' AND column_name='campus_id'",[sqlDatabase]);
+   if(!/^int(?: unsigned)?$/i.test(key.kind))throw new Error("Unexpected CAMPUS key type");
+   statement=sql.replace("campus_id INT UNSIGNED NOT NULL","campus_id "+key.kind+" NOT NULL");
+  }
+  await connection.query(statement);
  }
  return createHash("sha256").update(source).digest("hex");
 }
@@ -53,7 +63,7 @@ async function main() {
    }
   }
   await connection.query("CREATE TABLE IF NOT EXISTS SCHEMA_MIGRATION (name VARCHAR(100) PRIMARY KEY, checksum CHAR(64) NOT NULL, applied_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB");
-  for(const file of ["database/mysql/indexes_views.sql","database/mysql/advanced.sql","database/mysql/revisions.sql","database/mysql/outbox-reliability.sql"]) {
+  for(const file of ["database/mysql/indexes_views.sql","database/mysql/advanced.sql","database/mysql/revisions.sql","database/mysql/outbox-reliability.sql","database/mysql/college-auth.sql","database/mysql/college-email-formats.sql","database/mysql/syllabus-features.sql"]) {
    const [applied]=await connection.execute("SELECT checksum FROM SCHEMA_MIGRATION WHERE name=?",[file]);
    if(applied.length) { console.log("Already applied: "+file); continue; }
    const checksum=await runFile(connection,file);
