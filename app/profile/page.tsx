@@ -2,6 +2,7 @@ import type { RowDataPacket } from "mysql2";
 import { notFound } from "next/navigation";
 import { requireSession } from "@/lib/auth";
 import { mysqlPool } from "@/lib/mysql";
+import {PasswordForm} from "@/components/PasswordForm";
 import { ProfileForm } from "@/components/ProfileForm";
 
 export default async function ProfilePage() {
@@ -12,10 +13,10 @@ export default async function ProfilePage() {
     [session.userId]
   );
   if (!users[0]) notFound();
-  const [departmentRows] = await mysqlPool.query<RowDataPacket[]>(
+  const [departmentRows] = await mysqlPool.execute<RowDataPacket[]>(
     `SELECT d.department_id, d.department_name, c.campus_name
        FROM DEPARTMENT d JOIN CAMPUS c ON c.campus_id = d.campus_id
-      ORDER BY c.campus_name, d.department_name`
+      WHERE c.campus_id=? ORDER BY c.campus_name, d.department_name`,[session.campusId??-1]
   );
   const user = {
     first_name: String(users[0].first_name),
@@ -31,5 +32,5 @@ export default async function ProfilePage() {
     department_name: String(r.department_name),
     campus_name: String(r.campus_name)
   }));
-  return <main className="container stack"><h1 className="page-title">My profile</h1><ProfileForm user={user} departments={departments} /></main>;
+  return <main className="container stack"><h1 className="page-title">My profile</h1><ProfileForm user={user} departments={departments} /><PasswordForm/></main>;
 }
