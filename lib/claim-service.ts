@@ -11,24 +11,26 @@ import { claimCreateSchema } from "./validations";
 export async function listClaims(user:SessionUser,status="",id?:number) {
  const where:string[]=[],values:(string|number|boolean|Date|null)[]=[];
  if(!isStaffOrAdmin(user.role)) {where.push("cl.submitted_by=?");values.push(user.userId);}
+ if(user.role==="STAFF"){where.push("scope.campus_id=?");values.push(user.campusId??-1);}
  if(status) {if(!["PENDING","APPROVED","REJECTED"].includes(status)) throw new AppError("Invalid status");where.push("cl.status=?");values.push(status);}
  if(id) {where.push("cl.claim_id=?");values.push(id);}
- const [rows]=await mysqlPool.execute<RowDataPacket[]>("SELECT cl.*,fi.item_name,CONCAT_WS(' ',u.first_name,u.last_name) AS claimant_name,p.email AS processor_email FROM CLAIM cl JOIN FOUND_ITEM fi ON fi.found_id=cl.found_id JOIN `USER` u ON u.user_id=cl.submitted_by LEFT JOIN `USER` p ON p.user_id=cl.processed_by"+
+ const [rows]=await mysqlPool.execute<RowDataPacket[]>("SELECT cl.*,fi.item_name,CONCAT_WS(' ',u.first_name,u.last_name) AS claimant_name,p.email AS processor_email FROM CLAIM cl JOIN FOUND_ITEM fi ON fi.found_id=cl.found_id JOIN LOCATION scope ON scope.location_id=fi.location_id JOIN `USER` u ON u.user_id=cl.submitted_by LEFT JOIN `USER` p ON p.user_id=cl.processed_by"+
   (where.length?" WHERE "+where.join(" AND "):"")+" ORDER BY cl.status='PENDING' DESC,cl.created_at DESC LIMIT 500",values);
  return rows;
 }
 export async function createClaim(user:SessionUser,raw:unknown) {
+ requirePermission(user,"claims.own");
  const parsed=claimCreateSchema.safeParse(raw);
  if(!parsed.success) throw new AppError(parsed.error.issues[0]?.message??"Invalid claim");
  const d=parsed.data;
  const id=await transaction(async connection=>{
-  const [matches]=await connection.execute<RowDataPacket[]>("SELECT m.lost_id,li.reported_by FROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id WHERE m.found_id=? AND m.status='ACCEPTED'",[d.foundId]);
-  if(!matches[0]||matches[0].reported_by!==user.userId) throw new AppError("You need an accepted match for your own lost report before claiming this item",403);
+  const [matches]=await connection.execute<RowDataPacket[]>("SELECT m.lost_id,li.reported_by,l.campus_id FROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id JOIN LOCATION l ON l.location_id=li.location_id WHERE m.found_id=? AND m.status='ACCEPTED'",[d.foundId]);
+  if(!matches[0]||matches[0].reported_by!==user.userId||Number(matches[0].campus_id)!==user.campusId) throw new AppError("You need an accepted match for your own lost report before claiming this item",403);
   const [lost]=await connection.execute<RowDataPacket[]>("SELECT status FROM LOST_ITEM WHERE lost_id=? FOR UPDATE",[matches[0].lost_id]);
   const [found]=await connection.execute<RowDataPacket[]>("SELECT status FROM FOUND_ITEM WHERE found_id=? FOR UPDATE",[d.foundId]);
   if(lost[0]?.status!=="MATCHED"||found[0]?.status!=="MATCHED") throw new AppError("Item is no longer available",409);
   const [result]=await connection.execute<ResultSetHeader>("INSERT INTO CLAIM (claim_description,status,claim_remarks,submitted_by,found_id) VALUES (?,'PENDING',?,?,?)",[d.claimDescription,d.claimRemarks??null,user.userId,d.foundId]);
-  await connection.execute("INSERT INTO NOTIFICATION(title,message,type,user_id) SELECT 'New ownership claim',?,'CLAIM',user_id FROM `USER` WHERE role IN ('STAFF','ADMIN')",["Claim #"+result.insertId+" is awaiting ownership verification."]);
+  await connection.execute("INSERT INTO NOTIFICATION(title,message,type,user_id) SELECT 'New ownership claim',?,'CLAIM',u.user_id FROM USER u LEFT JOIN DEPARTMENT dep ON dep.department_id=u.department_id WHERE u.auth_enabled=TRUE AND (u.role='ADMIN' OR (u.role='STAFF' AND dep.campus_id=?))",["Claim #"+result.insertId+" is awaiting ownership verification.",user.campusId??-1]);
   await enqueueAuditEvent(connection,{userId:user.userId,eventType:"CLAIM_CREATE",entityType:"CLAIM",entityId:result.insertId});
   return result.insertId;
  });
