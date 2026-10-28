@@ -338,3 +338,14 @@ The repeatable `database/mysql/outbox-reliability.sql` migration adds these null
 `idx_outbox_document_pending(collection_name,document_id,processed_at,outbox_id)` supports per-document ordering. The collection CHECK now also permits `audit_events`. For audit events document_id groups writes by actor; the actual unique MongoDB event key is `outbox:<outbox_id>`, so separate events never overwrite one another. The existing audit_events collection adds a partial unique string event_id index; legacy audit documents remain intact. No domain table or collection was added.
 
 Decision procedures enqueue audit events before COMMIT. Old metadata/PDF/Word files retain their original capture date. [Live upgraded schema evidence](../testing/results/audit-live-storage.json) and [current audit](../AUDIT_2026-10-26.md) describe the current implementation.
+
+
+## College-authentication migration — 28 October 2026
+
+`college-auth.sql` adds CAMPUS.institution_code VARCHAR(12) NULL and registration_enabled BOOLEAN NOT NULL DEFAULT FALSE. USER adds password_hash VARCHAR(255) NULL, auth_enabled BOOLEAN NOT NULL DEFAULT FALSE, credential_version INT UNSIGNED DEFAULT 1, failed_login_attempts INT UNSIGNED DEFAULT 0 and locked_until DATETIME NULL. Existing rows/reports remain; NULL-hash legacy accounts cannot authenticate.
+
+The new relation is `COLLEGE_EMAIL_DOMAIN(domain_name VARCHAR(190) PK, campus_id FK -> CAMPUS.campus_id, account_type VARCHAR(10), UNIQUE(campus_id,account_type), CHECK account_type IN ('STUDENT','STAFF','ADMIN'))`. Its campus key type follows the installed parent key, preserving legacy signed-key compatibility. It has no plaintext passwords. Account campus membership still derives via DEPARTMENT; USER does not duplicate campus_id.
+
+`syllabus-features.sql` adds two report FULLTEXT indexes and the views vw_ranked_match_candidates (CTE + ROW_NUMBER) and vw_campus_recovery_dashboard. Current inventory: 13 base tables, 4 views, 8 original triggers, 2 procedures, 1 function, 4 Mongo collections. The original PDF/Word/schema capture files retain their historical dates. See [normalization and syllabus mapping](Syllabus_Mapping.md).
+
+The college-independent format migration [college-email-formats.sql](../../database/mysql/college-email-formats.sql) adds `COLLEGE_EMAIL_DOMAIN.local_part_format VARCHAR(120) NOT NULL DEFAULT '{id}'`. Each domain determines its campus, role and local ID template; no PES-specific SRN convention is enforced. Format changes revoke campus sessions.
