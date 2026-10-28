@@ -2,9 +2,9 @@ import { createSqlConnection,createMongoClient,mongoDatabase } from "./db-config
 import { replayOutbox } from "./sync-mongo.mjs";
 const sql=await createSqlConnection(),mongo=createMongoClient();
 try {
- const [[student]]=await sql.execute("SELECT user_id FROM `USER` WHERE email=?",[process.env.DEMO_STUDENT_EMAIL]);
- const [[staff]]=await sql.execute("SELECT user_id FROM `USER` WHERE email=?",[process.env.DEMO_STAFF_EMAIL]);
- if(!student||!staff)throw new Error("Configure demo student and staff, then run npm run seed");
+ const [[student]]=await sql.execute("SELECT user_id FROM `USER` WHERE email=? AND role='STUDENT'",[process.env.SEED_STUDENT_EMAIL]);
+ const [[staff]]=await sql.execute("SELECT user_id FROM `USER` WHERE email=? AND role='STUDENT'",[process.env.SEED_FINDER_EMAIL]);
+ if(!student||!staff)throw new Error("Set SEED_STUDENT_EMAIL and SEED_FINDER_EMAIL to two provisioned Student accounts");
  const samples=[
   {code:"DEMO_WALLET",name:"Black leather wallet",description:"Black leather wallet with a silver zipper and card slots",category:2,color:"Black",brand:"Fossil",location:1,tags:["wallet","black","leather"],keywords:["silver zipper"],attrs:{material:"leather",identifyingMark:"Small star stamped inside"},age:24},
   {code:"DEMO_HEADPHONES",name:"Blue wireless headphones",description:"Blue over-ear headphones in a carrying case",category:1,color:"Blue",brand:"Sony",location:2,tags:["headphones","blue","wireless"],keywords:["carrying case"],attrs:{model:"WH-CH720N"},age:48}
