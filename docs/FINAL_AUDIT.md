@@ -1,3 +1,5 @@
+> Historical submission audit. For the current college-registration, configurable email-format and Student-only reporting changes, see [the 28 October audit](COLLEGE_AUTH_2026-10-28.md).
+
 # Final submission audit
 
 ## FINAL VERDICT
