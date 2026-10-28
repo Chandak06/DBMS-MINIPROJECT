@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { normalizeLocalFormat } from "./college-email.mjs";
 const optionalText = (max: number) => z.string().trim().max(max).optional().transform(v => v === "" ? undefined : v);
 const attributes = z.record(z.string().min(1).max(60), z.union([z.string().max(300), z.number().finite(), z.boolean()])).refine(v => Object.keys(v).length <= 30, "At most 30 attributes");
 export const itemDetailsSchema = z.object({
@@ -40,7 +41,11 @@ export const profileUpdateSchema = z.object({
   lastName: z.string().trim().min(1).max(80), phone: optionalText(20),
   departmentId: z.coerce.number().int().positive()
 }).strict();
-export const campusCreateSchema = z.object({ campusName:z.string().trim().min(2).max(120), street:optionalText(150), city:optionalText(80), state:optionalText(80), postalCode:optionalText(20) });
+const domain=z.string().trim().toLowerCase().min(4).max(190).regex(/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/);
+const localFormat=z.string().trim().min(1).max(120).refine(v=>{try{normalizeLocalFormat(v);return true;}catch{return false;}},"Invalid email ID format").default("{id}");
+const collegeFields={institutionCode:z.string().trim().toUpperCase().regex(/^[A-Z]{2,12}$/),studentDomain:domain,staffDomain:domain,adminDomain:domain,studentLocalFormat:localFormat,staffLocalFormat:localFormat,adminLocalFormat:localFormat};
+export const collegeRegistrationSchema=z.object(collegeFields).strict().refine(d=>new Set([d.studentDomain,d.staffDomain,d.adminDomain]).size===3,"Use different email domains for each role");
+export const campusCreateSchema = z.object({ campusName:z.string().trim().min(2).max(120), street:optionalText(150), city:optionalText(80), state:optionalText(80), postalCode:optionalText(20),...collegeFields }).strict().refine(d=>new Set([d.studentDomain,d.staffDomain,d.adminDomain]).size===3,"Use different email domains for each role");
 export const departmentCreateSchema = z.object({ departmentName:z.string().trim().min(2).max(120), campusId:z.coerce.number().int().positive() });
 export const categoryCreateSchema = z.object({ categoryName:z.string().trim().min(2).max(100), description:optionalText(3000) });
 export const locationCreateSchema = z.object({ locationName:z.string().trim().min(2).max(150), campusId:z.coerce.number().int().positive(), building:optionalText(100), floor:optionalText(50), area:optionalText(100), type:optionalText(50) });
@@ -52,6 +57,7 @@ export const claimProcessSchema = z.object({ status:z.enum(["APPROVED","REJECTED
 export const userCreateSchema = z.object({
   firstName:z.string().trim().min(2).max(80), lastName:z.string().trim().min(1).max(80),
   email:z.string().trim().email().max(255).transform(v=>v.toLowerCase()),
-  role:z.enum(["STUDENT","STAFF","ADMIN"]), departmentId:z.coerce.number().int().positive()
+  role:z.enum(["STUDENT","STAFF"]), departmentId:z.coerce.number().int().positive(),
+  password:z.string().min(12).max(128).refine(v=>!v.includes("\0")&&Buffer.byteLength(v,"utf8")<=512,"Invalid password")
 }).strict();
 
