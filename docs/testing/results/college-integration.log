@@ -1,0 +1,148 @@
+
+> campus-lost-found@1.0.0 test:audit
+> node --env-file=.env.local scripts/audit-integration.mjs
+
+PASS Reference seed never creates an Admin or passwordless users
+PASS Trusted script provisions the first Admin and college
+PASS Admin bootstrap repeats without replacing its password
+PASS Production and unconfirmed bootstrap are refused
+PASS Fresh/repeated schema contains normalized domains, fulltext, CTE and window views
+PASS Removed Google and role-only demo routes cannot authenticate
+PASS STUDENT college/password login
+PASS FINDER college/password login
+PASS STAFF college/password login
+PASS ADMIN college/password login
+PASS Passwords are salted hashes and never returned
+PASS STUDENT cannot choose a role in the login body
+PASS STAFF cannot choose a role in the login body
+PASS ADMIN cannot choose a role in the login body
+PASS Unknown college/email and incorrect password are denied
+PASS Legacy OAuth/demo JWTs cannot survive the migration
+PASS Forged role and stale credential version are rejected
+PASS Unregistered colleges cannot authenticate or provision accounts
+PASS STUDENT cannot create an Admin through HTTP
+PASS STUDENT cannot promote a role through HTTP
+PASS STAFF cannot create an Admin through HTTP
+PASS STAFF cannot promote a role through HTTP
+PASS ADMIN cannot create an Admin through HTTP
+PASS ADMIN cannot promote a role through HTTP
+PASS Students and Staff cannot view Admin pages
+PASS STAFF cannot submit lost reports
+PASS STAFF cannot submit found reports
+PASS STAFF cannot submit ownership claims
+PASS ADMIN cannot submit lost reports
+PASS ADMIN cannot submit found reports
+PASS ADMIN cannot submit ownership claims
+PASS Student lost report commits SQL, details and audit
+PASS Student found report commits to MySQL and MongoDB
+PASS STAFF cannot PATCH a lost report
+PASS STAFF cannot DELETE a lost report
+PASS STAFF cannot PUT lost details
+PASS STAFF cannot DELETE lost details
+PASS STAFF cannot PATCH a found report
+PASS STAFF cannot DELETE a found report
+PASS STAFF cannot PUT found details
+PASS STAFF cannot DELETE found details
+PASS ADMIN cannot PATCH a lost report
+PASS ADMIN cannot DELETE a lost report
+PASS ADMIN cannot PUT lost details
+PASS ADMIN cannot DELETE lost details
+PASS ADMIN cannot PATCH a found report
+PASS ADMIN cannot DELETE a found report
+PASS ADMIN cannot PUT found details
+PASS ADMIN cannot DELETE found details
+PASS Staff/Admin report forms are absent and direct creation pages are denied
+PASS Unrelated Student cannot read private lost details
+PASS Private found attributes are hidden from another Student
+PASS Student cannot generate or review candidates
+PASS Staff matching uses current detail snapshots and ranks deterministically
+PASS Repeated matching does not create duplicate pairs
+PASS Atomic report edit and stale-candidate rejection
+PASS Concurrent report submissions produce one report
+PASS Student cannot claim without an accepted own match
+PASS Concurrent match decisions accept only one pair
+PASS Only the accepted lost-report owner can claim
+PASS Students cannot approve claims or read another claimant's proof
+PASS Concurrent approval returns the item exactly once
+PASS Terminal decisions and notifications remain consistent
+PASS Unmatched Student report supports guarded deletion in both databases
+PASS MySQL full-text report search returns relevant records
+PASS All role dashboards, reports, claims and profile pages render
+PASS STUDENT management read boundary /api/admin/users
+PASS STUDENT management read boundary /api/system/sync
+PASS STUDENT cannot reset an Admin password through the web
+PASS STAFF management read boundary /api/admin/users
+PASS STAFF management read boundary /api/system/sync
+PASS STAFF cannot reset an Admin password through the web
+PASS ADMIN management read boundary /api/admin/users
+PASS ADMIN management read boundary /api/system/sync
+PASS ADMIN cannot reset an Admin password through the web
+PASS College domain registration is Admin-only
+PASS Admin registers a college and provisions its Student
+PASS Staff and Students are isolated to their registered college
+PASS Profile changes and Staff messages cannot cross college boundaries
+PASS Claim review and operational notifications stay in the correct college
+PASS Each college enforces its own configured Student ID format
+PASS Login displays only Admin-registered college Student formats
+PASS Unsafe email-format expressions are refused
+PASS Disabling a registered college invalidates its current sessions
+PASS Admin cannot disable the college that grants their own access
+PASS Invalid role-specific college addresses are refused
+PASS Disabling and re-enabling a Student revokes old sessions
+PASS Admin password reset revokes previous Student sessions
+PASS Users can change their own password without exposing it
+PASS Login throttling survives as SQL account state
+PASS Anonymous access denied: /api/users/me
+PASS Anonymous access denied: /api/lost-items
+PASS Anonymous access denied: /api/found-items
+PASS Anonymous access denied: /api/matches
+PASS Anonymous access denied: /api/claims
+PASS Anonymous access denied: /api/notifications
+PASS Anonymous access denied: /api/campuses
+PASS Anonymous access denied: /api/admin/users
+PASS Anonymous access denied: /api/system/sync
+PASS Syllabus SELECT, CTE/window, fulltext and EXPLAIN examples execute
+Mongo synchronization deferred {
+  outboxId: 65,
+  collection: 'lost_item_details',
+  kind: 'TRANSIENT',
+  diagnostic: 'MongoServerSelectionError'
+}
+PASS A real unavailable MongoDB connection retains payload and records failure
+PASS Backoff prevents immediate automatic retry
+PASS Recovery works in a new worker process after restart
+PASS Replaying an acknowledged write does not duplicate documents
+Mongo synchronization deferred {
+  outboxId: 66,
+  collection: 'lost_item_details',
+  kind: 'TRANSIENT',
+  diagnostic: 'Error: ECONNRESET'
+}
+PASS Crash after Mongo write before SQL acknowledgement replays idempotently
+Mongo synchronization deferred {
+  outboxId: 67,
+  collection: 'lost_item_details',
+  kind: 'PERMANENT',
+  diagnostic: 'MongoServerError: 121'
+}
+PASS Permanent validation failure does not block unrelated writes
+PASS An unrelated failed write does not block matching or enrichment status
+PASS Same-document writes stay blocked behind a failed predecessor
+PASS Simultaneous workers cannot process a write unsafely
+Mongo synchronization deferred {
+  outboxId: 81,
+  collection: 'audit_events',
+  kind: 'TRANSIENT',
+  diagnostic: 'MongoNetworkError'
+}
+PASS Audit events survive outage and retries without duplicates
+Mongo synchronization deferred {
+  outboxId: 82,
+  collection: 'lost_item_details',
+  kind: 'EXHAUSTED',
+  diagnostic: 'MongoNetworkError'
+}
+PASS Retry limit stops automatic attempts and Admin can request recovery
+PASS All retained outbox records are synchronized
+PASS Matching and evidence remain available during a real Mongo connection outage
+
