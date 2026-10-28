@@ -13,20 +13,23 @@ export function requireStaff(user:SessionUser) { requirePermission(user,"operati
 export async function listMatches(user:SessionUser,status="") {
  const where:string[]=[],values:(string|number|boolean|Date|null)[]=[];
  if(!isStaffOrAdmin(user.role)) { where.push("li.reported_by=?");values.push(user.userId); }
+ if(user.role==="STAFF"){where.push("scope.campus_id=?");values.push(user.campusId??-1);}
  if(status) { if(!["PENDING","ACCEPTED","REJECTED"].includes(status)) throw new AppError("Invalid status");where.push("m.status=?");values.push(status); }
  const [rows]=await mysqlPool.execute<RowDataPacket[]>(
-  "SELECT m.*,li.item_name AS lost_name,fi.item_name AS found_name,li.reported_by AS owner_id,li.status AS lost_status,fi.status AS found_status,li.revision AS current_lost_revision,fi.revision AS current_found_revision FROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id JOIN FOUND_ITEM fi ON fi.found_id=m.found_id"+
+  "SELECT m.*,scope.campus_id,li.item_name AS lost_name,fi.item_name AS found_name,li.reported_by AS owner_id,li.status AS lost_status,fi.status AS found_status,li.revision AS current_lost_revision,fi.revision AS current_found_revision FROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id JOIN FOUND_ITEM fi ON fi.found_id=m.found_id JOIN LOCATION scope ON scope.location_id=li.location_id"+
   (where.length?" WHERE "+where.join(" AND "):"")+" ORDER BY m.status='PENDING' DESC,m.similarity_score DESC,m.match_id DESC LIMIT 500",values);
  return rows;
 }
 export async function getMatch(user:SessionUser,id:number) {
  const [rows]=await mysqlPool.execute<RowDataPacket[]>(
-  "SELECT m.*,li.item_name AS lost_name,fi.item_name AS found_name,li.reported_by AS owner_id,li.status AS lost_status,fi.status AS found_status,li.revision AS current_lost_revision,fi.revision AS current_found_revision FROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id JOIN FOUND_ITEM fi ON fi.found_id=m.found_id WHERE m.match_id=?",[id]);
+  "SELECT m.*,scope.campus_id,li.item_name AS lost_name,fi.item_name AS found_name,li.reported_by AS owner_id,li.status AS lost_status,fi.status AS found_status,li.revision AS current_lost_revision,fi.revision AS current_found_revision FROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id JOIN FOUND_ITEM fi ON fi.found_id=m.found_id JOIN LOCATION scope ON scope.location_id=li.location_id WHERE m.match_id=?",[id]);
+ if(rows[0]&&user.role==="STAFF"&&Number(rows[0].campus_id)!==user.campusId)throw new AppError("Match not found",404);
  if(!rows[0]||!isStaffOrAdmin(user.role)&&rows[0].owner_id!==user.userId) throw new AppError("Match not found",404);
  return rows[0];
 }
-async function candidateRows(lostId?:number,foundId?:number) {
+async function candidateRows(user:SessionUser,lostId?:number,foundId?:number) {
  const values:(string|number|boolean|Date|null)[]=[],filters=["li.status='OPEN'","fi.status='OPEN'","fi.category_id=li.category_id","fl.campus_id=ll.campus_id","fi.found_datetime BETWEEN DATE_SUB(li.lost_datetime,INTERVAL 5 MINUTE) AND DATE_ADD(li.lost_datetime,INTERVAL 14 DAY)"];
+ if(user.role==="STAFF"){filters.push("ll.campus_id=?");values.push(user.campusId??-1);}
  if(lostId) {filters.push("li.lost_id=?");values.push(lostId);}
  if(foundId) {filters.push("fi.found_id=?");values.push(foundId);}
  const [rows]=await mysqlPool.execute<RowDataPacket[]>(
@@ -36,7 +39,7 @@ async function candidateRows(lostId?:number,foundId?:number) {
 }
 export async function generateMatches(user:SessionUser,lostId?:number,foundId?:number) {
  requirePermission(user,"matches.manage");
- const rows=await candidateRows(lostId,foundId);
+ const rows=await candidateRows(user,lostId,foundId);
  if(lostId&&foundId&&!rows.length) throw new AppError("Reports must be OPEN, share a category/campus, and be within 14 days",409);
  const lostIds=[...new Set(rows.map(r=>r.lost_id))],foundIds=[...new Set(rows.map(r=>r.found_id))];
  const [lostMap,foundMap]=await Promise.all([
