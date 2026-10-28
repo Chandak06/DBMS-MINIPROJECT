@@ -8,6 +8,7 @@
     "start": "next start --hostname 127.0.0.1",
     "test": "vitest run",
     "seed": "node --env-file=.env.local scripts/seed.mjs",
+    "seed:admin": "node --env-file=.env.local scripts/provision-admin.mjs",
     "db:setup": "node --env-file=.env.local scripts/setup-databases.mjs",
     "db:sync": "node --env-file=.env.local scripts/sync-mongo.mjs",
     "db:worker": "node --env-file=.env.local scripts/sync-mongo.mjs --watch",
@@ -17,7 +18,8 @@
     "test:audit": "node --env-file=.env.local scripts/audit-integration.mjs",
     "check": "npm run typecheck && npm run test && npm run build",
     "test:schema": "node --env-file=.env.local scripts/schema-smoke.mjs",
-    "db:evidence": "node --env-file=.env.local scripts/collect-evidence.mjs"
+    "db:evidence": "node --env-file=.env.local scripts/collect-evidence.mjs",
+    "db:college-evidence": "node --env-file=.env.local scripts/college-evidence.mjs"
   },
   "dependencies": {
     "jose": "5.10.0",
