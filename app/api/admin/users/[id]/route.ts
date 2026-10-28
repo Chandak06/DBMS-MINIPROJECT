@@ -1,26 +1,21 @@
-import { NextResponse } from "next/server";
-import type { RowDataPacket } from "mysql2";
-import { z } from "zod";
-import { withPermission } from "@/lib/api-route";
-import { positiveId,AppError } from "@/lib/errors";
-import { transaction } from "@/lib/transaction";
-import { enqueueAuditEvent } from "@/lib/audit";
-import { tryFlushMongoOutbox } from "@/lib/outbox";
-const schema=z.object({role:z.enum(["STUDENT","STAFF","ADMIN"])}).strict();
-export function PATCH(request:Request,{params}:{params:Promise<{id:string}>}) {
+import {NextResponse} from "next/server";
+import type {RowDataPacket} from "mysql2";
+import {z} from "zod";
+import {withPermission} from "@/lib/api-route";
+import {positiveId,AppError} from "@/lib/errors";
+import {transaction} from "@/lib/transaction";
+import {enqueueAuditEvent} from "@/lib/audit";
+export function PATCH(request:Request,{params}:{params:Promise<{id:string}>}){
  return withPermission("users.manage",async actor=>{
-  const id=positiveId((await params).id),parsed=schema.safeParse(await request.json().catch(()=>({})));
-  if(!parsed.success)throw new AppError("Supply a valid role");
-  if(id===actor.userId)throw new AppError("You cannot change your own role",403);
+  const id=positiveId((await params).id),parsed=z.object({active:z.boolean()}).strict().safeParse(await request.json().catch(()=>({})));
+  if(!parsed.success)throw new AppError("Supply active=true/false. Web role assignment is disabled.");
   await transaction(async connection=>{
-   const [users]=await connection.execute<RowDataPacket[]>("SELECT user_id,role FROM `USER` WHERE role='ADMIN' OR user_id=? ORDER BY user_id FOR UPDATE",[id]);
-   if(!users.some(u=>u.user_id===actor.userId&&u.role==="ADMIN"))throw new AppError("Admin permission was revoked",403);
-   const target=users.find(u=>u.user_id===id);
-   if(!target)throw new AppError("User not found",404);
-   if(target.role===parsed.data.role)return;
-   await connection.execute("UPDATE `USER` SET role=? WHERE user_id=?",[parsed.data.role,id]);
-   await enqueueAuditEvent(connection,{userId:actor.userId,eventType:"USER_ROLE_CHANGE",entityType:"USER",entityId:id,payload:{from:target.role,to:parsed.data.role}});
-  });
-  await tryFlushMongoOutbox();return NextResponse.json({ok:true});
+   const [[user]]=await connection.execute<RowDataPacket[]>("SELECT role,password_hash FROM USER WHERE user_id=? FOR UPDATE",[id]);
+   if(!user)throw new AppError("User not found",404);
+   if(user.role==="ADMIN")throw new AppError("Admin accounts are managed only on the trusted setup system",403);
+   if(parsed.data.active&&!user.password_hash)throw new AppError("Provision a password before enabling this account",409);
+   await connection.execute("UPDATE USER SET auth_enabled=?,credential_version=credential_version+1 WHERE user_id=?",[parsed.data.active,id]);
+   await enqueueAuditEvent(connection,{userId:actor.userId,eventType:parsed.data.active?"USER_ENABLE":"USER_DISABLE",entityType:"USER",entityId:id});
+  });return NextResponse.json({ok:true});
  });
 }
