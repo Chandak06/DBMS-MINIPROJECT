@@ -1,52 +1,61 @@
-# API Reference
+# API reference â€” college accounts
 
-All write operations validate input. Database values use prepared parameters; SQL table/column choices come from fixed internal mappings.
+Current behavior: 28 October 2026. SQL values use prepared parameters. Input schemas reject role/ownership injection. Every protected request refreshes its account, registered college, email format and credential version from MySQL.
 
 | Method | Endpoint | Permission and behavior |
 |---|---|---|
-| GET | /api/auth/google | Public; start OAuth with random state cookie |
-| GET | /api/auth/google/callback | Validate state, verified Google email; new identities register as STUDENT |
-| POST | /api/auth/demo | Enabled local demonstration only; fixed seeded role accounts |
-| POST | /api/auth/logout | Clear HTTP-only session cookie |
-| GET | /api/auth/me | Current session identity |
-| GET, PATCH | /api/users/me | Current user's profile; role changes rejected |
-| GET | /api/campuses, /api/departments | Signed-in reference lists |
-| POST | /api/campuses, /api/departments | ADMIN creates reference data |
-| GET | /api/categories, /api/locations | Signed-in reference lists |
-| POST | /api/categories, /api/locations | ADMIN creates reference data |
-| GET | /api/lost-items | Students' own reports; staff/admin see all |
-| GET | /api/found-items | Signed-in browse; private remarks excluded for other students |
-| POST | /api/lost-items, /api/found-items | Signed-in report creation as OPEN; queue MongoDB details in same SQL transaction |
-| GET | /api/lost-items/:id | Owner or staff/admin |
-| GET | /api/found-items/:id | Signed-in browse; private remarks restricted |
-| PATCH | /api/lost-items/:id, /api/found-items/:id | Owner only, OPEN only; atomic report + optional enrichment update, OPEN/CLOSED status input; revision increment |
-| DELETE | /api/lost-items/:id, /api/found-items/:id | Owner only, OPEN only, no match/claim history |
-| GET | /api/lost-items/:id/details | Owner or staff/admin |
-| GET | /api/found-items/:id/details | Signed-in; identifying attributes/media restricted to owner or staff/admin |
-| PUT, DELETE | /api/lost-items/:id/details, /api/found-items/:id/details | Owner's OPEN report; durable write and revision increment |
-| GET | /api/matches | Students' own lost-report candidates; staff/admin all |
-| POST | /api/matches | STAFF/ADMIN manual pair: lostId, foundId |
-| POST | /api/matches/generate | STAFF/ADMIN automatic candidates; optional lostId |
-| GET | /api/matches/:id | Lost owner or staff/admin; SQL state plus current MongoDB/recovery explanation, mongoAvailable and syncState |
-| PATCH | /api/matches/:id | STAFF/ADMIN; ACCEPTED or REJECTED with remarks |
-| GET | /api/claims | Students' own claims; staff/admin all |
-| POST | /api/claims | Owner of an accepted matched lost report; foundId, claimDescription, optional claimRemarks |
-| GET | /api/claims/:id | Claimant or staff/admin; private ownership proof |
-| PATCH | /api/claims/:id | STAFF/ADMIN, cannot process own claim; APPROVED/REJECTED with remarks |
-| GET | /api/notifications | Current user's inbox; optional unread=1 |
-| POST | /api/notifications | STAFF/ADMIN sends a database inbox notification |
-| PATCH | /api/notifications/:id/read | Notification owner only |
-| PATCH | /api/notifications/read-all | Current user's notifications only |
-| GET, POST | /api/system/sync | ADMIN health inspection / process due writes; optional outboxId requests an explicit retry |
-| PATCH | /api/admin/users/:id | ADMIN assigns/revokes another user’s role; self-role changes denied |
-| GET, POST | /api/admin/users | ADMIN lists/registers SQL Google accounts |
+| POST | /api/auth/login | Public; email + password only. Requires a provisioned active account and enabled Admin-registered college; exact role domain and college-defined ID template must match |
+| GET | /api/auth/google, /api/auth/google/callback | Retired; HTTP 410 without authentication |
+| POST | /api/auth/demo | Retired; HTTP 410 without authentication |
+| POST | /api/auth/logout | Clear HttpOnly session cookie |
+| GET | /api/auth/me | Current SQL-validated identity |
+| GET, PATCH | /api/users/me | Current profile; same-college department only; role/email changes rejected |
+| POST | /api/users/me/password | Verify current password, replace salted hash, revoke old sessions and clear cookie |
+| GET | /api/campuses, /api/departments, /api/categories, /api/locations | Signed-in reference lists |
+| POST | /api/campuses | Admin registers college name/code, distinct role domains and email ID formats |
+| PATCH | /api/campuses/:id | Admin updates registration policy or disables college; own current Admin access cannot be removed |
+| POST | /api/departments, /api/categories, /api/locations | Admin creates reference data |
+| GET, POST | /api/admin/users | Admin lists accounts / provisions Student or Staff in a registered college; Admin role refused |
+| PATCH | /api/admin/users/:id | Admin enables/disables Student/Staff only; role assignment and Admin targets refused |
+| POST | /api/admin/users/:id/password | Admin resets Student/Staff password and revokes sessions; Admin targets refused |
+| GET | /api/lost-items | Students' own reports; Staff their college's reports; Admin supervision |
+| GET | /api/found-items | Student/Staff current-college browse; Admin supervision; other Students' private attributes hidden |
+| POST | /api/lost-items, /api/found-items | Student only; create own OPEN report at same-college location, enqueue Mongo details atomically |
+| GET | /api/lost-items/:id | Student owner, same-college Staff or Admin |
+| GET | /api/found-items/:id | College-scoped browse; private remarks restricted |
+| PATCH | /api/lost-items/:id, /api/found-items/:id | Student owner, OPEN report only; atomic SQL + enrichment update; revision increment |
+| DELETE | /api/lost-items/:id, /api/found-items/:id | Student owner, OPEN only and no match/claim history |
+| GET | /api/lost-items/:id/details | Student owner, same-college Staff or Admin |
+| GET | /api/found-items/:id/details | College-scoped; identifying attributes/media restricted to owner, Staff or Admin |
+| PUT, DELETE | /api/lost-items/:id/details, /api/found-items/:id/details | Student owner's OPEN report; durable write and revision increment |
+| GET | /api/matches | Student's lost-report candidates; Staff current college; Admin supervision |
+| POST | /api/matches | Staff/Admin manual pair: lostId, foundId; Staff college restriction enforced |
+| POST | /api/matches/generate | Staff/Admin automatic candidates; optional lostId; Staff college restriction enforced |
+| GET | /api/matches/:id | Lost owner or authorized Staff/Admin; SQL state plus available Mongo/recovery explanation |
+| PATCH | /api/matches/:id | Authorized Staff/Admin accepts/rejects with remarks; stale/self/terminal decisions denied |
+| GET | /api/claims | Student's own claims; Staff current college; Admin supervision |
+| POST | /api/claims | Student owner of an accepted matched lost report; private proof required |
+| GET | /api/claims/:id | Claimant or authorized Staff/Admin; private proof |
+| PATCH | /api/claims/:id | Authorized Staff/Admin approves/rejects; own/terminal claim decisions denied |
+| GET | /api/notifications | Current inbox; optional unread=1 |
+| POST | /api/notifications | Staff sends within college; Admin supervises globally |
+| PATCH | /api/notifications/:id/read, /api/notifications/read-all | Current user's notifications only |
+| GET, POST | /api/system/sync | Admin inspects/processes outbox; optional outboxId explicitly retries a retained failure |
 
-## Filters and errors
+Admin creation exists only in [the trusted local script](../../scripts/provision-admin.mjs), with development/test confirmation. There is no public signup, web Admin promotion or role-only demo login.
 
-Report list filters: `q`, `status=OPEN|MATCHED|CLOSED`, `categoryId`, `locationId`, `mine=1`. Match/claim lists accept their respective status enums. Lists return at most 500 rows. Matching refuses more than 2000 pairs; supply `lostId` to narrow the candidate set.
+## College email policy
 
-Responses use 400 for invalid input, 401 for missing authentication, 403 for forbidden roles/actions, 404 for unavailable or private records, 409 for duplicate/conflicting decisions, and 503 for unavailable database services. Report creation returns `lostId`/`foundId` and `enrichmentSaved`; false means SQL succeeded and extra details remain safely queued.
+Registration fields are institutionCode, studentDomain, staffDomain, adminDomain and studentLocalFormat/staffLocalFormat/adminLocalFormat. Formats describe only the ID before @; domains are separate exact names and must differ by role. A template can use literal text, {id}, {letters}, {digits}, {alnum}, or fixed counts such as S{digits:6}. No institution-specific ID prefix or arbitrary regular expression is required. Omitted format fields default to {id}; Admin UI and local setup show them explicitly. The login page reads enabled Student formats from SQL. Unknown colleges or emails that fail their stored format cannot authenticate even with a valid password.
 
-Date/time input must be an ISO date/time with a timezone. The browser converts local input to UTC; SQL stores UTC DATETIME, and interface dates display in IST.
+PATCH registration accepts the complete policy above or exactly {"registrationEnabled":false}. Policy changes revoke affected users' old credential versions. Account state PATCH accepts exactly {"active":true/false}; password resets accept {"password":"..."}. No password hash is returned or included in audit payloads.
 
-Staff access `/reference-data` in read-only mode. Admin uses `/admin/users`, `/admin/sync` and `/admin/audit`. Match and claim processing also rejects terminal transitions, and neither Staff nor Admin can process their own claim. Sync responses include processed, pending, retryable, failed and busy; remaining failures are not reported as completed.
+## Filters, consistency and errors
+
+Report filters: q, status=OPEN|MATCHED|CLOSED, categoryId, locationId, mine=1. searchMode=fulltext uses indexed MySQL MATCH ... AGAINST; default contains supports substring lookup. Lists are bounded to 500 rows. Matching bounds candidate comparisons to 2000; provide lostId to narrow the work.
+
+Dates must be ISO values with a timezone. Browser input is converted to UTC, SQL DATETIME stores UTC, and the interface displays IST. Report creation returns lostId/foundId and enrichmentSaved; false means SQL committed and enrichment remains durably queued. Mongo outages never imply a distributed rollback across stores.
+
+Errors: 400 invalid input, 401 missing/invalid authentication, 403 forbidden action, 404 private/unavailable resource, 409 conflicting/stale decision, 410 removed authentication endpoint, 413 oversized login body, 429 account lock or bounded hashing capacity, 503 unavailable database. Five failed known-account attempts lock login for 15 minutes. Cookies are HttpOnly, SameSite=Lax and Secure for HTTPS configuration. Same-origin middleware remains enabled, including validated local loopback aliases.
+
+Staff uses reference data read-only. Only Students see report submission and ownership-claim controls. Admin manages colleges/accounts, audit and synchronization; Staff/Admin retain operational matching and claim review.
