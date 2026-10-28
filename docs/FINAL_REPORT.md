@@ -1,3 +1,7 @@
+> Current college-independent authentication, Admin provisioning and test evidence are documented in [the 28 October change audit](COLLEGE_AUTH_2026-10-28.md). Previously generated PDFs/Word files and screenshots remain dated historical deliverables.
+
+Current implementation note (28 October 2026): college-email/password authentication replaces Google/demo sign-in; Student-only reporting and trusted CLI Admin provisioning are documented in [authentication](implementation/Authentication.md) and [syllabus mapping](design/Syllabus_Mapping.md). This report/PDF otherwise remains a dated snapshot.
+
 # Campus Lost & Found Intelligent Matching System
 
 DBMS Experiential Learning Level 3 | Original report: 2 October 2026
