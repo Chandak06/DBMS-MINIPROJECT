@@ -1,0 +1,49 @@
+{
+  "name": "campus-lost-found",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1",
+    "test": "vitest run --reporter=default --reporter=json --outputFile=docs/testing/results/current/unit-results.json",
+    "seed": "node --env-file=.env.local scripts/seed.mjs",
+    "seed:admin": "node --env-file=.env.local scripts/provision-admin.mjs",
+    "db:setup": "node --env-file=.env.local scripts/setup-databases.mjs",
+    "db:sync": "node --env-file=.env.local scripts/sync-mongo.mjs",
+    "db:worker": "node --env-file=.env.local scripts/sync-mongo.mjs --watch",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test:integration": "node --env-file=.env.local scripts/college-integration.mjs",
+    "test:audit": "node --env-file=.env.local scripts/college-integration.mjs",
+    "check": "npm run typecheck && npm run test && npm run build",
+    "test:schema": "node --env-file=.env.local scripts/college-integration.mjs --schema-only",
+    "db:evidence": "node --env-file=.env.local scripts/collect-evidence.mjs",
+    "db:college-evidence": "node --env-file=.env.local scripts/college-evidence.mjs",
+    "seed:samples": "node --env-file=.env.local scripts/seed-samples.mjs",
+    "verify": "node scripts/verify-deliverables.mjs",
+    "db:health": "node --env-file=.env.local scripts/check-shared-databases.mjs"
+  },
+  "dependencies": {
+    "jose": "5.10.0",
+    "mongodb": "6.21.0",
+    "mysql2": "3.24.4",
+    "next": "15.5.28",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3",
+    "vitest": "5.0.3"
+  },
+  "type": "module",
+  "overrides": {
+    "postcss": "^8.5.23"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
