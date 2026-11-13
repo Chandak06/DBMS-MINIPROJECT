@@ -1,0 +1,16 @@
+import {beforeEach,it,expect,vi} from "vitest";
+const m=vi.hoisted(()=>({execute:vi.fn(),verify:vi.fn(),audit:vi.fn()}));
+vi.mock("@/lib/mysql",()=>({mysqlPool:{execute:m.execute}}));
+vi.mock("@/lib/transaction",()=>({transaction:async(work:(c:unknown)=>Promise<unknown>)=>work({execute:m.execute})}));
+vi.mock("@/lib/audit",()=>({enqueueAuditEvent:m.audit}));
+vi.mock("@/lib/outbox",()=>({tryFlushMongoOutbox:async()=>({pending:0})}));
+vi.mock("@/lib/password.mjs",()=>({verifyPassword:m.verify,DUMMY_HASH:"dummy"}));
+import {loginAccount} from "@/lib/auth-service";
+const row={user_id:1,email:"s100001@students.example.edu",role:"STUDENT",password_hash:"hash",auth_enabled:1,credential_version:1,registration_enabled:1,institution_code:"COL",domain_name:"students.example.edu",local_part_format:"S{digits:6}",locked:0};
+beforeEach(()=>{vi.clearAllMocks();m.verify.mockResolvedValue(true);m.audit.mockResolvedValue(undefined);m.execute.mockResolvedValue([[row]]);});
+it("accepts only a provisioned account in a registered college",async()=>{expect(await loginAccount({email:"S100001@students.example.edu",password:"valid password"})).toEqual({userId:1,email:row.email,role:"STUDENT",authVersion:1});expect(m.audit).toHaveBeenCalled();});
+for(const change of [{registration_enabled:0},{auth_enabled:0},{domain_name:"wrong.example.edu"},{role:"ADMIN",domain_name:"admin.example.edu"},{local_part_format:"{digits:8}"}])it("rejects account/college policy mismatch "+Object.keys(change),async()=>{m.execute.mockResolvedValue([[{...row,...change}]]);await expect(loginAccount({email:row.email,password:"valid password"})).rejects.toMatchObject({status:401});});
+it("does not accept a frontend role",async()=>{await expect(loginAccount({email:row.email,password:"valid password",role:"ADMIN"})).rejects.toMatchObject({status:400});expect(m.execute).not.toHaveBeenCalled();});
+it("rejects an unknown account with the same response class",async()=>{m.execute.mockResolvedValue([[]]);m.verify.mockResolvedValue(false);await expect(loginAccount({email:row.email,password:"wrong password"})).rejects.toMatchObject({status:401});expect(m.verify).toHaveBeenCalledWith("wrong password","dummy");});
+it("honors the SQL-backed login lock",async()=>{m.execute.mockResolvedValue([[{...row,locked:1}]]);await expect(loginAccount({email:row.email,password:"valid password"})).rejects.toMatchObject({status:429});expect(m.verify).not.toHaveBeenCalled();});
+it("rejects a password changed before session issuance",async()=>{m.execute.mockResolvedValueOnce([[row]]).mockResolvedValueOnce([[{...row,password_hash:"new-hash"}]]);await expect(loginAccount({email:row.email,password:"valid password"})).rejects.toMatchObject({status:401});});
