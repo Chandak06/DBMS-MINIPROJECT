@@ -1,0 +1,12 @@
+{
+  "executedAt": "2026-10-02T03:26:39.214Z",
+  "status": "PASS",
+  "freshSetup": true,
+  "repeatedSetup": true,
+  "repeatedSeed": true,
+  "demoReports": 4,
+  "sqlTables": 12,
+  "routines": 3,
+  "triggers": 8,
+  "mongoCollections": 4
+}

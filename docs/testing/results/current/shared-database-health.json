@@ -1,0 +1,83 @@
+{
+  "checkedAt": "2026-11-11T14:29:59.237Z",
+  "result": "ATTENTION",
+  "mysql": {
+    "connected": true,
+    "database": "campus_lost_found",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "version": "8.0.46",
+    "selectedDatabase": "campus_lost_found",
+    "fingerprint": {
+      "value": "435496d391201520f7b54c593164c257edda305dd14b44b200a5f3baa89ea817",
+      "basis": "server UUID + database"
+    },
+    "baseTables": 13,
+    "missingTables": [],
+    "accounts": {
+      "total": 4,
+      "admins": 2,
+      "students": 1,
+      "staff": 1,
+      "enabled": 1,
+      "enabledWithoutHash": 0
+    },
+    "collegePolicy": {
+      "registered": 1,
+      "problems": []
+    },
+    "outbox": {
+      "total": 59,
+      "processed": 59,
+      "pending": 0,
+      "failed": 0,
+      "oldestPendingSeconds": null
+    },
+    "migrations": {
+      "count": 7,
+      "latest": "database/mysql/college-email-formats.sql",
+      "latestAppliedAt": "2026-10-28 03:51:18"
+    },
+    "records": {
+      "USER": 4,
+      "LOST_ITEM": 3,
+      "FOUND_ITEM": 2,
+      "MATCH": 2,
+      "CLAIM": 1,
+      "NOTIFICATION": 5
+    }
+  },
+  "mongo": {
+    "connected": true,
+    "database": "campus_lost_found",
+    "cluster": "[cluster].mongodb.net",
+    "missingCollections": [],
+    "collections": {
+      "lost_item_details": 3,
+      "found_item_details": 2,
+      "match_evidence": 2,
+      "audit_events": 80
+    },
+    "indexProblems": [],
+    "validatorProblems": []
+  },
+  "checks": {
+    "mysqlTables": true,
+    "authentication": true,
+    "collegePolicy": true,
+    "outbox": true,
+    "mongoCollections": true,
+    "mongoIndexes": true,
+    "mongoValidators": true,
+    "orphans": true
+  },
+  "warnings": [
+    "MySQL uses root. Configure a dedicated project account before team access."
+  ],
+  "errors": [],
+  "orphans": {
+    "lost_item_details": 0,
+    "found_item_details": 0,
+    "match_evidence": 0
+  }
+}

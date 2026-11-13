@@ -1,0 +1,81 @@
+
+> campus-lost-found@1.0.0 build
+> next build
+
+   ▲ Next.js 15.5.28
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2.6s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/39) ...
+   Generating static pages (9/39) 
+   Generating static pages (19/39) 
+   Generating static pages (29/39) 
+ ✓ Generating static pages (39/39)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      211 B         103 kB
+├ ƒ /_not-found                            211 B         103 kB
+├ ƒ /admin/audit                           211 B         103 kB
+├ ƒ /admin/sync                          1.65 kB         104 kB
+├ ƒ /admin/users                         1.46 kB         104 kB
+├ ƒ /api/admin/users                       211 B         103 kB
+├ ƒ /api/admin/users/[id]                  211 B         103 kB
+├ ƒ /api/auth/demo                         211 B         103 kB
+├ ƒ /api/auth/google                       211 B         103 kB
+├ ƒ /api/auth/google/callback              211 B         103 kB
+├ ƒ /api/auth/logout                       211 B         103 kB
+├ ƒ /api/auth/me                           211 B         103 kB
+├ ƒ /api/campuses                          211 B         103 kB
+├ ƒ /api/categories                        211 B         103 kB
+├ ƒ /api/claims                            211 B         103 kB
+├ ƒ /api/claims/[id]                       211 B         103 kB
+├ ƒ /api/departments                       211 B         103 kB
+├ ƒ /api/found-items                       211 B         103 kB
+├ ƒ /api/found-items/[id]                  211 B         103 kB
+├ ƒ /api/found-items/[id]/details          211 B         103 kB
+├ ƒ /api/locations                         211 B         103 kB
+├ ƒ /api/lost-items                        211 B         103 kB
+├ ƒ /api/lost-items/[id]                   211 B         103 kB
+├ ƒ /api/lost-items/[id]/details           211 B         103 kB
+├ ƒ /api/matches                           211 B         103 kB
+├ ƒ /api/matches/[id]                      211 B         103 kB
+├ ƒ /api/matches/generate                  211 B         103 kB
+├ ƒ /api/notifications                     211 B         103 kB
+├ ƒ /api/notifications/[id]/read           211 B         103 kB
+├ ƒ /api/notifications/read-all            211 B         103 kB
+├ ƒ /api/system/sync                       211 B         103 kB
+├ ƒ /api/users/me                          211 B         103 kB
+├ ƒ /claims                                168 B         106 kB
+├ ƒ /claims/[id]                           985 B         107 kB
+├ ƒ /claims/new                            893 B         107 kB
+├ ƒ /dashboard                             878 B         107 kB
+├ ƒ /found-items                         2.28 kB         108 kB
+├ ƒ /found-items/[id]                    2.28 kB         108 kB
+├ ƒ /found-items/[id]/edit               2.28 kB         108 kB
+├ ƒ /found-items/new                     2.28 kB         108 kB
+├ ƒ /login                                 768 B         104 kB
+├ ƒ /lost-items                          2.28 kB         108 kB
+├ ƒ /lost-items/[id]                     2.28 kB         108 kB
+├ ƒ /lost-items/[id]/edit                2.28 kB         108 kB
+├ ƒ /lost-items/new                      2.28 kB         108 kB
+├ ƒ /matches                             1.23 kB         107 kB
+├ ƒ /matches/[id]                        1.35 kB         108 kB
+├ ƒ /notifications                         509 B         103 kB
+├ ƒ /profile                               960 B         104 kB
+├ ƒ /reference-data                        919 B         104 kB
+└ ƒ /staff                                 879 B         107 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/1255-dc3ddf72a1dc71a7.js      46.6 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js  54.2 kB
+  └ other shared chunks (total)             2 kB
+
+
+ƒ Middleware                             34.3 kB
+
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,238 @@
+{
+  "runId": "92ddf837-543e-4c16-be97-98fcf6cbb62a",
+  "executedAt": "2026-10-12T15:19:19.226Z",
+  "passed": 46,
+  "failed": 0,
+  "results": [
+    {
+      "name": "Authentication required",
+      "status": "PASS",
+      "durationMs": 216
+    },
+    {
+      "name": "Tampered session rejected",
+      "status": "PASS",
+      "durationMs": 19
+    },
+    {
+      "name": "Database role overrides stale admin claim",
+      "status": "PASS",
+      "durationMs": 28
+    },
+    {
+      "name": "OAuth callback rejects invalid state before provider exchange",
+      "status": "PASS",
+      "durationMs": 9
+    },
+    {
+      "name": "Student cannot manage categories",
+      "status": "PASS",
+      "durationMs": 17
+    },
+    {
+      "name": "Student cannot manage users",
+      "status": "PASS",
+      "durationMs": 20
+    },
+    {
+      "name": "Cross-origin mutation rejected",
+      "status": "PASS",
+      "durationMs": 22
+    },
+    {
+      "name": "Future date rejected",
+      "status": "PASS",
+      "durationMs": 14
+    },
+    {
+      "name": "Invalid foreign reference rejected",
+      "status": "PASS",
+      "durationMs": 13
+    },
+    {
+      "name": "Lost report persists in both databases",
+      "status": "PASS",
+      "durationMs": 555
+    },
+    {
+      "name": "Duplicate active report rejected",
+      "status": "PASS",
+      "durationMs": 30
+    },
+    {
+      "name": "Other student's lost report hidden",
+      "status": "PASS",
+      "durationMs": 17
+    },
+    {
+      "name": "Student cannot set MATCHED",
+      "status": "PASS",
+      "durationMs": 11
+    },
+    {
+      "name": "Found report persists in both databases",
+      "status": "PASS",
+      "durationMs": 144
+    },
+    {
+      "name": "Private found attributes hidden from strangers",
+      "status": "PASS",
+      "durationMs": 40
+    },
+    {
+      "name": "Student cannot generate matches",
+      "status": "PASS",
+      "durationMs": 10
+    },
+    {
+      "name": "Matching persists ranked evidence",
+      "status": "PASS",
+      "durationMs": 375
+    },
+    {
+      "name": "Match generation is idempotent",
+      "status": "PASS",
+      "durationMs": 160
+    },
+    {
+      "name": "Changed details block stale acceptance and roll back",
+      "status": "PASS",
+      "durationMs": 128
+    },
+    {
+      "name": "Regeneration refreshes revisions",
+      "status": "PASS",
+      "durationMs": 123
+    },
+    {
+      "name": "Manual pairing creates competing candidate",
+      "status": "PASS",
+      "durationMs": 220
+    },
+    {
+      "name": "Student cannot review match",
+      "status": "PASS",
+      "durationMs": 21
+    },
+    {
+      "name": "Other student cannot read match",
+      "status": "PASS",
+      "durationMs": 14
+    },
+    {
+      "name": "Claim requires accepted match",
+      "status": "PASS",
+      "durationMs": 18
+    },
+    {
+      "name": "Concurrent match decisions produce one accepted pair",
+      "status": "PASS",
+      "durationMs": 165
+    },
+    {
+      "name": "Matched report cannot be edited",
+      "status": "PASS",
+      "durationMs": 13
+    },
+    {
+      "name": "Match notification is committed",
+      "status": "PASS",
+      "durationMs": 13
+    },
+    {
+      "name": "Wrong owner cannot claim",
+      "status": "PASS",
+      "durationMs": 13
+    },
+    {
+      "name": "Owner can submit claim",
+      "status": "PASS",
+      "durationMs": 98
+    },
+    {
+      "name": "Duplicate claim rejected",
+      "status": "PASS",
+      "durationMs": 17
+    },
+    {
+      "name": "Claim evidence is private",
+      "status": "PASS",
+      "durationMs": 13
+    },
+    {
+      "name": "Student cannot approve claim",
+      "status": "PASS",
+      "durationMs": 10
+    },
+    {
+      "name": "Concurrent claim approval commits once and closes both reports",
+      "status": "PASS",
+      "durationMs": 80
+    },
+    {
+      "name": "Terminal claim cannot be reversed",
+      "status": "PASS",
+      "durationMs": 17
+    },
+    {
+      "name": "MongoDB audit aggregation records one approval",
+      "status": "PASS",
+      "durationMs": 31
+    },
+    {
+      "name": "MySQL role trigger rejects student reviewer",
+      "status": "PASS",
+      "durationMs": 7
+    },
+    {
+      "name": "MySQL CHECK rejects invalid score",
+      "status": "PASS",
+      "durationMs": 3
+    },
+    {
+      "name": "MySQL trigger rejects future date",
+      "status": "PASS",
+      "durationMs": 1
+    },
+    {
+      "name": "MongoDB validator rejects invalid detail",
+      "status": "PASS",
+      "durationMs": 37
+    },
+    {
+      "name": "Failed outbox write is retained and successfully replayed",
+      "status": "PASS",
+      "durationMs": 137
+    },
+    {
+      "name": "Views and stored function return results",
+      "status": "PASS",
+      "durationMs": 11
+    },
+    {
+      "name": "All role pages render",
+      "status": "PASS",
+      "durationMs": 1163
+    },
+    {
+      "name": "Invalid demo payload returns a validation response",
+      "status": "PASS",
+      "durationMs": 13
+    },
+    {
+      "name": "Local demo login is gated",
+      "status": "PASS",
+      "durationMs": 37
+    },
+    {
+      "name": "Notification ownership is enforced",
+      "status": "PASS",
+      "durationMs": 73
+    },
+    {
+      "name": "Unmatched OPEN report deletes SQL and MongoDB",
+      "status": "PASS",
+      "durationMs": 224
+    }
+  ]
+}

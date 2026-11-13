@@ -1,0 +1,121 @@
+{
+  "checkedAt": "2026-10-19T07:44:20.422916+00:00",
+  "repository": "https://github.com/Chandak06/DBMS-MINIPROJECT.git",
+  "head": "94d64d493f01a689842fdd0875ac1421c095e629",
+  "remoteMainObserved": "94d64d493f01a689842fdd0875ac1421c095e629",
+  "remoteVerification": "Source push acknowledged by GitHub; origin/main matches local source head",
+  "commitCount": 198,
+  "authors": [
+    {
+      "name": "Harshit Chandak",
+      "email": "chandakharshit06@gmail.com",
+      "commits": 198
+    }
+  ],
+  "hamzaAuthorVerified": false,
+  "existingHistoryRewritten": false,
+  "identityModified": false,
+  "finalApplicationPublished": true,
+  "publication": {
+    "verifiedAt": "2026-10-19T07:44:20.422916+00:00",
+    "repository": "https://github.com/Chandak06/DBMS-MINIPROJECT",
+    "branch": "main",
+    "publishedSourceHead": "94d64d493f01a689842fdd0875ac1421c095e629",
+    "sourcePhaseSingleFileCommits": 189,
+    "finalDocumentationCommitsPlannedAfterSnapshot": 7,
+    "author": {
+      "name": "Harshit Chandak",
+      "email": "chandakharshit06@gmail.com"
+    },
+    "existingHistoryPreserved": true,
+    "identityChanged": false,
+    "hamzaAuthorVerified": false,
+    "snapshotBeforeFinalDocumentationCommits": true
+  },
+  "historicalSnapshot": {
+    "checkedAt": "2026-10-02T03:45:43.8202853Z",
+    "repository": "https://github.com/Chandak06/DBMS-MINIPROJECT.git",
+    "head": "b68b64425da2b385c4d5e2d7eb6883aab6b3b0cd",
+    "remoteMainObserved": "b68b64425da2b385c4d5e2d7eb6883aab6b3b0cd",
+    "remoteVerification": "git ls-remote origin HEAD refs/heads/main succeeded read-only during cleanup",
+    "commitCount": 9,
+    "commits": [
+      {
+        "hash": "b68b64425da2b385c4d5e2d7eb6883aab6b3b0cd",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-07T16:42:31+05:30",
+        "subject": "Updated Campus_Lost_Found_DDL.sql"
+      },
+      {
+        "hash": "205a1a1504a7640b30006ec232dec43d7e865548",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-07T16:34:59+05:30",
+        "subject": "Updated Campus_Lost_Found_DDL.sql"
+      },
+      {
+        "hash": "c19dbf3e7928b23802b4e0b3ef6d3b802799106c",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-03T14:53:25+05:30",
+        "subject": "Updated Campus_Lost_Found_DDL.sql"
+      },
+      {
+        "hash": "fee0f9d8ed51c343497f067bd2c19bbaec2fc1e8",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-03T14:17:20+05:30",
+        "subject": "Added DBMS Level 3 Mini_Project Requirements draft.docx"
+      },
+      {
+        "hash": "8b31663c589920829ba4e585d688c7e7c605c9a2",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-03T14:16:42+05:30",
+        "subject": "Added Campus_Lost_Found_Relational_Schema.docx"
+      },
+      {
+        "hash": "b029b16632f94677794dfc5a83f958e21fa30391",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-03T14:15:47+05:30",
+        "subject": "Added Campus_Lost_Found_DDL.sql"
+      },
+      {
+        "hash": "161d6a55d3b0a74f75777a5904642b5832de3f22",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-03T14:10:59+05:30",
+        "subject": "Added CAMPUS_LOST_AND_FOUND-1.drawio.png"
+      },
+      {
+        "hash": "75d96fe785e2edf324d1bfe891cbb631e01aa2e5",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-03T14:10:20+05:30",
+        "subject": "Added CAMPUS_LOST_AND_FOUND-1.drawio"
+      },
+      {
+        "hash": "87a859a17710d063defa79ceff1cade9bb8a138b",
+        "author": "Harshit Chandak",
+        "email": "chandakharshit06@gmail.com",
+        "authoredAt": "2026-09-02T22:27:40+05:30",
+        "subject": "first commit"
+      }
+    ],
+    "hamzaAuthorVerified": false,
+    "historyModified": false,
+    "identityModified": false,
+    "cleanupCommittedOrPushed": false,
+    "trackedPathsAtHead": [
+      "CAMPUS_LOST_AND_FOUND-1.drawio",
+      "CAMPUS_LOST_AND_FOUND-1.drawio.png",
+      "Campus_Lost_Found_DDL.sql",
+      "Campus_Lost_Found_Relational_Schema.docx",
+      "DBMS Level 3 Mini_Project Requirements draft.docx",
+      "README.md"
+    ],
+    "finalApplicationPublished": false
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "result": "ATTENTION",
+  "mysqlFingerprint": {
+    "value": "435496d391201520f7b54c593164c257edda305dd14b44b200a5f3baa89ea817",
+    "basis": "server UUID + database"
+  },
+  "database": "campus_lost_found",
+  "migrations": {
+    "count": 7,
+    "latest": "database/mysql/college-email-formats.sql",
+    "latestAppliedAt": "2026-10-28 03:51:18"
+  },
+  "records": {
+    "USER": 4,
+    "LOST_ITEM": 3,
+    "FOUND_ITEM": 2,
+    "MATCH": 2,
+    "CLAIM": 1
+  },
+  "mongoDatabase": "campus_lost_found",
+  "mongoCollections": {
+    "lost_item_details": 3,
+    "found_item_details": 2,
+    "match_evidence": 2,
+    "audit_events": 80
+  },
+  "pendingOutbox": 0
+}

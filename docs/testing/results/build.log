@@ -1,0 +1,98 @@
+
+> campus-lost-found@1.0.0 check
+> npm run typecheck && npm run test && npm run build
+
+
+> campus-lost-found@1.0.0 typecheck
+> tsc --noEmit
+
+
+> campus-lost-found@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.3 D:/SEMESTERS/SEM5_2025/DBMS-MINIPROJECT
+
+
+ Test Files  4 passed (4)
+      Tests  28 passed (28)
+   Start at  08:44:12
+   Duration  4.41s (transform 58%, import 25%, tests 9%, worker 8%)
+
+
+> campus-lost-found@1.0.0 build
+> next build
+
+   ▲ Next.js 15.5.26
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 4.9s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/36) ...
+   Generating static pages (9/36) 
+   Generating static pages (18/36) 
+   Generating static pages (27/36) 
+ ✓ Generating static pages (36/36)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      206 B         103 kB
+├ ƒ /_not-found                            206 B         103 kB
+├ ƒ /api/admin/users                       206 B         103 kB
+├ ƒ /api/auth/demo                         206 B         103 kB
+├ ƒ /api/auth/google                       206 B         103 kB
+├ ƒ /api/auth/google/callback              206 B         103 kB
+├ ƒ /api/auth/logout                       206 B         103 kB
+├ ƒ /api/auth/me                           206 B         103 kB
+├ ƒ /api/campuses                          206 B         103 kB
+├ ƒ /api/categories                        206 B         103 kB
+├ ƒ /api/claims                            206 B         103 kB
+├ ƒ /api/claims/[id]                       206 B         103 kB
+├ ƒ /api/departments                       206 B         103 kB
+├ ƒ /api/found-items                       206 B         103 kB
+├ ƒ /api/found-items/[id]                  206 B         103 kB
+├ ƒ /api/found-items/[id]/details          206 B         103 kB
+├ ƒ /api/locations                         206 B         103 kB
+├ ƒ /api/lost-items                        206 B         103 kB
+├ ƒ /api/lost-items/[id]                   206 B         103 kB
+├ ƒ /api/lost-items/[id]/details           206 B         103 kB
+├ ƒ /api/matches                           206 B         103 kB
+├ ƒ /api/matches/[id]                      206 B         103 kB
+├ ƒ /api/matches/generate                  206 B         103 kB
+├ ƒ /api/notifications                     206 B         103 kB
+├ ƒ /api/notifications/[id]/read           206 B         103 kB
+├ ƒ /api/notifications/read-all            206 B         103 kB
+├ ƒ /api/system/sync                       206 B         103 kB
+├ ƒ /api/users/me                          206 B         103 kB
+├ ƒ /claims                                168 B         106 kB
+├ ƒ /claims/[id]                           985 B         107 kB
+├ ƒ /claims/new                            893 B         107 kB
+├ ƒ /dashboard                             775 B         107 kB
+├ ƒ /found-items                         2.25 kB         108 kB
+├ ƒ /found-items/[id]                    2.25 kB         108 kB
+├ ƒ /found-items/[id]/edit               2.25 kB         108 kB
+├ ƒ /found-items/new                     2.25 kB         108 kB
+├ ƒ /login                                 768 B         103 kB
+├ ƒ /lost-items                          2.25 kB         108 kB
+├ ƒ /lost-items/[id]                     2.25 kB         108 kB
+├ ƒ /lost-items/[id]/edit                2.25 kB         108 kB
+├ ƒ /lost-items/new                      2.25 kB         108 kB
+├ ƒ /matches                             1.13 kB         107 kB
+├ ƒ /matches/[id]                        1.25 kB         107 kB
+├ ƒ /notifications                         509 B         103 kB
+├ ƒ /profile                               960 B         104 kB
+├ ƒ /reference-data                        919 B         104 kB
+└ ƒ /staff                                 775 B         107 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/1255-0f12d1d68e0b5948.js      46.4 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js  54.2 kB
+  └ other shared chunks (total)             2 kB
+
+
+ƒ Middleware                             34.3 kB
+
+ƒ  (Dynamic)  server-rendered on demand
+

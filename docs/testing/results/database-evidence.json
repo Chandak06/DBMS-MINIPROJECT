@@ -1,0 +1,2981 @@
+{
+  "executedAt": "2026-10-12T15:23:14.535Z",
+  "sql": {
+    "version": [
+      {
+        "version": "8.0.46",
+        "session_time_zone": "+00:00"
+      }
+    ],
+    "CAMPUS": {
+      "columns": [
+        {
+          "Field": "campus_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "campus_name",
+          "Type": "varchar(120)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "street",
+          "Type": "varchar(150)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "city",
+          "Type": "varchar(80)",
+          "Null": "YES",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "state",
+          "Type": "varchar(80)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "postal_code",
+          "Type": "varchar(20)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "campus",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "campus_id",
+          "Collation": "A",
+          "Cardinality": 0,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "campus",
+          "Non_unique": 1,
+          "Key_name": "idx_campus_city_name",
+          "Seq_in_index": 1,
+          "Column_name": "city",
+          "Collation": "A",
+          "Cardinality": 0,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "campus",
+          "Non_unique": 1,
+          "Key_name": "idx_campus_city_name",
+          "Seq_in_index": 2,
+          "Column_name": "campus_name",
+          "Collation": "A",
+          "Cardinality": 0,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "DEPARTMENT": {
+      "columns": [
+        {
+          "Field": "department_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "department_name",
+          "Type": "varchar(120)",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "campus_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "department",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "department_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "department",
+          "Non_unique": 1,
+          "Key_name": "campus_id",
+          "Seq_in_index": 1,
+          "Column_name": "campus_id",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "department",
+          "Non_unique": 1,
+          "Key_name": "idx_department_name",
+          "Seq_in_index": 1,
+          "Column_name": "department_name",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "USER": {
+      "columns": [
+        {
+          "Field": "user_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "first_name",
+          "Type": "varchar(80)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "middle_name",
+          "Type": "varchar(80)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "last_name",
+          "Type": "varchar(80)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "phone",
+          "Type": "varchar(20)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "email",
+          "Type": "varchar(255)",
+          "Null": "NO",
+          "Key": "UNI",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "role",
+          "Type": "varchar(30)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "created_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "",
+          "Default": "CURRENT_TIMESTAMP",
+          "Extra": "DEFAULT_GENERATED"
+        },
+        {
+          "Field": "department_id",
+          "Type": "int",
+          "Null": "YES",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "user",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "user_id",
+          "Collation": "A",
+          "Cardinality": 3,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "user",
+          "Non_unique": 0,
+          "Key_name": "email",
+          "Seq_in_index": 1,
+          "Column_name": "email",
+          "Collation": "A",
+          "Cardinality": 3,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "user",
+          "Non_unique": 1,
+          "Key_name": "department_id",
+          "Seq_in_index": 1,
+          "Column_name": "department_id",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "CATEGORY": {
+      "columns": [
+        {
+          "Field": "category_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "category_name",
+          "Type": "varchar(100)",
+          "Null": "NO",
+          "Key": "UNI",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "description",
+          "Type": "text",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "category",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "category_id",
+          "Collation": "A",
+          "Cardinality": 6,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "category",
+          "Non_unique": 0,
+          "Key_name": "category_name",
+          "Seq_in_index": 1,
+          "Column_name": "category_name",
+          "Collation": "A",
+          "Cardinality": 6,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "LOCATION": {
+      "columns": [
+        {
+          "Field": "location_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "location_name",
+          "Type": "varchar(150)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "building",
+          "Type": "varchar(100)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "floor",
+          "Type": "varchar(50)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "area",
+          "Type": "varchar(100)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "type",
+          "Type": "varchar(50)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "campus_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "location",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "location_id",
+          "Collation": "A",
+          "Cardinality": 4,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "location",
+          "Non_unique": 1,
+          "Key_name": "campus_id",
+          "Seq_in_index": 1,
+          "Column_name": "campus_id",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "LOST_ITEM": {
+      "columns": [
+        {
+          "Field": "lost_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "item_name",
+          "Type": "varchar(150)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "description",
+          "Type": "text",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "lost_datetime",
+          "Type": "datetime",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "color",
+          "Type": "varchar(60)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "brand",
+          "Type": "varchar(100)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "status",
+          "Type": "varchar(30)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "remarks",
+          "Type": "text",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "created_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "",
+          "Default": "CURRENT_TIMESTAMP",
+          "Extra": "DEFAULT_GENERATED"
+        },
+        {
+          "Field": "reported_by",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "category_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "location_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "revision",
+          "Type": "int unsigned",
+          "Null": "NO",
+          "Key": "",
+          "Default": "1",
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "lost_item",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "lost_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "lost_item",
+          "Non_unique": 1,
+          "Key_name": "location_id",
+          "Seq_in_index": 1,
+          "Column_name": "location_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "lost_item",
+          "Non_unique": 1,
+          "Key_name": "idx_lost_user_status_created",
+          "Seq_in_index": 1,
+          "Column_name": "reported_by",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "lost_item",
+          "Non_unique": 1,
+          "Key_name": "idx_lost_user_status_created",
+          "Seq_in_index": 2,
+          "Column_name": "status",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "lost_item",
+          "Non_unique": 1,
+          "Key_name": "idx_lost_user_status_created",
+          "Seq_in_index": 3,
+          "Column_name": "created_at",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "lost_item",
+          "Non_unique": 1,
+          "Key_name": "idx_lost_category_location",
+          "Seq_in_index": 1,
+          "Column_name": "category_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "lost_item",
+          "Non_unique": 1,
+          "Key_name": "idx_lost_category_location",
+          "Seq_in_index": 2,
+          "Column_name": "location_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "lost_item",
+          "Non_unique": 1,
+          "Key_name": "idx_lost_datetime",
+          "Seq_in_index": 1,
+          "Column_name": "lost_datetime",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "FOUND_ITEM": {
+      "columns": [
+        {
+          "Field": "found_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "item_name",
+          "Type": "varchar(150)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "description",
+          "Type": "text",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "found_datetime",
+          "Type": "datetime",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "color",
+          "Type": "varchar(60)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "brand",
+          "Type": "varchar(100)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "status",
+          "Type": "varchar(30)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "remarks",
+          "Type": "text",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "created_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "",
+          "Default": "CURRENT_TIMESTAMP",
+          "Extra": "DEFAULT_GENERATED"
+        },
+        {
+          "Field": "reported_by",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "category_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "location_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "revision",
+          "Type": "int unsigned",
+          "Null": "NO",
+          "Key": "",
+          "Default": "1",
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "found_item",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "found_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "found_item",
+          "Non_unique": 1,
+          "Key_name": "location_id",
+          "Seq_in_index": 1,
+          "Column_name": "location_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "found_item",
+          "Non_unique": 1,
+          "Key_name": "idx_found_category_location",
+          "Seq_in_index": 1,
+          "Column_name": "category_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "found_item",
+          "Non_unique": 1,
+          "Key_name": "idx_found_category_location",
+          "Seq_in_index": 2,
+          "Column_name": "location_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "found_item",
+          "Non_unique": 1,
+          "Key_name": "idx_found_category_location",
+          "Seq_in_index": 3,
+          "Column_name": "status",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "found_item",
+          "Non_unique": 1,
+          "Key_name": "idx_found_user_created",
+          "Seq_in_index": 1,
+          "Column_name": "reported_by",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "found_item",
+          "Non_unique": 1,
+          "Key_name": "idx_found_user_created",
+          "Seq_in_index": 2,
+          "Column_name": "created_at",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "MATCH": {
+      "columns": [
+        {
+          "Field": "match_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "lost_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "found_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "similarity_score",
+          "Type": "decimal(10,6)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "match_method",
+          "Type": "varchar(100)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "status",
+          "Type": "varchar(30)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "matched_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "",
+          "Default": "CURRENT_TIMESTAMP",
+          "Extra": "DEFAULT_GENERATED"
+        },
+        {
+          "Field": "reviewed_by",
+          "Type": "int",
+          "Null": "YES",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "reviewed_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "review_remarks",
+          "Type": "text",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "accepted_lost_id",
+          "Type": "int unsigned",
+          "Null": "YES",
+          "Key": "UNI",
+          "Default": null,
+          "Extra": "STORED GENERATED"
+        },
+        {
+          "Field": "accepted_found_id",
+          "Type": "int unsigned",
+          "Null": "YES",
+          "Key": "UNI",
+          "Default": null,
+          "Extra": "STORED GENERATED"
+        },
+        {
+          "Field": "lost_revision",
+          "Type": "int unsigned",
+          "Null": "NO",
+          "Key": "",
+          "Default": "1",
+          "Extra": ""
+        },
+        {
+          "Field": "found_revision",
+          "Type": "int unsigned",
+          "Null": "NO",
+          "Key": "",
+          "Default": "1",
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "match",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "match_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "match",
+          "Non_unique": 0,
+          "Key_name": "uq_match_pair",
+          "Seq_in_index": 1,
+          "Column_name": "lost_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "match",
+          "Non_unique": 0,
+          "Key_name": "uq_match_pair",
+          "Seq_in_index": 2,
+          "Column_name": "found_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "match",
+          "Non_unique": 0,
+          "Key_name": "uq_match_accepted_lost",
+          "Seq_in_index": 1,
+          "Column_name": "accepted_lost_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "match",
+          "Non_unique": 0,
+          "Key_name": "uq_match_accepted_found",
+          "Seq_in_index": 1,
+          "Column_name": "accepted_found_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "match",
+          "Non_unique": 1,
+          "Key_name": "found_id",
+          "Seq_in_index": 1,
+          "Column_name": "found_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "match",
+          "Non_unique": 1,
+          "Key_name": "reviewed_by",
+          "Seq_in_index": 1,
+          "Column_name": "reviewed_by",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "match",
+          "Non_unique": 1,
+          "Key_name": "idx_match_lost_status",
+          "Seq_in_index": 1,
+          "Column_name": "lost_id",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "match",
+          "Non_unique": 1,
+          "Key_name": "idx_match_lost_status",
+          "Seq_in_index": 2,
+          "Column_name": "status",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "CLAIM": {
+      "columns": [
+        {
+          "Field": "claim_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "claim_description",
+          "Type": "text",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "status",
+          "Type": "varchar(30)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "created_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "",
+          "Default": "CURRENT_TIMESTAMP",
+          "Extra": "DEFAULT_GENERATED"
+        },
+        {
+          "Field": "claim_remarks",
+          "Type": "text",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "submitted_by",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "found_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "processed_by",
+          "Type": "int",
+          "Null": "YES",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "processed_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "processing_remarks",
+          "Type": "text",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "approved_found_id",
+          "Type": "int unsigned",
+          "Null": "YES",
+          "Key": "UNI",
+          "Default": null,
+          "Extra": "STORED GENERATED"
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "claim",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "claim_id",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "claim",
+          "Non_unique": 0,
+          "Key_name": "uq_claim_user_found",
+          "Seq_in_index": 1,
+          "Column_name": "submitted_by",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "claim",
+          "Non_unique": 0,
+          "Key_name": "uq_claim_user_found",
+          "Seq_in_index": 2,
+          "Column_name": "found_id",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "claim",
+          "Non_unique": 0,
+          "Key_name": "uq_claim_approved_found",
+          "Seq_in_index": 1,
+          "Column_name": "approved_found_id",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "claim",
+          "Non_unique": 1,
+          "Key_name": "found_id",
+          "Seq_in_index": 1,
+          "Column_name": "found_id",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "claim",
+          "Non_unique": 1,
+          "Key_name": "processed_by",
+          "Seq_in_index": 1,
+          "Column_name": "processed_by",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "claim",
+          "Non_unique": 1,
+          "Key_name": "idx_claim_user_created",
+          "Seq_in_index": 1,
+          "Column_name": "submitted_by",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "claim",
+          "Non_unique": 1,
+          "Key_name": "idx_claim_user_created",
+          "Seq_in_index": 2,
+          "Column_name": "created_at",
+          "Collation": "A",
+          "Cardinality": 1,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "NOTIFICATION": {
+      "columns": [
+        {
+          "Field": "notification_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "title",
+          "Type": "varchar(200)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "message",
+          "Type": "text",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "type",
+          "Type": "varchar(50)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "is_read",
+          "Type": "tinyint(1)",
+          "Null": "YES",
+          "Key": "",
+          "Default": "0",
+          "Extra": ""
+        },
+        {
+          "Field": "created_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "",
+          "Default": "CURRENT_TIMESTAMP",
+          "Extra": "DEFAULT_GENERATED"
+        },
+        {
+          "Field": "user_id",
+          "Type": "int",
+          "Null": "NO",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "notification",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "notification_id",
+          "Collation": "A",
+          "Cardinality": 5,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "notification",
+          "Non_unique": 1,
+          "Key_name": "idx_notification_user_read_created",
+          "Seq_in_index": 1,
+          "Column_name": "user_id",
+          "Collation": "A",
+          "Cardinality": 3,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "notification",
+          "Non_unique": 1,
+          "Key_name": "idx_notification_user_read_created",
+          "Seq_in_index": 2,
+          "Column_name": "is_read",
+          "Collation": "A",
+          "Cardinality": 3,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "notification",
+          "Non_unique": 1,
+          "Key_name": "idx_notification_user_read_created",
+          "Seq_in_index": 3,
+          "Column_name": "created_at",
+          "Collation": "A",
+          "Cardinality": 5,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "MONGO_OUTBOX": {
+      "columns": [
+        {
+          "Field": "outbox_id",
+          "Type": "bigint unsigned",
+          "Null": "NO",
+          "Key": "PRI",
+          "Default": null,
+          "Extra": "auto_increment"
+        },
+        {
+          "Field": "collection_name",
+          "Type": "varchar(40)",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "document_id",
+          "Type": "int unsigned",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "payload",
+          "Type": "json",
+          "Null": "NO",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "operation",
+          "Type": "varchar(10)",
+          "Null": "NO",
+          "Key": "",
+          "Default": "UPSERT",
+          "Extra": ""
+        },
+        {
+          "Field": "created_at",
+          "Type": "datetime",
+          "Null": "NO",
+          "Key": "",
+          "Default": "CURRENT_TIMESTAMP",
+          "Extra": "DEFAULT_GENERATED"
+        },
+        {
+          "Field": "processed_at",
+          "Type": "datetime",
+          "Null": "YES",
+          "Key": "MUL",
+          "Default": null,
+          "Extra": ""
+        },
+        {
+          "Field": "attempts",
+          "Type": "int unsigned",
+          "Null": "NO",
+          "Key": "",
+          "Default": "0",
+          "Extra": ""
+        },
+        {
+          "Field": "last_error",
+          "Type": "varchar(500)",
+          "Null": "YES",
+          "Key": "",
+          "Default": null,
+          "Extra": ""
+        }
+      ],
+      "indexes": [
+        {
+          "Table": "mongo_outbox",
+          "Non_unique": 0,
+          "Key_name": "PRIMARY",
+          "Seq_in_index": 1,
+          "Column_name": "outbox_id",
+          "Collation": "A",
+          "Cardinality": 6,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "mongo_outbox",
+          "Non_unique": 1,
+          "Key_name": "idx_outbox_pending",
+          "Seq_in_index": 1,
+          "Column_name": "processed_at",
+          "Collation": "A",
+          "Cardinality": 2,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "YES",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        },
+        {
+          "Table": "mongo_outbox",
+          "Non_unique": 1,
+          "Key_name": "idx_outbox_pending",
+          "Seq_in_index": 2,
+          "Column_name": "outbox_id",
+          "Collation": "A",
+          "Cardinality": 6,
+          "Sub_part": null,
+          "Packed": null,
+          "Null": "",
+          "Index_type": "BTREE",
+          "Comment": "",
+          "Index_comment": "",
+          "Visible": "YES",
+          "Expression": null
+        }
+      ]
+    },
+    "triggers": [
+      {
+        "name": "check_claim_processor_insert",
+        "event": "INSERT",
+        "table": "claim",
+        "timing": "BEFORE"
+      },
+      {
+        "name": "check_claim_processor_update",
+        "event": "UPDATE",
+        "table": "claim",
+        "timing": "BEFORE"
+      },
+      {
+        "name": "trg_found_date_bi",
+        "event": "INSERT",
+        "table": "found_item",
+        "timing": "BEFORE"
+      },
+      {
+        "name": "trg_found_date_bu",
+        "event": "UPDATE",
+        "table": "found_item",
+        "timing": "BEFORE"
+      },
+      {
+        "name": "trg_lost_date_bi",
+        "event": "INSERT",
+        "table": "lost_item",
+        "timing": "BEFORE"
+      },
+      {
+        "name": "trg_lost_date_bu",
+        "event": "UPDATE",
+        "table": "lost_item",
+        "timing": "BEFORE"
+      },
+      {
+        "name": "check_match_reviewer_insert",
+        "event": "INSERT",
+        "table": "match",
+        "timing": "BEFORE"
+      },
+      {
+        "name": "check_match_reviewer_update",
+        "event": "UPDATE",
+        "table": "match",
+        "timing": "BEFORE"
+      }
+    ],
+    "summaryView": [
+      {
+        "user_id": 1,
+        "full_name": "Demo Student",
+        "total_lost_reports": 2,
+        "open_reports": "1",
+        "matched_reports": "0",
+        "closed_reports": "1",
+        "unread_notifications": 0
+      },
+      {
+        "user_id": 2,
+        "full_name": "Demo Staff",
+        "total_lost_reports": 0,
+        "open_reports": "0",
+        "matched_reports": "0",
+        "closed_reports": "0",
+        "unread_notifications": 1
+      },
+      {
+        "user_id": 3,
+        "full_name": "Demo Admin",
+        "total_lost_reports": 0,
+        "open_reports": "0",
+        "matched_reports": "0",
+        "closed_reports": "0",
+        "unread_notifications": 1
+      }
+    ],
+    "recoveryView": [
+      {
+        "category_id": 4,
+        "category_name": "Books / Notes",
+        "lost_reports": 0,
+        "found_reports": 0,
+        "recovered_items": 0
+      },
+      {
+        "category_id": 1,
+        "category_name": "Electronics",
+        "lost_reports": 1,
+        "found_reports": 1,
+        "recovered_items": 0
+      },
+      {
+        "category_id": 3,
+        "category_name": "ID / Cards",
+        "lost_reports": 0,
+        "found_reports": 0,
+        "recovered_items": 0
+      },
+      {
+        "category_id": 5,
+        "category_name": "Other",
+        "lost_reports": 0,
+        "found_reports": 0,
+        "recovered_items": 0
+      },
+      {
+        "category_id": 2,
+        "category_name": "Wallet / Purse",
+        "lost_reports": 1,
+        "found_reports": 1,
+        "recovered_items": 1
+      }
+    ],
+    "queries": [
+      {
+        "id": "Q1",
+        "query": "SELECT li.lost_id,CONCAT_WS(' ',u.first_name,u.middle_name,u.last_name) AS reporter,\n li.item_name,c.category_name,l.location_name,li.status,li.lost_datetime\nFROM LOST_ITEM li JOIN `USER` u ON u.user_id=li.reported_by\nJOIN CATEGORY c ON c.category_id=li.category_id\nJOIN LOCATION l ON l.location_id=li.location_id ORDER BY li.lost_datetime DESC",
+        "rows": [
+          {
+            "lost_id": 4,
+            "reporter": "Demo Student",
+            "item_name": "Black leather wallet",
+            "category_name": "Wallet / Purse",
+            "location_name": "Library",
+            "status": "CLOSED",
+            "lost_datetime": "2026-09-30 14:01:24"
+          },
+          {
+            "lost_id": 5,
+            "reporter": "Demo Student",
+            "item_name": "Blue wireless headphones",
+            "category_name": "Electronics",
+            "location_name": "Cafeteria",
+            "status": "OPEN",
+            "lost_datetime": "2026-09-29 14:01:24"
+          }
+        ]
+      },
+      {
+        "id": "Q2",
+        "query": "SELECT status,COUNT(*) AS report_count FROM LOST_ITEM GROUP BY status ORDER BY report_count DESC",
+        "rows": [
+          {
+            "status": "CLOSED",
+            "report_count": 1
+          },
+          {
+            "status": "OPEN",
+            "report_count": 1
+          }
+        ]
+      },
+      {
+        "id": "Q3",
+        "query": "SELECT u.user_id,u.email,COUNT(*) AS active_reports FROM `USER` u\nJOIN LOST_ITEM li ON li.reported_by=u.user_id WHERE li.status IN ('OPEN','MATCHED')\nGROUP BY u.user_id,u.email HAVING COUNT(*)>=2 ORDER BY active_reports DESC",
+        "rows": []
+      },
+      {
+        "id": "Q4",
+        "query": "SELECT u.user_id,u.email,COUNT(li.lost_id) AS report_count FROM `USER` u\nJOIN LOST_ITEM li ON li.reported_by=u.user_id GROUP BY u.user_id,u.email\nHAVING COUNT(li.lost_id)>(SELECT AVG(user_report_count) FROM\n (SELECT COUNT(*) AS user_report_count FROM LOST_ITEM GROUP BY reported_by) counts_per_user)",
+        "rows": []
+      },
+      {
+        "id": "Q5",
+        "query": "SELECT type,COUNT(*) AS unread_count FROM NOTIFICATION WHERE is_read=0\nGROUP BY type ORDER BY unread_count DESC",
+        "rows": [
+          {
+            "type": "CLAIM",
+            "unread_count": 2
+          }
+        ]
+      },
+      {
+        "id": "Q6",
+        "query": "SELECT * FROM vw_user_lost_summary ORDER BY total_lost_reports DESC",
+        "rows": [
+          {
+            "user_id": 1,
+            "email": "student@campus.test",
+            "full_name": "Demo Student",
+            "total_lost_reports": 2,
+            "open_reports": "1",
+            "matched_reports": "0",
+            "closed_reports": "1",
+            "unread_notifications": 0
+          },
+          {
+            "user_id": 2,
+            "email": "staff@campus.test",
+            "full_name": "Demo Staff",
+            "total_lost_reports": 0,
+            "open_reports": "0",
+            "matched_reports": "0",
+            "closed_reports": "0",
+            "unread_notifications": 1
+          },
+          {
+            "user_id": 3,
+            "email": "admin@campus.test",
+            "full_name": "Demo Admin",
+            "total_lost_reports": 0,
+            "open_reports": "0",
+            "matched_reports": "0",
+            "closed_reports": "0",
+            "unread_notifications": 1
+          }
+        ]
+      },
+      {
+        "id": "Q7",
+        "query": "SELECT m.match_id,li.item_name AS lost_item,fi.item_name AS found_item,\n m.similarity_score,fn_match_band(m.similarity_score) AS score_band,m.status\nFROM `MATCH` m JOIN LOST_ITEM li ON li.lost_id=m.lost_id\nJOIN FOUND_ITEM fi ON fi.found_id=m.found_id ORDER BY m.similarity_score DESC,m.match_id",
+        "rows": [
+          {
+            "match_id": 7,
+            "lost_item": "Black leather wallet",
+            "found_item": "Black leather wallet",
+            "similarity_score": "0.999702",
+            "score_band": "HIGH",
+            "status": "ACCEPTED"
+          },
+          {
+            "match_id": 8,
+            "lost_item": "Blue wireless headphones",
+            "found_item": "Blue wireless headphones",
+            "similarity_score": "0.999702",
+            "score_band": "HIGH",
+            "status": "PENDING"
+          }
+        ]
+      },
+      {
+        "id": "Q8",
+        "query": "SELECT match_method,COUNT(*) AS candidates,AVG(similarity_score) AS mean_score,\n MAX(similarity_score) AS best_score,MIN(similarity_score) AS lowest_score,\n SUM(status='ACCEPTED') AS accepted\nFROM `MATCH` GROUP BY match_method HAVING COUNT(*)>0 ORDER BY mean_score DESC",
+        "rows": [
+          {
+            "match_method": "HYBRID",
+            "candidates": 2,
+            "mean_score": "0.9997020000",
+            "best_score": "0.999702",
+            "lowest_score": "0.999702",
+            "accepted": "1"
+          }
+        ]
+      },
+      {
+        "id": "Q9",
+        "query": "SELECT cl.claim_id,fi.item_name,u.email AS claimant,cl.status,\n reviewer.email AS processor,cl.processing_remarks\nFROM CLAIM cl JOIN FOUND_ITEM fi ON fi.found_id=cl.found_id\nJOIN `USER` u ON u.user_id=cl.submitted_by\nLEFT JOIN `USER` reviewer ON reviewer.user_id=cl.processed_by ORDER BY cl.created_at DESC",
+        "rows": [
+          {
+            "claim_id": 9,
+            "item_name": "Black leather wallet",
+            "claimant": "student@campus.test",
+            "status": "APPROVED",
+            "processor": "staff@campus.test",
+            "processing_remarks": "Demo ownership verified against the wallet details. Collect at the library recovery desk with your campus ID."
+          }
+        ]
+      },
+      {
+        "id": "Q10",
+        "query": "SELECT li.lost_id,li.item_name FROM LOST_ITEM li WHERE li.status='OPEN'\nAND NOT EXISTS(SELECT 1 FROM `MATCH` m WHERE m.lost_id=li.lost_id AND m.status='PENDING')",
+        "rows": []
+      },
+      {
+        "id": "Q11",
+        "query": "SELECT *,ROUND(100.0*recovered_items/NULLIF(lost_reports,0),1) AS recovery_percent\nFROM vw_recovery_dashboard ORDER BY recovered_items DESC,category_name",
+        "rows": [
+          {
+            "category_id": 2,
+            "category_name": "Wallet / Purse",
+            "lost_reports": 1,
+            "found_reports": 1,
+            "recovered_items": 1,
+            "recovery_percent": "100.0"
+          },
+          {
+            "category_id": 4,
+            "category_name": "Books / Notes",
+            "lost_reports": 0,
+            "found_reports": 0,
+            "recovered_items": 0,
+            "recovery_percent": null
+          },
+          {
+            "category_id": 1,
+            "category_name": "Electronics",
+            "lost_reports": 1,
+            "found_reports": 1,
+            "recovered_items": 0,
+            "recovery_percent": "0.0"
+          },
+          {
+            "category_id": 3,
+            "category_name": "ID / Cards",
+            "lost_reports": 0,
+            "found_reports": 0,
+            "recovered_items": 0,
+            "recovery_percent": null
+          },
+          {
+            "category_id": 5,
+            "category_name": "Other",
+            "lost_reports": 0,
+            "found_reports": 0,
+            "recovered_items": 0,
+            "recovery_percent": null
+          }
+        ]
+      },
+      {
+        "id": "Q12",
+        "query": "SELECT collection_name,COUNT(*) AS waiting,SUM(attempts) AS retry_attempts\nFROM MONGO_OUTBOX WHERE processed_at IS NULL GROUP BY collection_name ORDER BY waiting DESC",
+        "rows": []
+      }
+    ],
+    "ddlDemo": [
+      {
+        "statement": "USE campus_lost_found",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 16386,
+          "warningStatus": 0,
+          "stateChanges": {
+            "systemVariables": {},
+            "schema": "campus_lost_found",
+            "gtids": [],
+            "trackStateChange": null
+          },
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "DROP TABLE IF EXISTS DDL_TEST",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 2,
+          "warningStatus": 1,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "CREATE TABLE DDL_TEST (\n    test_id INT PRIMARY KEY AUTO_INCREMENT,\n    note VARCHAR(100) NOT NULL\n)",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 2,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "ALTER TABLE DDL_TEST\n    ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "Records: 0  Duplicates: 0  Warnings: 0",
+          "serverStatus": 2,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "CREATE INDEX idx_ddl_test_created_at ON DDL_TEST(created_at)",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "Records: 0  Duplicates: 0  Warnings: 0",
+          "serverStatus": 2,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "INSERT INTO DDL_TEST(note) VALUES ('Test row')",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 1,
+          "insertId": 1,
+          "info": "",
+          "serverStatus": 2,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "SELECT * FROM DDL_TEST",
+        "result": [
+          {
+            "test_id": 1,
+            "note": "Test row",
+            "created_at": "2026-10-12 15:23:15"
+          }
+        ]
+      },
+      {
+        "statement": "DROP TABLE IF EXISTS DDL_TEST",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 2,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      }
+    ],
+    "transactionDemo": [
+      {
+        "statement": "USE campus_lost_found",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 16386,
+          "warningStatus": 0,
+          "stateChanges": {
+            "systemVariables": {},
+            "schema": "campus_lost_found",
+            "gtids": [],
+            "trackStateChange": null
+          },
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "START TRANSACTION",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 16387,
+          "warningStatus": 0,
+          "stateChanges": {
+            "systemVariables": {},
+            "schema": null,
+            "gtids": [],
+            "trackStateChange": null
+          },
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "INSERT INTO CATEGORY(category_name,description) VALUES (CONCAT('Transaction demo ',UUID()),'Temporary rollback example')",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 1,
+          "insertId": 9,
+          "info": "",
+          "serverStatus": 3,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "SET @demo_category_id=LAST_INSERT_ID()",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 3,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "SAVEPOINT category_added",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 3,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "UPDATE CATEGORY SET description='Updated inside a transaction' WHERE category_id=@demo_category_id",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 1,
+          "insertId": 0,
+          "info": "Rows matched: 1  Changed: 1  Warnings: 0",
+          "serverStatus": 3,
+          "warningStatus": 0,
+          "changedRows": 1
+        }
+      },
+      {
+        "statement": "SELECT category_id,category_name,description FROM CATEGORY WHERE category_id=@demo_category_id",
+        "result": [
+          {
+            "category_id": 9,
+            "category_name": "Transaction demo d8483a01-c650-11f1-b9c3-0a0027000006",
+            "description": "Updated inside a transaction"
+          }
+        ]
+      },
+      {
+        "statement": "ROLLBACK TO SAVEPOINT category_added",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 3,
+          "warningStatus": 0,
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "SELECT description FROM CATEGORY WHERE category_id=@demo_category_id",
+        "result": [
+          {
+            "description": "Temporary rollback example"
+          }
+        ]
+      },
+      {
+        "statement": "ROLLBACK",
+        "result": {
+          "fieldCount": 0,
+          "affectedRows": 0,
+          "insertId": 0,
+          "info": "",
+          "serverStatus": 16386,
+          "warningStatus": 0,
+          "stateChanges": {
+            "systemVariables": {},
+            "schema": null,
+            "gtids": [],
+            "trackStateChange": null
+          },
+          "changedRows": 0
+        }
+      },
+      {
+        "statement": "SELECT COUNT(*) AS should_be_zero FROM CATEGORY WHERE category_id=@demo_category_id",
+        "result": [
+          {
+            "should_be_zero": 0
+          }
+        ]
+      }
+    ]
+  },
+  "mongo": {
+    "lost_item_details": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "lost_id",
+            "created_at",
+            "updated_at"
+          ],
+          "properties": {
+            "lost_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double"
+              ],
+              "minimum": 1
+            },
+            "media": {
+              "bsonType": "array",
+              "maxItems": 10,
+              "items": {
+                "bsonType": "object",
+                "required": [
+                  "url",
+                  "type"
+                ],
+                "properties": {
+                  "url": {
+                    "bsonType": "string",
+                    "pattern": "^https?://"
+                  },
+                  "type": {
+                    "enum": [
+                      "image",
+                      "document"
+                    ]
+                  },
+                  "caption": {
+                    "bsonType": "string",
+                    "maxLength": 200
+                  }
+                }
+              }
+            },
+            "tags": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "search_keywords": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "extra_attributes": {
+              "bsonType": "object"
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "updated_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "lost_id": 1
+          },
+          "name": "ux_lost_item_details_lost_id",
+          "unique": true
+        },
+        {
+          "v": 2,
+          "key": {
+            "tags": 1
+          },
+          "name": "idx_lost_item_details_tags"
+        },
+        {
+          "v": 2,
+          "key": {
+            "_fts": "text",
+            "_ftsx": 1
+          },
+          "name": "txt_lost_item_details_search",
+          "weights": {
+            "search_keywords": 1,
+            "tags": 1
+          },
+          "default_language": "english",
+          "language_override": "language",
+          "textIndexVersion": 3
+        }
+      ],
+      "samples": [
+        {
+          "lost_id": 4,
+          "created_at": "2026-10-01T19:31:24.000Z",
+          "extra_attributes": {
+            "material": "leather",
+            "identifyingMark": "Small star stamped inside"
+          },
+          "media": [],
+          "search_keywords": [
+            "silver zipper"
+          ],
+          "tags": [
+            "wallet",
+            "black",
+            "leather"
+          ],
+          "updated_at": "2026-10-01T19:31:24.000Z"
+        },
+        {
+          "lost_id": 5,
+          "created_at": "2026-10-01T19:31:24.000Z",
+          "extra_attributes": {
+            "model": "WH-CH720N"
+          },
+          "media": [],
+          "search_keywords": [
+            "carrying case"
+          ],
+          "tags": [
+            "headphones",
+            "blue",
+            "wireless"
+          ],
+          "updated_at": "2026-10-01T19:31:24.000Z"
+        }
+      ]
+    },
+    "found_item_details": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "found_id",
+            "created_at",
+            "updated_at"
+          ],
+          "properties": {
+            "found_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double"
+              ],
+              "minimum": 1
+            },
+            "media": {
+              "bsonType": "array",
+              "maxItems": 10,
+              "items": {
+                "bsonType": "object",
+                "required": [
+                  "url",
+                  "type"
+                ],
+                "properties": {
+                  "url": {
+                    "bsonType": "string",
+                    "pattern": "^https?://"
+                  },
+                  "type": {
+                    "enum": [
+                      "image",
+                      "document"
+                    ]
+                  },
+                  "caption": {
+                    "bsonType": "string",
+                    "maxLength": 200
+                  }
+                }
+              }
+            },
+            "tags": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "search_keywords": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "extra_attributes": {
+              "bsonType": "object"
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "updated_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "found_id": 1
+          },
+          "name": "ux_found_item_details_found_id",
+          "unique": true
+        },
+        {
+          "v": 2,
+          "key": {
+            "tags": 1
+          },
+          "name": "idx_found_item_details_tags"
+        },
+        {
+          "v": 2,
+          "key": {
+            "_fts": "text",
+            "_ftsx": 1
+          },
+          "name": "txt_found_item_details_search",
+          "weights": {
+            "search_keywords": 1,
+            "tags": 1
+          },
+          "default_language": "english",
+          "language_override": "language",
+          "textIndexVersion": 3
+        }
+      ],
+      "samples": [
+        {
+          "found_id": 3,
+          "created_at": "2026-10-01T19:31:24.000Z",
+          "extra_attributes": {
+            "material": "leather",
+            "identifyingMark": "Small star stamped inside"
+          },
+          "media": [],
+          "search_keywords": [
+            "silver zipper"
+          ],
+          "tags": [
+            "wallet",
+            "black",
+            "leather"
+          ],
+          "updated_at": "2026-10-01T19:31:24.000Z"
+        },
+        {
+          "found_id": 4,
+          "created_at": "2026-10-01T19:31:24.000Z",
+          "extra_attributes": {
+            "model": "WH-CH720N"
+          },
+          "media": [],
+          "search_keywords": [
+            "carrying case"
+          ],
+          "tags": [
+            "headphones",
+            "blue",
+            "wireless"
+          ],
+          "updated_at": "2026-10-01T19:31:24.000Z"
+        }
+      ]
+    },
+    "match_evidence": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "match_id",
+            "rule_scores",
+            "evidence",
+            "explanation",
+            "created_at"
+          ],
+          "properties": {
+            "match_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double"
+              ],
+              "minimum": 1
+            },
+            "matched_tags": {
+              "bsonType": "array",
+              "maxItems": 30,
+              "items": {
+                "bsonType": "string",
+                "maxLength": 80
+              }
+            },
+            "rule_scores": {
+              "bsonType": "object"
+            },
+            "evidence": {
+              "bsonType": "object"
+            },
+            "explanation": {
+              "bsonType": "string"
+            },
+            "score": {
+              "bsonType": [
+                "double",
+                "int"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "updated_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "match_id": 1
+          },
+          "name": "ux_match_evidence_match_id",
+          "unique": true
+        },
+        {
+          "v": 2,
+          "key": {
+            "score": -1
+          },
+          "name": "idx_match_evidence_score"
+        }
+      ],
+      "samples": [
+        {
+          "match_id": 7,
+          "created_at": "2026-10-01T18:55:06.000Z",
+          "evidence": {
+            "lost": {
+              "tags": [
+                "wallet",
+                "black",
+                "leather"
+              ],
+              "brand": "Fossil",
+              "color": "Black",
+              "datetime": "2026-09-30 14:01:24",
+              "campus_id": 1,
+              "item_name": "Black leather wallet",
+              "category_id": 2,
+              "description": "Black leather wallet with a silver zipper and card slots",
+              "location_id": 1,
+              "search_keywords": [
+                "silver zipper"
+              ]
+            },
+            "found": {
+              "tags": [
+                "wallet",
+                "black",
+                "leather"
+              ],
+              "brand": "Fossil",
+              "color": "Black",
+              "datetime": "2026-09-30 16:01:24",
+              "campus_id": 1,
+              "item_name": "Black leather wallet",
+              "category_id": 2,
+              "description": "Black leather wallet with a silver zipper and card slots",
+              "location_id": 1,
+              "search_keywords": [
+                "silver zipper"
+              ]
+            },
+            "algorithm": "weighted-rules-v1",
+            "lost_revision": 1,
+            "found_revision": 1
+          },
+          "explanation": "Weighted comparison of category, name, description, color, brand, location, time and MongoDB tags. Missing attributes score zero. Staff must verify ownership.",
+          "matched_tags": [
+            "wallet",
+            "black",
+            "leather",
+            "silver zipper"
+          ],
+          "rule_scores": {
+            "name": 1,
+            "tags": 1,
+            "time": 0.9940476190476192,
+            "brand": 1,
+            "color": 1,
+            "category": 1,
+            "location": 1,
+            "description": 1
+          },
+          "score": 0.999702,
+          "updated_at": "2026-10-01T18:55:06.000Z"
+        },
+        {
+          "match_id": 8,
+          "created_at": "2026-10-01T18:55:06.000Z",
+          "evidence": {
+            "lost": {
+              "tags": [
+                "headphones",
+                "blue",
+                "wireless"
+              ],
+              "brand": "Sony",
+              "color": "Blue",
+              "datetime": "2026-09-29 14:01:24",
+              "campus_id": 1,
+              "item_name": "Blue wireless headphones",
+              "category_id": 1,
+              "description": "Blue over-ear headphones in a carrying case",
+              "location_id": 2,
+              "search_keywords": [
+                "carrying case"
+              ]
+            },
+            "found": {
+              "tags": [
+                "headphones",
+                "blue",
+                "wireless"
+              ],
+              "brand": "Sony",
+              "color": "Blue",
+              "datetime": "2026-09-29 16:01:24",
+              "campus_id": 1,
+              "item_name": "Blue wireless headphones",
+              "category_id": 1,
+              "description": "Blue over-ear headphones in a carrying case",
+              "location_id": 2,
+              "search_keywords": [
+                "carrying case"
+              ]
+            },
+            "algorithm": "weighted-rules-v1",
+            "lost_revision": 1,
+            "found_revision": 1
+          },
+          "explanation": "Weighted comparison of category, name, description, color, brand, location, time and MongoDB tags. Missing attributes score zero. Staff must verify ownership.",
+          "matched_tags": [
+            "headphones",
+            "blue",
+            "wireless",
+            "carrying case"
+          ],
+          "rule_scores": {
+            "name": 1,
+            "tags": 1,
+            "time": 0.9940476190476192,
+            "brand": 1,
+            "color": 1,
+            "category": 1,
+            "location": 1,
+            "description": 1
+          },
+          "score": 0.999702,
+          "updated_at": "2026-10-01T18:55:06.000Z"
+        }
+      ]
+    },
+    "audit_events": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "user_id",
+            "event_type",
+            "occurred_at"
+          ],
+          "properties": {
+            "user_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double"
+              ],
+              "minimum": 1
+            },
+            "event_type": {
+              "bsonType": "string"
+            },
+            "entity_type": {
+              "bsonType": [
+                "string",
+                "null"
+              ]
+            },
+            "entity_id": {
+              "bsonType": [
+                "int",
+                "long",
+                "double",
+                "string",
+                "null"
+              ]
+            },
+            "payload": {
+              "bsonType": "object"
+            },
+            "occurred_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "user_id": 1,
+            "occurred_at": -1
+          },
+          "name": "idx_audit_user_time"
+        },
+        {
+          "v": 2,
+          "key": {
+            "event_type": 1,
+            "occurred_at": -1
+          },
+          "name": "idx_audit_event_time"
+        },
+        {
+          "v": 2,
+          "key": {
+            "entity_type": 1,
+            "entity_id": 1
+          },
+          "name": "idx_audit_entity"
+        }
+      ],
+      "samples": [
+        {
+          "user_id": 1,
+          "event_type": "LOGIN_DEMO",
+          "entity_type": "USER",
+          "entity_id": 1,
+          "payload": {},
+          "occurred_at": "2026-10-12T13:39:47.905Z"
+        },
+        {
+          "user_id": 1,
+          "event_type": "NOTIFICATION_READ_ALL",
+          "entity_type": "NOTIFICATION",
+          "entity_id": null,
+          "payload": {
+            "affected_rows": 3
+          },
+          "occurred_at": "2026-10-12T13:41:21.539Z"
+        }
+      ]
+    },
+    "auditAggregation": [
+      {
+        "_id": "LOGIN_DEMO",
+        "count": 14
+      },
+      {
+        "_id": "LOGOUT",
+        "count": 6
+      },
+      {
+        "_id": "NOTIFICATION_READ",
+        "count": 5
+      },
+      {
+        "_id": "CLAIM_CREATE",
+        "count": 1
+      },
+      {
+        "_id": "CLAIM_APPROVED",
+        "count": 1
+      },
+      {
+        "_id": "MATCH_ACCEPTED",
+        "count": 1
+      },
+      {
+        "_id": "NOTIFICATION_READ_ALL",
+        "count": 1
+      },
+      {
+        "_id": "MATCH_GENERATE",
+        "count": 1
+      }
+    ],
+    "tagAggregation": [
+      {
+        "_id": "black",
+        "count": 1
+      },
+      {
+        "_id": "leather",
+        "count": 1
+      },
+      {
+        "_id": "headphones",
+        "count": 1
+      },
+      {
+        "_id": "wireless",
+        "count": 1
+      },
+      {
+        "_id": "wallet",
+        "count": 1
+      },
+      {
+        "_id": "carrying case",
+        "count": 1
+      },
+      {
+        "_id": "silver zipper",
+        "count": 1
+      },
+      {
+        "_id": "blue",
+        "count": 1
+      }
+    ],
+    "textSearch": [
+      {
+        "lost_id": 4,
+        "created_at": "2026-10-01T19:31:24.000Z",
+        "extra_attributes": {
+          "material": "leather",
+          "identifyingMark": "Small star stamped inside"
+        },
+        "media": [],
+        "search_keywords": [
+          "silver zipper"
+        ],
+        "tags": [
+          "wallet",
+          "black",
+          "leather"
+        ],
+        "updated_at": "2026-10-01T19:31:24.000Z"
+      }
+    ]
+  }
+}

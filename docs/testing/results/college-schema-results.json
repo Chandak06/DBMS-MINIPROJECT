@@ -1,0 +1,30 @@
+{
+  "executedAt": "2026-10-28T03:55:16.476Z",
+  "sqlDatabase": "clf_college_1793159707919",
+  "mongoDatabase": "clf_college_1793159707919",
+  "passed": 5,
+  "failed": 0,
+  "fixturesRetained": true,
+  "results": [
+    {
+      "name": "Reference seed never creates an Admin or passwordless users",
+      "status": "PASS"
+    },
+    {
+      "name": "Trusted script provisions the first Admin and college",
+      "status": "PASS"
+    },
+    {
+      "name": "Admin bootstrap repeats without replacing its password",
+      "status": "PASS"
+    },
+    {
+      "name": "Production and unconfirmed bootstrap are refused",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh/repeated schema contains normalized domains, fulltext, CTE and window views",
+      "status": "PASS"
+    }
+  ]
+}

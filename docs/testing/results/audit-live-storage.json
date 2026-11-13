@@ -1,0 +1,311 @@
+{
+  "verifiedAt": "2026-10-26T07:48:32.659Z",
+  "sqlDatabase": "campus_lost_found",
+  "mongoDatabase": "campus_lost_found",
+  "domainCounts": {
+    "CAMPUS": 1,
+    "DEPARTMENT": 3,
+    "USER": 3,
+    "CATEGORY": 5,
+    "LOCATION": 4,
+    "LOST_ITEM": 3,
+    "FOUND_ITEM": 2,
+    "MATCH": 2,
+    "CLAIM": 1,
+    "NOTIFICATION": 5
+  },
+  "outbox": {
+    "total": 12,
+    "pending": "0",
+    "originalPendingWrite": {
+      "outbox_id": 72,
+      "collection_name": "lost_item_details",
+      "document_id": 16,
+      "attempts": 0,
+      "processed_at": "2026-10-26 07:24:47",
+      "failure_kind": null
+    }
+  },
+  "integrity": {
+    "orphanLost": 0,
+    "orphanFound": 0,
+    "orphanMatches": 0,
+    "orphanClaims": 0,
+    "duplicateMatches": 0,
+    "duplicateApproved": 0
+  },
+  "columns": [
+    {
+      "name": "outbox_id",
+      "type": "bigint unsigned",
+      "nullable": "NO"
+    },
+    {
+      "name": "collection_name",
+      "type": "varchar(40)",
+      "nullable": "NO"
+    },
+    {
+      "name": "document_id",
+      "type": "int unsigned",
+      "nullable": "NO"
+    },
+    {
+      "name": "payload",
+      "type": "json",
+      "nullable": "NO"
+    },
+    {
+      "name": "operation",
+      "type": "varchar(10)",
+      "nullable": "NO"
+    },
+    {
+      "name": "created_at",
+      "type": "datetime",
+      "nullable": "NO"
+    },
+    {
+      "name": "processed_at",
+      "type": "datetime",
+      "nullable": "YES"
+    },
+    {
+      "name": "attempts",
+      "type": "int unsigned",
+      "nullable": "NO"
+    },
+    {
+      "name": "last_error",
+      "type": "varchar(500)",
+      "nullable": "YES"
+    },
+    {
+      "name": "failure_kind",
+      "type": "varchar(20)",
+      "nullable": "YES"
+    },
+    {
+      "name": "next_attempt_at",
+      "type": "datetime",
+      "nullable": "YES"
+    }
+  ],
+  "indexes": [
+    {
+      "name": "idx_outbox_document_pending",
+      "columnName": "collection_name",
+      "position": 1
+    },
+    {
+      "name": "idx_outbox_document_pending",
+      "columnName": "document_id",
+      "position": 2
+    },
+    {
+      "name": "idx_outbox_document_pending",
+      "columnName": "processed_at",
+      "position": 3
+    },
+    {
+      "name": "idx_outbox_document_pending",
+      "columnName": "outbox_id",
+      "position": 4
+    },
+    {
+      "name": "idx_outbox_pending",
+      "columnName": "processed_at",
+      "position": 1
+    },
+    {
+      "name": "idx_outbox_pending",
+      "columnName": "outbox_id",
+      "position": 2
+    },
+    {
+      "name": "PRIMARY",
+      "columnName": "outbox_id",
+      "position": 1
+    }
+  ],
+  "mongoIndexes": {
+    "lost_item_details": [
+      {
+        "v": 2,
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "v": 2,
+        "key": {
+          "lost_id": 1
+        },
+        "name": "ux_lost_item_details_lost_id",
+        "unique": true
+      },
+      {
+        "v": 2,
+        "key": {
+          "tags": 1
+        },
+        "name": "idx_lost_item_details_tags"
+      },
+      {
+        "v": 2,
+        "key": {
+          "_fts": "text",
+          "_ftsx": 1
+        },
+        "name": "txt_lost_item_details_search",
+        "weights": {
+          "search_keywords": 1,
+          "tags": 1
+        },
+        "default_language": "english",
+        "language_override": "language",
+        "textIndexVersion": 3
+      }
+    ],
+    "found_item_details": [
+      {
+        "v": 2,
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "v": 2,
+        "key": {
+          "found_id": 1
+        },
+        "name": "ux_found_item_details_found_id",
+        "unique": true
+      },
+      {
+        "v": 2,
+        "key": {
+          "tags": 1
+        },
+        "name": "idx_found_item_details_tags"
+      },
+      {
+        "v": 2,
+        "key": {
+          "_fts": "text",
+          "_ftsx": 1
+        },
+        "name": "txt_found_item_details_search",
+        "weights": {
+          "search_keywords": 1,
+          "tags": 1
+        },
+        "default_language": "english",
+        "language_override": "language",
+        "textIndexVersion": 3
+      }
+    ],
+    "match_evidence": [
+      {
+        "v": 2,
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "v": 2,
+        "key": {
+          "match_id": 1
+        },
+        "name": "ux_match_evidence_match_id",
+        "unique": true
+      },
+      {
+        "v": 2,
+        "key": {
+          "score": -1
+        },
+        "name": "idx_match_evidence_score"
+      }
+    ],
+    "audit_events": [
+      {
+        "v": 2,
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "v": 2,
+        "key": {
+          "user_id": 1,
+          "occurred_at": -1
+        },
+        "name": "idx_audit_user_time"
+      },
+      {
+        "v": 2,
+        "key": {
+          "event_type": 1,
+          "occurred_at": -1
+        },
+        "name": "idx_audit_event_time"
+      },
+      {
+        "v": 2,
+        "key": {
+          "entity_type": 1,
+          "entity_id": 1
+        },
+        "name": "idx_audit_entity"
+      },
+      {
+        "v": 2,
+        "key": {
+          "event_id": 1
+        },
+        "name": "ux_audit_event_id",
+        "unique": true,
+        "partialFilterExpression": {
+          "event_id": {
+            "$type": "string"
+          }
+        }
+      }
+    ]
+  },
+  "sourceHashes": [
+    {
+      "path": "package.json",
+      "sha256": "5a068ca81415fedb44eb12e1414ad05650d313e2a53eb53eac13cf5342d2ecd6"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "3644feace0da84e4b3ec56e08a6904ea10090c520252f2b8886d3b2c363e9c74"
+    },
+    {
+      "path": "lib/permissions.ts",
+      "sha256": "b3f41e04287d573c693acc0607c6ce879a5fc70451ccc2239decc61f56ca6ff8"
+    },
+    {
+      "path": "lib/outbox-worker.mjs",
+      "sha256": "70e28ba66bd779fce86928e6383cc36634234b2f6f2480aae35e5377c07e0796"
+    },
+    {
+      "path": "database/mysql/outbox-reliability.sql",
+      "sha256": "4f719f527e9b0a2321619f651cc0225d075c321f8ac9e652cd8572def74a6915"
+    },
+    {
+      "path": "database/mysql/procedures.sql",
+      "sha256": "142f6fbf9417db98aee5361b216f3ca96f733f6e618a191e65c027368d5ed50b"
+    },
+    {
+      "path": "database/mongodb/model.mjs",
+      "sha256": "f0cd5e9413bb9588637803eaac913f8c033d192a92b0ddbf244261ff8492da62"
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+
+> campus-lost-found@1.0.0 test:audit
+> node --env-file=.env.local scripts/audit-integration.mjs
+
+Created the ten domain tables and role triggers.
+Applied database/mysql/indexes_views.sql
+Applied database/mysql/advanced.sql
+Applied database/mysql/revisions.sql
+Applied database/mysql/outbox-reliability.sql
+Procedures, function, MongoDB validators and indexes are ready.
+Already applied: database/mysql/indexes_views.sql
+Already applied: database/mysql/advanced.sql
+Already applied: database/mysql/revisions.sql
+Already applied: database/mysql/outbox-reliability.sql
+Procedures, function, MongoDB validators and indexes are ready.
+Seed complete.
+Google STUDENT account: audit-student@campus.test
+Google STAFF account:   audit-staff@campus.test
+Google ADMIN account:   audit-admin@campus.test
+Seeded lost report #1
+Seeded found report #1
+Seeded lost report #2
+Seeded found report #2
+{ processed: 4, busy: false, pending: 0, failed: 0, retryable: 0 }
+Seed complete.
+Google STUDENT account: audit-student@campus.test
+Google STAFF account:   audit-staff@campus.test
+Google ADMIN account:   audit-admin@campus.test
+lost report #1 already seeded; status preserved.
+found report #1 already seeded; status preserved.
+lost report #2 already seeded; status preserved.
+found report #2 already seeded; status preserved.
+{ processed: 0, busy: false, pending: 0, failed: 0, retryable: 0 }
+PASS Authentication required
+PASS Tampered session rejected
+PASS Database role overrides stale admin claim
+PASS OAuth callback rejects invalid state before provider exchange
+PASS Student cannot manage categories
+PASS Student cannot manage users
+PASS Cross-origin mutation rejected
+PASS Future date rejected
+PASS Invalid foreign reference rejected
+PASS Lost report persists in both databases
+PASS Duplicate active report rejected
+PASS Other student's lost report hidden
+PASS Student cannot set MATCHED
+PASS Found report persists in both databases
+PASS Private found attributes hidden from strangers
+PASS Student cannot generate matches
+PASS Matching persists ranked evidence
+PASS Match generation is idempotent
+PASS Changed details block stale acceptance and roll back
+PASS Regeneration refreshes revisions
+PASS Manual pairing creates competing candidate
+PASS Student cannot review match
+PASS Other student cannot read match
+PASS Claim requires accepted match
+PASS Concurrent match decisions produce one accepted pair
+PASS Matched report cannot be edited
+PASS Match notification is committed
+PASS Wrong owner cannot claim
+PASS Owner can submit claim
+PASS Duplicate claim rejected
+PASS Claim evidence is private
+PASS Student cannot approve claim
+PASS Concurrent claim approval commits once and closes both reports
+PASS Terminal claim cannot be reversed
+PASS MongoDB audit aggregation records one approval
+PASS MySQL role trigger rejects student reviewer
+PASS MySQL CHECK rejects invalid score
+PASS MySQL trigger rejects future date
+PASS MongoDB validator rejects invalid detail
+PASS Failed outbox write is retained and successfully replayed
+PASS Views and stored function return results
+PASS All role pages render
+PASS Invalid demo payload returns a validation response
+PASS Local demo login is gated
+PASS Notification ownership is enforced
+PASS Unmatched OPEN report deletes SQL and MongoDB
+PASS STUDENT can read campuses
+PASS STUDENT master-data write permission: campuses
+PASS STUDENT can read departments
+PASS STUDENT master-data write permission: departments
+PASS STUDENT can read categories
+PASS STUDENT master-data write permission: categories
+PASS STUDENT can read locations
+PASS STUDENT master-data write permission: locations
+PASS STUDENT admin read permission: /api/admin/users
+PASS STUDENT admin read permission: /api/system/sync
+PASS STUDENT synchronization mutation permission
+PASS STUDENT user creation permission
+PASS STUDENT role assignment permission
+PASS STUDENT direct match review permission
+PASS STUDENT direct claim processing permission
+PASS STUDENT match generation permission
+PASS STUDENT manual matching permission
+PASS STUDENT profile role escalation rejected
+PASS STUDENT notification send permission
+PASS STUDENT own profile can be updated
+PASS STUDENT own notifications can be marked read
+PASS STUDENT report and details edit is atomic
+PASS STUDENT own found report details lifecycle
+PASS STAFF can read campuses
+PASS STAFF master-data write permission: campuses
+PASS STAFF can read departments
+PASS STAFF master-data write permission: departments
+PASS STAFF can read categories
+PASS STAFF master-data write permission: categories
+PASS STAFF can read locations
+PASS STAFF master-data write permission: locations
+PASS STAFF admin read permission: /api/admin/users
+PASS STAFF admin read permission: /api/system/sync
+PASS STAFF synchronization mutation permission
+PASS STAFF user creation permission
+PASS STAFF role assignment permission
+PASS STAFF direct match review permission
+PASS STAFF direct claim processing permission
+PASS STAFF match generation permission
+PASS STAFF manual matching permission
+PASS STAFF profile role escalation rejected
+PASS STAFF notification send permission
+PASS STAFF own profile can be updated
+PASS STAFF own notifications can be marked read
+PASS STAFF report and details edit is atomic
+PASS STAFF own found report details lifecycle
+PASS ADMIN can read campuses
+PASS ADMIN master-data write permission: campuses
+PASS ADMIN can read departments
+PASS ADMIN master-data write permission: departments
+PASS ADMIN can read categories
+PASS ADMIN master-data write permission: categories
+PASS ADMIN can read locations
+PASS ADMIN master-data write permission: locations
+PASS ADMIN admin read permission: /api/admin/users
+PASS ADMIN admin read permission: /api/system/sync
+PASS ADMIN synchronization mutation permission
+PASS ADMIN user creation permission
+PASS ADMIN role assignment permission
+PASS ADMIN direct match review permission
+PASS ADMIN direct claim processing permission
+PASS ADMIN match generation permission
+PASS ADMIN manual matching permission
+PASS ADMIN profile role escalation rejected
+PASS ADMIN notification send permission
+PASS ADMIN own profile can be updated
+PASS ADMIN own notifications can be marked read
+PASS ADMIN report and details edit is atomic
+PASS ADMIN own found report details lifecycle
+PASS Anonymous denied GET /api/campuses
+PASS Anonymous denied POST /api/campuses
+PASS Anonymous denied GET /api/departments
+PASS Anonymous denied POST /api/departments
+PASS Anonymous denied GET /api/categories
+PASS Anonymous denied POST /api/categories
+PASS Anonymous denied GET /api/locations
+PASS Anonymous denied POST /api/locations
+PASS Anonymous denied GET /api/admin/users
+PASS Anonymous denied POST /api/admin/users
+PASS Anonymous denied GET /api/system/sync
+PASS Anonymous denied POST /api/system/sync
+PASS Anonymous denied GET /api/claims
+PASS Anonymous denied POST /api/claims
+PASS Anonymous denied GET /api/matches
+PASS Anonymous denied POST /api/matches
+PASS Anonymous denied GET /api/found-items
+PASS Anonymous denied POST /api/found-items
+PASS Anonymous denied GET /api/notifications
+PASS Anonymous denied POST /api/notifications
+PASS Anonymous denied GET /api/users/me
+PASS Anonymous denied POST /api/users/me
+PASS Admin cannot change own role
+PASS Role revocation overrides an existing Staff session
+PASS Admin and Staff dashboard responsibilities differ
+PASS STUDENT cannot open /admin/users
+PASS STUDENT cannot open /admin/sync
+PASS STUDENT cannot open /admin/audit
+PASS STAFF cannot open /admin/users
+PASS STAFF cannot open /admin/sync
+PASS STAFF cannot open /admin/audit
+PASS Admin management pages render
+PASS Concurrent duplicate report submissions save once
+PASS Dashboard counters match SQL
+PASS Staff cannot process own claim; Admin rejection preserves matched reports
+PASS Admin cannot process own claim; Staff can verify the return
+PASS Rejected match leaves both reports OPEN
+PASS A real unavailable MongoDB connection retains payload and records failure
+PASS Backoff prevents immediate automatic retry
+PASS Recovery works in a new worker process after restart
+PASS Replaying an acknowledged write does not duplicate documents
+PASS Crash after Mongo write before SQL acknowledgement replays idempotently
+PASS Permanent validation failure does not block unrelated writes
+PASS An unrelated failed write does not block matching or enrichment status
+PASS Same-document writes stay blocked behind a failed predecessor
+PASS Simultaneous workers cannot process a write unsafely
+PASS Audit events survive outage and retries without duplicates
+PASS Retry limit stops automatic attempts and Admin can request recovery
+PASS All retained outbox records are synchronized
+PASS Matching and evidence remain available during a real Mongo connection outage
+Isolated audit integration completed; test databases retained as clf_audit_1793000373613

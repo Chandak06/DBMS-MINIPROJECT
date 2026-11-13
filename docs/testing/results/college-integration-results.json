@@ -1,0 +1,410 @@
+{
+  "executedAt": "2026-10-28T03:53:26.181Z",
+  "sqlDatabase": "clf_college_1793159564397",
+  "mongoDatabase": "clf_college_1793159564397",
+  "passed": 100,
+  "failed": 0,
+  "fixturesRetained": true,
+  "results": [
+    {
+      "name": "Reference seed never creates an Admin or passwordless users",
+      "status": "PASS"
+    },
+    {
+      "name": "Trusted script provisions the first Admin and college",
+      "status": "PASS"
+    },
+    {
+      "name": "Admin bootstrap repeats without replacing its password",
+      "status": "PASS"
+    },
+    {
+      "name": "Production and unconfirmed bootstrap are refused",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh/repeated schema contains normalized domains, fulltext, CTE and window views",
+      "status": "PASS"
+    },
+    {
+      "name": "Removed Google and role-only demo routes cannot authenticate",
+      "status": "PASS"
+    },
+    {
+      "name": "STUDENT college/password login",
+      "status": "PASS"
+    },
+    {
+      "name": "FINDER college/password login",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF college/password login",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN college/password login",
+      "status": "PASS"
+    },
+    {
+      "name": "Passwords are salted hashes and never returned",
+      "status": "PASS"
+    },
+    {
+      "name": "STUDENT cannot choose a role in the login body",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot choose a role in the login body",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot choose a role in the login body",
+      "status": "PASS"
+    },
+    {
+      "name": "Unknown college/email and incorrect password are denied",
+      "status": "PASS"
+    },
+    {
+      "name": "Legacy OAuth/demo JWTs cannot survive the migration",
+      "status": "PASS"
+    },
+    {
+      "name": "Forged role and stale credential version are rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Unregistered colleges cannot authenticate or provision accounts",
+      "status": "PASS"
+    },
+    {
+      "name": "STUDENT cannot create an Admin through HTTP",
+      "status": "PASS"
+    },
+    {
+      "name": "STUDENT cannot promote a role through HTTP",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot create an Admin through HTTP",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot promote a role through HTTP",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot create an Admin through HTTP",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot promote a role through HTTP",
+      "status": "PASS"
+    },
+    {
+      "name": "Students and Staff cannot view Admin pages",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot submit lost reports",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot submit found reports",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot submit ownership claims",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot submit lost reports",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot submit found reports",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot submit ownership claims",
+      "status": "PASS"
+    },
+    {
+      "name": "Student lost report commits SQL, details and audit",
+      "status": "PASS"
+    },
+    {
+      "name": "Student found report commits to MySQL and MongoDB",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot PATCH a lost report",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot DELETE a lost report",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot PUT lost details",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot DELETE lost details",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot PATCH a found report",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot DELETE a found report",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot PUT found details",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot DELETE found details",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot PATCH a lost report",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot DELETE a lost report",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot PUT lost details",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot DELETE lost details",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot PATCH a found report",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot DELETE a found report",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot PUT found details",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot DELETE found details",
+      "status": "PASS"
+    },
+    {
+      "name": "Staff/Admin report forms are absent and direct creation pages are denied",
+      "status": "PASS"
+    },
+    {
+      "name": "Unrelated Student cannot read private lost details",
+      "status": "PASS"
+    },
+    {
+      "name": "Private found attributes are hidden from another Student",
+      "status": "PASS"
+    },
+    {
+      "name": "Student cannot generate or review candidates",
+      "status": "PASS"
+    },
+    {
+      "name": "Staff matching uses current detail snapshots and ranks deterministically",
+      "status": "PASS"
+    },
+    {
+      "name": "Repeated matching does not create duplicate pairs",
+      "status": "PASS"
+    },
+    {
+      "name": "Atomic report edit and stale-candidate rejection",
+      "status": "PASS"
+    },
+    {
+      "name": "Concurrent report submissions produce one report",
+      "status": "PASS"
+    },
+    {
+      "name": "Student cannot claim without an accepted own match",
+      "status": "PASS"
+    },
+    {
+      "name": "Concurrent match decisions accept only one pair",
+      "status": "PASS"
+    },
+    {
+      "name": "Only the accepted lost-report owner can claim",
+      "status": "PASS"
+    },
+    {
+      "name": "Students cannot approve claims or read another claimant's proof",
+      "status": "PASS"
+    },
+    {
+      "name": "Concurrent approval returns the item exactly once",
+      "status": "PASS"
+    },
+    {
+      "name": "Terminal decisions and notifications remain consistent",
+      "status": "PASS"
+    },
+    {
+      "name": "Unmatched Student report supports guarded deletion in both databases",
+      "status": "PASS"
+    },
+    {
+      "name": "MySQL full-text report search returns relevant records",
+      "status": "PASS"
+    },
+    {
+      "name": "All role dashboards, reports, claims and profile pages render",
+      "status": "PASS"
+    },
+    {
+      "name": "STUDENT management read boundary /api/admin/users",
+      "status": "PASS"
+    },
+    {
+      "name": "STUDENT management read boundary /api/system/sync",
+      "status": "PASS"
+    },
+    {
+      "name": "STUDENT cannot reset an Admin password through the web",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF management read boundary /api/admin/users",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF management read boundary /api/system/sync",
+      "status": "PASS"
+    },
+    {
+      "name": "STAFF cannot reset an Admin password through the web",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN management read boundary /api/admin/users",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN management read boundary /api/system/sync",
+      "status": "PASS"
+    },
+    {
+      "name": "ADMIN cannot reset an Admin password through the web",
+      "status": "PASS"
+    },
+    {
+      "name": "College domain registration is Admin-only",
+      "status": "PASS"
+    },
+    {
+      "name": "Admin registers a college and provisions its Student",
+      "status": "PASS"
+    },
+    {
+      "name": "Staff and Students are isolated to their registered college",
+      "status": "PASS"
+    },
+    {
+      "name": "Profile changes and Staff messages cannot cross college boundaries",
+      "status": "PASS"
+    },
+    {
+      "name": "Claim review and operational notifications stay in the correct college",
+      "status": "PASS"
+    },
+    {
+      "name": "Each college enforces its own configured Student ID format",
+      "status": "PASS"
+    },
+    {
+      "name": "Login displays only Admin-registered college Student formats",
+      "status": "PASS"
+    },
+    {
+      "name": "Unsafe email-format expressions are refused",
+      "status": "PASS"
+    },
+    {
+      "name": "Disabling a registered college invalidates its current sessions",
+      "status": "PASS"
+    },
+    {
+      "name": "Admin cannot disable the college that grants their own access",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid role-specific college addresses are refused",
+      "status": "PASS"
+    },
+    {
+      "name": "Disabling and re-enabling a Student revokes old sessions",
+      "status": "PASS"
+    },
+    {
+      "name": "Admin password reset revokes previous Student sessions",
+      "status": "PASS"
+    },
+    {
+      "name": "Users can change their own password without exposing it",
+      "status": "PASS"
+    },
+    {
+      "name": "Login throttling survives as SQL account state",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/users/me",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/lost-items",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/found-items",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/matches",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/claims",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/notifications",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/campuses",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/admin/users",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous access denied: /api/system/sync",
+      "status": "PASS"
+    },
+    {
+      "name": "Syllabus SELECT, CTE/window, fulltext and EXPLAIN examples execute",
+      "status": "PASS"
+    }
+  ]
+}
